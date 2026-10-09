@@ -11,9 +11,6 @@ public static class GameConfig
 	public const float InteractDistance = 2.4f;
 	public const float Fov = 75f;
 
-	/// <summary>If true, accusing the wrong passenger is punished like breaking the carriage rule.</summary>
-	public const bool WrongAccusationKills = true;
-
 	// Collision layers
 	public const uint LayerWorld = 1;
 	public const uint LayerInteract = 2;

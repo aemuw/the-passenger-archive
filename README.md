@@ -1,10 +1,14 @@
 # The Passenger Archive
 
-First-person PS1-style horror in an endless train. Walk through carriages, listen to passengers,
-collect their stories and find the hidden killer — but break the carriage rule and the killer
-kills *you* the same way they killed the victim.
+First-person PS1-style horror anthology on a train that never stops. Every carriage holds someone's story —
+told as dialogue, an overheard conversation, a memory you walk through. Stories are fictional, inspired by
+real cases, or (later) documented. Some carriages hide a rule that comes straight out of the victim's story.
+Nobody tells you the rule. Break it and the killer does to you what he did to the victim.
 
-**Engine:** Godot 4.7 (.NET / C#) · **Renderer:** Mobile · **Status:** vertical-slice prototype (2 carriages)
+You are not a detective. You are a passenger. You listen, you watch, you remember — and one man has been
+riding with you from carriage to carriage since the very start.
+
+**Engine:** Godot 4.7 (.NET / C#) · **Renderer:** Mobile · **Status:** vertical-slice prototype (4 carriages)
 
 ## Run
 1. Install Godot 4.7.x **.NET** build and the .NET 8 SDK.
@@ -15,38 +19,51 @@ kills *you* the same way they killed the victim.
 ## Controls
 | Key | Action |
 |---|---|
-| WASD / arrows | move |
-| Mouse | look |
-| E | talk / examine / use |
-| F | accuse the passenger you are looking at (needs enough clues) |
-| Tab | notebook (ticket, rule, clues) |
+| WASD / arrows, mouse | move, look |
+| E | talk / use / answer |
+| F | alternative action (only shown when it exists) |
+| Tab | your ticket (the destination is erased — it slowly comes back) |
 | R | retry after death / restart after the end |
 | Esc | release / capture the mouse |
 
-## What the prototype contains
-- **Procedural carriage** (no imported assets): shell, seats, windows, luggage shelves, flickering lamps (some dead).
-- **PS1 look:** vertex-snapping spatial shader, world-space grime texture, internal render at window/3,
-  Bayer dithering + colour quantisation + grain + scanlines + vignette (`shaders/`).
-- **Night outside the windows:** poles/trees streaming past; in carriage II a lit house that never moves.
-- **Passengers:** box-built figures, faces half in shadow, line-by-line dialogue, clues go to the notebook.
-  The killer turns their head to follow you only while you are *not* looking at them.
-- **Carriage rule:** printed above the front door. Breaking it → lights die → death screen describing
-  the victim's method used on you.
-- **Accusation:** wrong accusation also kills (`GameConfig.WrongAccusationKills`). Right one unlocks the front door.
-- **Procedural train audio** (rumble + wheel clacks) — replace with recordings later.
-- Back door never opens: *the train never goes back*.
+## The prototype carriages
+| # | Type | Structure | What it shows |
+|---|---|---|---|
+| 1 | Fiction | one person you can talk to + a **played memory** | Viktor's way home, four evenings, one more sign each time. Hidden rule: a phone rings in the carriage. |
+| 2 | Inspired | two people talking to each other; you **overhear** and may interrupt | a widow and her friend with flowers; a stuck door that a friendly stranger helps you open. |
+| 3 | Inspired | five voices that contradict each other | victim, newspaper reader, witness who "could do nothing", a liar, a friendly man who offers to guide you when the lights go out. |
+| 4 | Hero | the conductor opposite you | your memories: boarding in a hurry, and the empty terminus. Ends with *TRAIN / FINAL MEMORY*. |
+
+Always true: doors lock behind you (the train never goes back) · the conductor never explains and never lies ·
+the victim cannot be saved · after carriages 2–3 a card shows how the story relates to reality
+(FICTIONAL / INSPIRED / DOCUMENTED + *real-world context*).
+
+## The man who rides with you
+In carriages 1, 2, 3 and in your own memories there is one man in different clothes:
+long coat → shirt with a newspaper → brown coat by the door. Same tells every time:
+he adjusts his cuff, and he says *«Далі — то далі.»* Nothing marks him as dangerous. In carriage 2 he is kind to you.
+
+## How it works
+- Everything is built in code (no imported assets): `scenes/Main.tscn` only holds the `Game` node.
+- **PS1 look:** vertex-snapping shader, world-space grime texture, internal render at window/3, Bayer dithering,
+  colour quantisation, grain, scanlines, vignette. Reality = warm yellow-green, memory = cold blue.
+- **Rule system:** a `RuleDef` per carriage (`RuleKind.PhoneRing`, `RuleKind.OfferGuide`). Violation →
+  lamps die, everyone freezes, the clacking stops, one flash of the killer standing in front of you, death text with the victim's method.
+- **Authoring:** edit `scripts/Data/Carriages.cs` — people, lines (`LineSet` blocks that unlock by flags), overheard scripts, rules, cards.
+  Lines can carry effects: `done` (story complete → door unlocks), `memory:<id>`, `unstick`, `flag:<x>`.
+  Memories are in `scripts/World/MemoryScene.cs`.
 
 ## Layout
 ```
-scenes/Main.tscn          single scene; everything else is built in code
-scripts/Game.cs           root: view, input, game rules, carriage flow
-scripts/Data/             Carriages.cs  ← edit stories, rules, passengers here
-scripts/World/            CarriageBuilder, Scenery, FlickerLight, TrainAudio, Ps1Materials
-scripts/Actors/           Player, Passenger
-scripts/Interact/         Interactable + door / rule prop / victim
+scenes/Main.tscn            single scene
+scripts/Game.cs             flow: carriages, memories, doors, rule/death, ending
+scripts/Data/               CarriageData (types), Carriages (content)
+scripts/World/              CarriageBuilder, MemoryScene, FigureBuilder, Scenery, FlickerLight, TrainAudio, Geo, Ps1Materials
+scripts/Actors/             Player, Passenger
+scripts/Interact/           Interactable, DoorInteractable, ActionProp
 scripts/UI/Hud.cs
-shaders/                  ps1.gdshader, post_ps1.gdshader
-docs/DESIGN.md            concept, world rules, art/sound direction, roadmap
+shaders/                    ps1.gdshader, post_ps1.gdshader
+docs/DESIGN.md              concept, structure, world rules, art/sound, roadmap
 ```
 
 ## Git workflow

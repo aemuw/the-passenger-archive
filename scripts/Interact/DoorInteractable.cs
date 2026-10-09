@@ -2,7 +2,7 @@ using Godot;
 
 namespace PassengerArchive;
 
-/// <summary>Door at either end of the carriage. Front leads on once the carriage is solved.</summary>
+/// <summary>Door at either end of the carriage. The back door never opens: the train never goes back.</summary>
 public partial class DoorInteractable : Interactable
 {
 	public bool Forward;
@@ -10,7 +10,7 @@ public partial class DoorInteractable : Interactable
 
 	public override void Interact(Game game)
 	{
-		if (Forward) game.TryAdvance();
-		else game.Notify("Двері не піддаються. Назад не повернутися.");
+		if (Forward) game.TryDoor();
+		else game.Notify("Двері заблоковано. Назад не повернутися.");
 	}
 }

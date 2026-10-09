@@ -2,14 +2,16 @@ using Godot;
 
 namespace PassengerArchive;
 
-/// <summary>A dirty fluorescent lamp: slow hum-flicker, occasional dropout, can be killed.</summary>
+/// <summary>A dirty fluorescent lamp: hum-flicker, occasional dropout; can be switched off and (unless permanently dead) back on.</summary>
 public partial class FlickerLight : OmniLight3D
 {
 	public float BaseEnergy = 1.1f;
 	public MeshInstance3D Fixture;
 	public bool Dead;
+	public bool Permanent;      // permanently broken lamp: Revive() does nothing
 
 	readonly RandomNumberGenerator _rng = new();
+	Material _fixtureMat;
 	float _timer;
 	float _dropout;
 
@@ -18,6 +20,7 @@ public partial class FlickerLight : OmniLight3D
 		AddToGroup("lamps");
 		_rng.Randomize();
 		_timer = _rng.RandfRange(0.5f, 4f);
+		_fixtureMat = Fixture?.MaterialOverride;
 	}
 
 	public override void _Process(double delta)
@@ -42,5 +45,12 @@ public partial class FlickerLight : OmniLight3D
 		Dead = true;
 		LightEnergy = 0f;
 		if (Fixture != null) Fixture.MaterialOverride = Ps1Materials.Get(new Color(0.15f, 0.15f, 0.12f));
+	}
+
+	public void Revive()
+	{
+		if (Permanent) return;
+		Dead = false;
+		if (Fixture != null && _fixtureMat != null) Fixture.MaterialOverride = _fixtureMat;
 	}
 }
