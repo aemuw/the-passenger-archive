@@ -8,7 +8,7 @@ namespace PassengerArchive;
 /// </summary>
 public partial class TrainAudio : Node
 {
-	AudioStreamPlayer _rumble, _clack, _ring, _click;
+	AudioStreamPlayer _rumble, _clack, _ring, _click, _hit;
 	Tween _tween;
 
 	public override void _Ready()
@@ -17,6 +17,8 @@ public partial class TrainAudio : Node
 		_clack = new AudioStreamPlayer { Stream = MakeClack(), VolumeDb = -12f };
 		_ring = new AudioStreamPlayer { Stream = MakeRing(), VolumeDb = -8f };
 		_click = new AudioStreamPlayer { Stream = MakeClick(), VolumeDb = -4f };
+		_hit = new AudioStreamPlayer { Stream = MakeHit(), VolumeDb = -2f };
+		AddChild(_hit);
 		AddChild(_rumble);
 		AddChild(_clack);
 		AddChild(_ring);
@@ -47,6 +49,9 @@ public partial class TrainAudio : Node
 
 	/// <summary>Door lock / unlock.</summary>
 	public void Click() => _click.Play();
+
+	/// <summary>A heavy blow: low thump + a wet crack of noise.</summary>
+	public void Hit() => _hit.Play();
 
 	const int Rate = 22050;
 
@@ -116,6 +121,22 @@ public partial class TrainAudio : Node
 			float t = (float)i / Rate;
 			float v = (rng.RandfRange(-1f, 1f) * 0.5f + Mathf.Sin(t * Mathf.Tau * 140f)) * Mathf.Exp(-t * 28f);
 			Write(data, i, v * 0.8f);
+		}
+		return Wav(data, n, false);
+	}
+
+	static AudioStreamWav MakeHit()
+	{
+		int n = (int)(Rate * 0.7f);
+		var data = new byte[n * 2];
+		var rng = new RandomNumberGenerator { Seed = 21 };
+		float lp = 0f;
+		for (int i = 0; i < n; i++)
+		{
+			float t = (float)i / Rate;
+			lp += (rng.RandfRange(-1f, 1f) - lp) * 0.25f;
+			float v = Mathf.Sin(t * Mathf.Tau * (70f - t * 60f)) * Mathf.Exp(-t * 7f) + lp * Mathf.Exp(-t * 22f) * 0.8f;
+			Write(data, i, v * 0.9f);
 		}
 		return Wav(data, n, false);
 	}

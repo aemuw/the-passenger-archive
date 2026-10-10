@@ -107,10 +107,11 @@ public static class CarriageBuilder
 
 	static void BuildDoorsAndSign(Node3D root, CarriageData d)
 	{
-		var front = new DoorInteractable { Forward = true, Position = new Vector3(0, 1.0f, -HalfLen + 0.03f) };
+		var front = new DoorInteractable { Name = "door_front", Forward = true, Position = new Vector3(0, 1.0f, -HalfLen + 0.03f) };
 		front.AddChild(Geo.MeshBox(Vector3.Zero, new Vector3(0.95f, 2.0f, 0.06f), new Color(0.16f, 0.12f, 0.09f)));
 		front.AddChild(Geo.MeshBox(new Vector3(0, 0.45f, 0.04f), new Vector3(0.55f, 0.6f, 0.02f), new Color(0.02f, 0.03f, 0.05f)));
 		front.SetBox(new Vector3(0.95f, 2.0f, 0.3f), Vector3.Zero);
+		front.AddLamp(false);
 		root.AddChild(front);
 
 		var back = new DoorInteractable { Forward = false, Position = new Vector3(0, 1.0f, HalfLen - 0.03f) };

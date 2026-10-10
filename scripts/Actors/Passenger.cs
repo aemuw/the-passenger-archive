@@ -4,7 +4,7 @@ using Godot;
 namespace PassengerArchive;
 
 /// <summary>
-/// A person, seated or standing, built from boxes. Their speech comes from <see cref="PersonData.Talk"/>.
+/// A person, seated or standing, built from boxes. Their speech comes from <see cref="PersonData.Dialog"/>.
 /// Tells (<see cref="Gesture"/>) repeat across carriages and memories. A carriage killer slowly turns
 /// their head to follow the player — but only while the player is not looking at them.
 /// </summary>
@@ -17,24 +17,22 @@ public partial class Passenger : Interactable
 	public bool Standing;
 
 	FigureParts _parts;
-	readonly Dictionary<int, int> _idx = new();
 	Player _player;
 	float _yaw;
 	float _t;
 	float _habit = 3f;
 
-	bool Offering => GameRef != null && GameRef.OfferTarget == Data.Id;
+	/// <summary>"Незнайомець …" until a conversation reveals the real name.</summary>
+	public string DisplayName => Game.DisplayOf(Data, GameRef);
 
-	public override string Prompt =>
-		Data.Talk == null ? "" :
-		Offering ? $"[E] Відмовитись — {Data.Name}" : $"[E] Заговорити — {Data.Name}";
+	public override string Prompt => Data.Dialog == null ? "" : $"{DisplayName}\n[E] Заговорити";
 
-	public override string AltPrompt => Offering ? "[F] Піти з ним" : null;
+	public Vector3 HeadWorld => _parts != null ? _parts.Head.GlobalPosition : GlobalPosition + new Vector3(0, 1.4f, 0);
 
 	public void Build()
 	{
 		_parts = FigureBuilder.Build(this, Data.Look, !Standing);
-		if (Data.Talk != null)
+		if (Data.Dialog != null)
 		{
 			if (Standing) SetBox(new Vector3(0.6f, 1.85f, 0.5f), new Vector3(0, 0.92f, 0));
 			else SetBox(new Vector3(0.6f, 1.5f, 0.55f), new Vector3(0, 0.45f, -0.05f));
@@ -43,20 +41,9 @@ public partial class Passenger : Interactable
 
 	public override void Interact(Game game)
 	{
-		if (Data.Talk == null) return;
-		if (Offering) { game.DeclineOffer(Data.Name); return; }
-
-		int si = Data.Talk.Length - 1;
-		while (si > 0 && Data.Talk[si].Requires != null && !game.HasFlag(Data.Talk[si].Requires)) si--;
-		var set = Data.Talk[si];
-
-		_idx.TryGetValue(si, out int i);
-		Line line = i < set.Lines.Length ? set.Lines[i] : (set.Loop ? set.Lines[i % set.Lines.Length] : set.Lines[^1]);
-		_idx[si] = i + 1;
-		game.Say(Data.Name, line);
+		if (Data.Dialog == null) return;
+		game.StartTalk(Data.Dialog, Data.Id, () => DisplayName, HeadWorld);
 	}
-
-	public override void Alt(Game game) => game.ViolateRule();
 
 	public override void _Process(double delta)
 	{
@@ -99,7 +86,7 @@ public partial class Passenger : Interactable
 		{
 			if (!seen && dist < 9f) { target = look; rate = 1.1f; }   // watches you only when you are not watching
 		}
-		else if (Data.Talk != null && dist < 2.8f)
+		else if (Data.Dialog != null && dist < 2.8f)
 		{
 			target = look;
 			rate = 4f;

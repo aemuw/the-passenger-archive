@@ -2,7 +2,10 @@ using Godot;
 
 namespace PassengerArchive;
 
-/// <summary>One spoken line. <see cref="Fx"/> triggers a game effect (see Game.ApplyFx).</summary>
+/// <summary>
+/// One spoken line. <see cref="Fx"/> triggers game effects (several separated by ';', see Game.ApplyFx).
+/// <see cref="Speaker"/>: a name, or "@id" = the current display name of that person (alias until they are known).
+/// </summary>
 public sealed record Line(string Text, string Fx = null, string Speaker = null);
 
 /// <summary>How the story of a carriage relates to reality — shown on the card at the carriage end.</summary>
@@ -22,17 +25,20 @@ public sealed record Outfit(
 	bool LongCoat = false,
 	bool Collar = false,
 	bool Paper = false,
-	bool Flowers = false);
+	bool Flowers = false,
+	bool Faceless = false);   // a face nobody ever saw (used in reconstructed memories)
 
-/// <summary>A block of lines. The person uses the last set whose <see cref="Requires"/> flag is set.</summary>
-public sealed record LineSet(Line[] Lines, string Requires = null, bool Loop = false);
-
+/// <summary>
+/// A person on the train (or in a memory). Everyone is "Незнайомець / Незнайомка …" (<see cref="Alias"/>, a description
+/// of what the hero sees) until a conversation reveals the real <see cref="Name"/>. Name == null: never revealed.
+/// </summary>
 public sealed record PersonData(
 	string Id,
 	string Name,
+	string Alias,
 	int Row, int Side, int Slot,
 	Outfit Look,
-	LineSet[] Talk = null,           // null = background passenger, cannot be spoken to
+	Convo Dialog = null,             // null = background passenger, cannot be spoken to
 	Gesture Idle = Gesture.None,
 	Vector3? StandAt = null,         // set = standing at this spot instead of sitting
 	float StandYaw = 0f,
@@ -43,7 +49,8 @@ public sealed record PersonData(
 public sealed record RuleDef(
 	RuleKind Kind,
 	string Reason,
-	string VictimName,
+	string VictimId,
+	string VictimName,      // instrumental case, e.g. "Віктором"
 	string Method,
 	string KillText,
 	string KillerId);
@@ -59,5 +66,4 @@ public sealed record CarriageData(
 	Line[] Overheard = null,         // auto-plays when the player comes near OverheardAt
 	Vector3 OverheardAt = default,
 	RuleDef Rule = null,
-	bool DoorStuck = false,
-	Line[] HelperScript = null);     // played when the player tries a stuck door (someone helps)
+	bool DoorStuck = false);         // the door sticks until the man with the newspaper helps (his node "door")

@@ -13,6 +13,7 @@ public partial class Player : CharacterBody3D
 	float _pitch;
 	float _bobTime;
 	float _swayTime;
+	bool _collapsed;
 
 	const float EyeHeight = 1.6f;
 
@@ -59,6 +60,32 @@ public partial class Player : CharacterBody3D
 		Rotation = new Vector3(0, yaw, 0);
 		_pitch = 0;
 		_head.Rotation = Vector3.Zero;
+		_collapsed = false;
+		_head.Position = new Vector3(0, EyeHeight, 0);
+		Cam.Rotation = Vector3.Zero;
+	}
+
+	/// <summary>Smoothly turns the view towards a point (used when a conversation starts).</summary>
+	public void FaceTowards(Vector3 worldPoint)
+	{
+		Vector3 d = worldPoint - (GlobalPosition + new Vector3(0, EyeHeight, 0));
+		float yaw = Mathf.Atan2(-d.X, -d.Z);
+		float pitch = Mathf.Clamp(Mathf.Atan2(d.Y, new Vector2(d.X, d.Z).Length()), -0.9f, 0.9f);
+		float target = Rotation.Y + Mathf.AngleDifference(Rotation.Y, yaw);
+
+		var tw = CreateTween().SetParallel(true);
+		tw.TweenProperty(this, "rotation:y", target, 0.4f).SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.Out);
+		tw.TweenMethod(Callable.From<float>(v => { _pitch = v; _head.Rotation = new Vector3(v, 0, 0); }), _pitch, pitch, 0.4f);
+	}
+
+	/// <summary>The hero drops to the floor: the camera falls and tilts, the world goes sideways.</summary>
+	public void Collapse(float seconds = 1.4f)
+	{
+		InputEnabled = false;
+		_collapsed = true;
+		var tw = CreateTween().SetParallel(true);
+		tw.TweenProperty(_head, "position", new Vector3(0, 0.22f, 0), seconds).SetTrans(Tween.TransitionType.Quad).SetEase(Tween.EaseType.In);
+		tw.TweenProperty(Cam, "rotation:z", 1.35f, seconds).SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.In);
 	}
 
 	public Interactable Focus()
@@ -86,6 +113,7 @@ public partial class Player : CharacterBody3D
 		Velocity = vel;
 		MoveAndSlide();
 
+		if (_collapsed) return;
 		// Head bob when walking + constant gentle train sway.
 		bool moving = new Vector2(Velocity.X, Velocity.Z).Length() > 0.3f;
 		_bobTime += dt * (moving ? 8.5f : 0f);

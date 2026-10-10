@@ -67,6 +67,7 @@ public static class FigureBuilder
 		h.AddChild(Geo.MeshBox(new Vector3(0, 0.28f, 0.01f), new Vector3(0.26f, 0.07f, 0.26f), new Color(0.12f, 0.09f, 0.07f), 0, 0.25f));
 		h.AddChild(Geo.MeshBox(new Vector3(0, 0.17f, -0.125f), new Vector3(0.25f, 0.1f, 0.02f), Dark, 0, 0.1f));          // eyes in shadow
 		h.AddChild(Geo.MeshBox(new Vector3(0, 0.03f, -0.125f), new Vector3(0.09f, 0.025f, 0.02f), new Color(0.25f, 0.08f, 0.08f), 0, 0.1f)); // mouth
+		if (o.Faceless) h.AddChild(Geo.MeshBox(new Vector3(0, 0.12f, -0.128f), new Vector3(0.26f, 0.3f, 0.02f), Dark, 0, 0.1f));   // nothing to remember
 		if (o.Hat)
 		{
 			var hc = o.HatColor ?? Dark;

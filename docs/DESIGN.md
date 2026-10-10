@@ -81,3 +81,16 @@ FICTIONAL / INSPIRED card + real-world context · the hero's own memories and en
 Not yet: DOCUMENTED carriage with sources · NIGHTMARE carriage · objects-only / wrong-version / unheard-truth carriages ·
 fake window reflections · real models, textures, music.
 **The `RealWorld` texts in `Carriages.cs` are placeholders** — replace them with sourced text before release.
+
+## v3 changes
+- **Strangers first.** Everyone is «Незнайомець / Незнайомка …» with a one-line description of what the hero sees; the real name appears only
+  after a conversation reveals it (the ticket lists whom you got to know). The man who rides with you is never named.
+- **Conversations with choices.** The hero picks what to say; answers change what people tell you (per-carriage flags) and some choices are
+  kept for the whole run (`k:` flags). The killer at the terminus quotes them back («Ви казали, що не пам'ятаєте, звідки їдете»).
+- **Memories in every story carriage:** route (Viktor) · ride (Halyna's imagined night; the hitch-hiker has no face because she never saw him) ·
+  walk (Solomiya: say "no" twice, the third time the word won't come; the lamps die behind you) · depart/arrive (the hero).
+- **The hero's reason:** he didn't wait for the 05:10 train with Marta (the person he loves) and didn't listen to her voicemail
+  (optional, remembered). At the terminus her call rings with the same phone sound that ended Viktor.
+- **The ending:** the man says «Далі — то далі.» and kills the hero. Violence is shown (blood on the lens, pool on the floor, camera falls).
+- **Rule deaths** also show it. The F key is gone: Taras's offer is now a conversation (go with him = rule broken).
+- Door lamp: red = locked, green = story finished. No more "click" caption.

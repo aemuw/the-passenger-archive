@@ -8,7 +8,7 @@ Nobody tells you the rule. Break it and the killer does to you what he did to th
 You are not a detective. You are a passenger. You listen, you watch, you remember — and one man has been
 riding with you from carriage to carriage since the very start.
 
-**Engine:** Godot 4.7 (.NET / C#) · **Renderer:** Mobile · **Status:** vertical-slice prototype (4 carriages)
+**Engine:** Godot 4.7 (.NET / C#) · **Renderer:** Mobile · **Status:** vertical-slice prototype (4 carriages, 3 played memories + the final)
 
 ## Run
 1. Install Godot 4.7.x **.NET** build and the .NET 8 SDK.
@@ -20,8 +20,8 @@ riding with you from carriage to carriage since the very start.
 | Key | Action |
 |---|---|
 | WASD / arrows, mouse | move, look |
-| E | talk / use / answer |
-| F | alternative action (only shown when it exists) |
+| E / Space / click | talk, use, advance a line, pick the highlighted option |
+| 1–6, W/S | pick an answer in a conversation |
 | Tab | your ticket (the destination is erased — it slowly comes back) |
 | R | retry after death / restart after the end |
 | Esc | release / capture the mouse |
@@ -49,14 +49,16 @@ he adjusts his cuff, and he says *«Далі — то далі.»* Nothing marks
   colour quantisation, grain, scanlines, vignette. Reality = warm yellow-green, memory = cold blue.
 - **Rule system:** a `RuleDef` per carriage (`RuleKind.PhoneRing`, `RuleKind.OfferGuide`). Violation →
   lamps die, everyone freezes, the clacking stops, one flash of the killer standing in front of you, death text with the victim's method.
-- **Authoring:** edit `scripts/Data/Carriages.cs` — people, lines (`LineSet` blocks that unlock by flags), overheard scripts, rules, cards.
-  Lines can carry effects: `done` (story complete → door unlocks), `memory:<id>`, `unstick`, `flag:<x>`.
-  Memories are in `scripts/World/MemoryScene.cs`.
+- **Authoring:** edit `scripts/Data/Carriages.cs` — people (`Alias` = what the hero sees, `Name` = revealed by `know`), conversations
+  (`DNode`/`Opt` graphs: what you ask changes what they say; flags `x` per carriage, `k:x` for the whole run), overheard scripts, rules, cards.
+  Effects (`;`-separated): `done`, `unstick`, `know[:id]`, `flag:x`, `memory:<id>`, `memend`, `walkgo`, `callend`, `kill`, `violate`.
+  Memories are in `scripts/World/MemoryScene.cs`; the conversation engine is `scripts/GameTalk.cs`.
 
 ## Layout
 ```
 scenes/Main.tscn            single scene
 scripts/Game.cs             flow: carriages, memories, doors, rule/death, ending
+scripts/GameTalk.cs         conversation engine (choices, flags, effects)
 scripts/Data/               CarriageData (types), Carriages (content)
 scripts/World/              CarriageBuilder, MemoryScene, FigureBuilder, Scenery, FlickerLight, TrainAudio, Geo, Ps1Materials
 scripts/Actors/             Player, Passenger

@@ -8,6 +8,7 @@ namespace PassengerArchive;
 /// Root script: builds the low-res 3D view + HUD and runs the flow of the train:
 /// carriage → (played memory) → carriage … doors lock behind you, the rule is never announced,
 /// and breaking it makes the carriage's killer do to you what he did to the victim.
+/// The conversation system lives in GameTalk.cs.
 /// </summary>
 public partial class Game : Node
 {
@@ -15,7 +16,6 @@ public partial class Game : Node
 
 	public Hud Hud { get; private set; }
 	public TrainAudio Audio { get; private set; }
-	public string OfferTarget { get; private set; }
 	public bool PhoneRinging { get; private set; }
 	public Vector3 PlayerPosition => _player.GlobalPosition;
 
@@ -33,8 +33,11 @@ public partial class Game : Node
 	int _index;
 	int _gen;                         // bumps on every carriage load; stale async continuations check it
 	bool _dead, _deathShown, _busy, _memoryQueued;
-	readonly HashSet<string> _flags = new();
-	double _carriageTime, _offerTimer;
+	readonly HashSet<string> _flags = new();      // live until the carriage ends / you die
+	readonly HashSet<string> _kept = new();       // "k:…" flags: live for the whole run
+	readonly HashSet<string> _known = new();      // people whose real name you have learned (this carriage)
+	readonly List<string> _remembered = new();    // shown on the ticket
+	double _carriageTime;
 	bool _offerStarted, _overheardStarted;
 	Vector3 _savedPos;
 	float _savedYaw;
@@ -72,9 +75,15 @@ public partial class Game : Node
 		Bind("move_left", Key.A, Key.Left);
 		Bind("move_right", Key.D, Key.Right);
 		Bind("interact", Key.E);
-		Bind("alt", Key.F);
+		Bind("confirm", Key.Space, Key.Enter);
 		Bind("notebook", Key.Tab);
 		Bind("restart", Key.R);
+		Bind("opt1", Key.Key1, Key.Kp1);
+		Bind("opt2", Key.Key2, Key.Kp2);
+		Bind("opt3", Key.Key3, Key.Kp3);
+		Bind("opt4", Key.Key4, Key.Kp4);
+		Bind("opt5", Key.Key5, Key.Kp5);
+		Bind("opt6", Key.Key6, Key.Kp6);
 	}
 
 	static void Bind(string action, params Key[] keys)
@@ -139,6 +148,8 @@ public partial class Game : Node
 		_worldRoot?.QueueFree();
 
 		_flags.Clear();
+		_known.Clear();
+		ResetTalk();
 		_script = null;
 		_scriptDone = null;
 		ClearUse();
@@ -149,13 +160,12 @@ public partial class Game : Node
 		_carriageTime = 0;
 		_offerStarted = false;
 		_overheardStarted = false;
-		_offerTimer = 0;
-		OfferTarget = null;
 		PhoneRinging = false;
 		Audio.SetRing(false);
 		Audio.RestoreClacks();
 		_mode = Mode.Carriage;
 		ApplyLook(false);
+		Hud.ClearGore();
 
 		_worldRoot = CarriageBuilder.Build(Current, this);
 		_vp.AddChild(_worldRoot);
@@ -170,17 +180,18 @@ public partial class Game : Node
 		tw.Finished += () => { _busy = false; _player.InputEnabled = !Hud.BookOpen; };
 
 		Hud.Caption(Current.Title, 2.5f);
-		if (first)
-			Hud.Notify("WASD — рух · E — взаємодія · F — альтернативна дія · Tab — квиток · Esc — курсор", 7f);
+		if (first) Hud.Notify("WASD — рух · E — діяти · Tab — квиток · Esc — курсор", 6f);
 	}
 
 	public void TryDoor()
 	{
-		if (_mode != Mode.Carriage || _busy) return;
-		if (_index >= Carriages.All.Length - 1 || !HasFlag("story_done")) { Notify("Двері не відчиняються."); return; }
+		if (_mode != Mode.Carriage || _busy || _inTalk) return;
+		if (_index >= Carriages.All.Length - 1 || !HasFlag("story_done")) { Notify("Двері зачинені."); return; }
 		if (Current.DoorStuck && !HasFlag("unstuck"))
 		{
-			if (_script == null && Current.HelperScript != null) PlayScript(Current.HelperScript);
+			// The man with the newspaper offers to help (his node "door").
+			var pop = _worldRoot.GetNodeOrNull<Passenger>("p_pop");
+			if (pop?.Data.Dialog != null) StartTalk(pop.Data.Dialog, pop.Data.Id, () => pop.DisplayName, pop.HeadWorld, force: "door");
 			else Notify("Двері заклинило.");
 			return;
 		}
@@ -217,6 +228,7 @@ public partial class Game : Node
 		LoadCarriage();
 	}
 
+	/// <summary>The end of the run: the memory of the terminus has played out and the hero is dead.</summary>
 	void EndGame()
 	{
 		_mode = Mode.Ending;
@@ -224,9 +236,13 @@ public partial class Game : Node
 		_player.InputEnabled = false;
 		Hud.ShowDeath(
 			"TRAIN / FINAL MEMORY\n\n" +
-			"Ти бачиш ту саму мить ще раз — іншими очима.\n" +
-			"Чоловік у довгому пальті. Чоловік із газетою. Чоловік біля дверей.\n\n" +
-			"Він не переслідував тебе.\nВін їхав разом із тобою.\n\n" +
+			"Ти бачиш ту саму мить ще раз — іншими очима.\n\n" +
+			"Він сів у потяг на тій самій станції. Він не переслідував тебе.\n" +
+			"Він їхав поруч.\n\n" +
+			"Вагон 1 — у довгому пальті, біля заднього виходу.\n" +
+			"Вагон 2 — із газетою, яку він ніколи не перегортав. Він відчинив тобі двері.\n" +
+			"Вагон 3 — біля виходу, ніби теж чекає зупинки.\n\n" +
+			"Марта чекала на ранковий потяг о 05:10.\n\n" +
 			"Кінець прототипу  ·  [R] — почати спочатку", ending: true);
 	}
 
@@ -292,55 +308,114 @@ public partial class Game : Node
 		_player.InputEnabled = true;
 		_busy = false;
 
-		if (id == "route") ApplyFx("done");
+		// A memory that tells the whole story finishes the carriage (the door lamp turns green).
+		if (id == "route" || id == "ride" || id == "walk") ApplyFx("done");
 	}
 
 	public void TeleportPlayer(Vector3 pos, float yaw) => _player.Teleport(pos, yaw);
+	public void LockPlayer() => _player.InputEnabled = false;
+	public void CollapsePlayer() => _player.Collapse();
 
 	public void SetUse(string prompt, Action action) { _pendingPrompt = prompt; _pendingUse = action; }
 	public void ClearUse() { _pendingPrompt = null; _pendingUse = null; }
 
 	// ───────────────────────── speech & effects ─────────────────────────
-	public bool HasFlag(string f) => _flags.Contains(f);
+	public bool HasFlag(string f) => _flags.Contains(f) || _kept.Contains(f);
 	public void Notify(string text) => Hud.Notify(text);
 
+	/// <summary>Remember something for the whole run (it may change what people say much later).</summary>
+	public void Keep(string flag) => _kept.Add("k:" + flag);
+
+	/// <summary>Flags separated by ',' — "k:x" lives for the run, "x" for the carriage.</summary>
+	void ApplySet(string set)
+	{
+		if (string.IsNullOrEmpty(set)) return;
+		foreach (var raw in set.Split(','))
+		{
+			var f = raw.Trim();
+			if (f.Length == 0) continue;
+			if (f.StartsWith("k:")) _kept.Add(f); else _flags.Add(f);
+		}
+	}
+
+	/// <summary>All of <paramref name="need"/> set, none of <paramref name="unless"/> set (both comma separated).</summary>
+	public bool Check(string need, string unless)
+	{
+		if (!string.IsNullOrEmpty(need))
+			foreach (var f in need.Split(',')) if (!HasFlag(f.Trim())) return false;
+		if (!string.IsNullOrEmpty(unless))
+			foreach (var f in unless.Split(',')) if (HasFlag(f.Trim())) return false;
+		return true;
+	}
+
+	/// <summary>"Незнайомець …" until a conversation reveals the real name.</summary>
+	public static string DisplayOf(PersonData p, Game g)
+		=> p.Name != null && g != null && g.IsKnown(p.Id) ? p.Name : (p.Alias ?? p.Name ?? "");
+
+	public bool IsKnown(string id) => _known.Contains(id);
+
+	void Know(string id)
+	{
+		if (string.IsNullOrEmpty(id) || !_known.Add(id)) return;
+		var p = _mode == Mode.Carriage ? Carriages.Find(Current, id) : null;
+		if (p?.Name == null) return;
+		string entry = $"{p.Name} — {Current.Title}";
+		if (!_remembered.Contains(entry)) _remembered.Add(entry);
+	}
+
+	string ResolveSpeaker(string speaker)
+	{
+		if (speaker == null || !speaker.StartsWith("@")) return speaker;
+		var p = Carriages.Find(Current, speaker.Substring(1));
+		return p == null ? "—" : DisplayOf(p, this);
+	}
+
+	/// <summary>One-off line (scripts, overheard talk). Conversations use ShowNodeLine instead.</summary>
 	public void Say(string speaker, Line line)
 	{
-		Hud.ShowDialogue(line.Speaker ?? speaker, line.Text);
+		Hud.ShowDialogue(ResolveSpeaker(line.Speaker) ?? speaker, line.Text);
 		ApplyFx(line.Fx);
 	}
 
+	/// <summary>Effects, separated by ';': done · unstick · know[:id] · flag:x · memory:id · memend · walkgo · callend · kill · violate</summary>
 	void ApplyFx(string fx)
 	{
 		if (string.IsNullOrEmpty(fx)) return;
+		if (fx.Contains(';'))
+		{
+			foreach (var part in fx.Split(';')) ApplyFx(part.Trim());
+			return;
+		}
 
 		if (fx == "done")
 		{
 			if (_flags.Add("story_done"))
 			{
 				Audio.Click();
-				Notify("Попереду щось клацнуло.");
+				_worldRoot?.GetNodeOrNull<DoorInteractable>("door_front")?.SetUnlocked(true);   // the lamp over the door turns green
 			}
 		}
-		else if (fx == "unstick")
-		{
-			_flags.Add("unstuck");
-			Audio.Click();
-		}
-		else if (fx.StartsWith("flag:"))
-		{
-			_flags.Add(fx.Substring(5));
-		}
+		else if (fx == "unstick") { _flags.Add("unstuck"); Audio.Click(); }
+		else if (fx == "know") Know(_ownerId);
+		else if (fx.StartsWith("know:")) Know(fx.Substring(5));
+		else if (fx.StartsWith("flag:")) ApplySet(fx.Substring(5));
 		else if (fx.StartsWith("memory:"))
 		{
 			if (_mode != Mode.Carriage || _memoryQueued) return;
 			_memoryQueued = true;
+			_busy = true;
+			_player.InputEnabled = false;
 			string id = fx.Substring(7);
-			GetTree().CreateTimer(2.2).Timeout += () => EnterMemory(id);
+			GetTree().CreateTimer(0.8).Timeout += () => EnterMemory(id);
 		}
+		else if (fx == "memend") _memory?.Conclude();
+		else if (fx == "walkgo") _memory?.StartWalk();
+		else if (fx == "callend") _memory?.CallEnded();
+		else if (fx == "kill") _memory?.Kill();
+		else if (fx == "violate") ViolateRule();
 	}
 
-	/// <summary>Plays lines one after another (overheard talk, someone helping with a door…).</summary>
+	/// <summary>Plays lines one after another (overheard talk…). Pauses while the player is in a conversation.</summary>
 	public void PlayScript(Line[] lines, Action done = null)
 	{
 		_script = lines;
@@ -351,7 +426,7 @@ public partial class Game : Node
 
 	void TickScript(double dt)
 	{
-		if (_script == null) return;
+		if (_script == null || _inTalk) return;
 		_scriptT -= dt;
 		if (_scriptT > 0) return;
 		if (_scriptI >= _script.Length)
@@ -373,6 +448,7 @@ public partial class Game : Node
 		if (_mode == Mode.Carriage && Current.Rule != null) KillPlayer(Current.Rule.Reason);
 	}
 
+	/// <summary>Lights die; a moment later Taras starts a conversation: "Темно. Давайте я вас проведу."</summary>
 	async void StartOffer()
 	{
 		_offerStarted = true;
@@ -381,20 +457,20 @@ public partial class Game : Node
 		await ToSignal(GetTree().CreateTimer(1.6), SceneTreeTimer.SignalName.Timeout);
 		if (g != _gen || _dead) return;
 
-		OfferTarget = "taras";
-		_offerTimer = 22;
-		Say("Тарас", new Line("Темно. Давайте я вас проведу до дверей."));
+		// Never cut into another conversation, a memory or a transition.
+		while (_inTalk || _busy || _mode != Mode.Carriage)
+		{
+			await ToSignal(GetTree().CreateTimer(0.5), SceneTreeTimer.SignalName.Timeout);
+			if (g != _gen || _dead) return;
+		}
 
-		await ToSignal(GetTree().CreateTimer(4.5), SceneTreeTimer.SignalName.Timeout);
-		if (g != _gen || _dead) return;
-		foreach (var n in GetTree().GetNodesInGroup("lamps")) (n as FlickerLight)?.Revive();
-	}
-
-	public void DeclineOffer(string who)
-	{
-		OfferTarget = null;
-		_flags.Add("offer_declined");
-		Say(who, new Line("Як знаєте. Тоді сидіть тихо."));
+		var taras = _worldRoot.GetNodeOrNull<Passenger>("p_taras");
+		if (taras == null) return;
+		StartTalk(taras.Data.Dialog, taras.Data.Id, () => taras.DisplayName, taras.HeadWorld, force: "offer", onEnd: () =>
+		{
+			if (!HasFlag("offer_declined")) return;
+			foreach (var n in GetTree().GetNodesInGroup("lamps")) (n as FlickerLight)?.Revive();
+		});
 	}
 
 	async void KillPlayer(string reason)
@@ -406,6 +482,7 @@ public partial class Game : Node
 		_player.InputEnabled = false;
 		Hud.HideDialogue();
 		Hud.CloseBook();
+		ResetTalk();
 		_script = null;
 		_scriptDone = null;
 		ClearUse();
@@ -413,7 +490,6 @@ public partial class Game : Node
 		Audio.CutClacks();
 		Audio.SetRing(false);
 		PhoneRinging = false;
-		OfferTarget = null;
 		foreach (var n in GetTree().GetNodesInGroup("lamps")) (n as FlickerLight)?.Extinguish();
 
 		await ToSignal(GetTree().CreateTimer(1.8), SceneTreeTimer.SignalName.Timeout);
@@ -427,7 +503,7 @@ public partial class Game : Node
 		fwd = fwd.Normalized();
 		var figure = new Passenger
 		{
-			Data = killer with { Talk = null, StandAt = null, Idle = Gesture.None },
+			Data = killer with { Dialog = null, StandAt = null, Idle = Gesture.None },
 			GameRef = this,
 			Standing = true,
 			Position = _player.GlobalPosition + fwd * 1.1f,
@@ -440,11 +516,25 @@ public partial class Game : Node
 		await ToSignal(GetTree().CreateTimer(0.22), SceneTreeTimer.SignalName.Timeout);
 		if (g != _gen) return;
 		_env.AmbientLightEnergy = 0.05f;
-		await ToSignal(GetTree().CreateTimer(1.4), SceneTreeTimer.SignalName.Timeout);
+		await ToSignal(GetTree().CreateTimer(0.6), SceneTreeTimer.SignalName.Timeout);
 		if (g != _gen) return;
 
+		// The blow. Blood on the lens, blood on the floor, the world tips over.
+		Audio.Hit();
+		Hud.BloodFlash();
+		Hud.Splatter(16);
+		_player.Collapse();
+		var floor = new Vector3(_player.GlobalPosition.X, 0f, _player.GlobalPosition.Z);
+		Gore.Pool(_worldRoot, floor + fwd * 0.3f, 1.2f, 6f);
+		Gore.Spatter(_worldRoot, floor, 14, 1.5f);
+		_env.AmbientLightColor = new Color(0.55f, 0.1f, 0.1f);
+		_env.AmbientLightEnergy = 0.35f;
+		await ToSignal(GetTree().CreateTimer(2.4), SceneTreeTimer.SignalName.Timeout);
+		if (g != _gen) return;
+
+		string victim = IsKnown(rule.VictimId) ? rule.VictimName : "жертвою цього вагона";
 		Hud.ShowDeath(
-			$"{reason}\n\n{killer.Name} робить із тобою те саме, що зробив із {rule.VictimName}:\n{rule.Method}.\n\n{rule.KillText}\n\n[R] — пройти вагон ще раз");
+			$"{reason}\n\n{DisplayOf(killer, this)} робить із тобою те саме, що зробив із {victim}:\n{rule.Method}.\n\n{rule.KillText}\n\n[R] — пройти вагон ще раз");
 		_deathShown = true;
 	}
 
@@ -453,7 +543,12 @@ public partial class Game : Node
 	{
 		if (Input.IsActionJustPressed("restart") && (_deathShown || _mode == Mode.Ending))
 		{
-			if (_mode == Mode.Ending) _index = 0;
+			if (_mode == Mode.Ending)
+			{
+				_index = 0;
+				_kept.Clear();
+				_remembered.Clear();
+			}
 			LoadCarriage();
 			return;
 		}
@@ -462,6 +557,13 @@ public partial class Game : Node
 		if (_dead || _busy || _mode == Mode.Ending)
 		{
 			Hud.SetPrompt(null);
+			return;
+		}
+
+		if (_inTalk)
+		{
+			Hud.SetPrompt(null);
+			TickTalk();
 			return;
 		}
 
@@ -475,26 +577,18 @@ public partial class Game : Node
 
 		_focus = _player.InputEnabled ? _player.Focus() : null;
 		string prompt = _focus?.Prompt;
-		if (_focus?.AltPrompt != null) prompt += "\n" + _focus.AltPrompt;
 		if (_pendingUse != null) prompt = _pendingPrompt;
 		Hud.SetPrompt(prompt);
 
-		if (_player.InputEnabled)
+		if (_player.InputEnabled && Input.IsActionJustPressed("interact"))
 		{
-			if (Input.IsActionJustPressed("interact"))
+			if (_pendingUse != null)
 			{
-				if (_pendingUse != null)
-				{
-					var a = _pendingUse;
-					ClearUse();
-					a();
-				}
-				else _focus?.Interact(this);
+				var a = _pendingUse;
+				ClearUse();
+				a();
 			}
-			else if (Input.IsActionJustPressed("alt") && _focus?.AltPrompt != null)
-			{
-				_focus.Alt(this);
-			}
+			else _focus?.Interact(this);
 		}
 	}
 
@@ -513,19 +607,8 @@ public partial class Game : Node
 			}
 		}
 
-		if (rule?.Kind == RuleKind.OfferGuide)
-		{
-			if (!_offerStarted && _carriageTime >= 35) StartOffer();
-			if (OfferTarget != null)
-			{
-				_offerTimer -= delta;
-				if (_offerTimer <= 0)
-				{
-					OfferTarget = null;
-					_flags.Add("offer_declined");
-				}
-			}
-		}
+		if (rule?.Kind == RuleKind.OfferGuide && !_offerStarted && _carriageTime >= 35 && !_inTalk && !_busy && _script == null)
+			StartOffer();
 
 		if (Current.Overheard != null && !_overheardStarted)
 		{
@@ -542,6 +625,8 @@ public partial class Game : Node
 	{
 		if (e is InputEventMouseMotion mm && Input.MouseMode == Input.MouseModeEnum.Captured)
 			_player.Look(mm.Relative);
+		else if (e is InputEventMouseButton { Pressed: true, ButtonIndex: MouseButton.Left } && _inTalk)
+			_clickPending = true;
 		else if (e is InputEventMouseButton { Pressed: true } && Input.MouseMode != Input.MouseModeEnum.Captured)
 			Input.MouseMode = Input.MouseModeEnum.Captured;
 		else if (e.IsActionPressed("ui_cancel"))
@@ -550,17 +635,22 @@ public partial class Game : Node
 				: Input.MouseModeEnum.Captured;
 	}
 
-	/// <summary>The ticket. Its destination is erased and slowly comes back as the train goes on.</summary>
+	/// <summary>The ticket. Its destination is erased and slowly comes back as the train goes on. Below: who you have got to know.</summary>
 	string TicketText()
 	{
 		const string dest = "КІНЦЕВА";
 		int reveal = Mathf.Min(_index * 2, dest.Length);
 		string shown = dest.Substring(0, reveal) + new string('▒', dest.Length - reveal);
-		return
+		string text =
 			"КВИТОК\n\n" +
 			"  Відправлення:  ЦЕНТРАЛЬНИЙ ВОКЗАЛ · 23:41\n" +
 			$"  Призначення:   {shown}\n" +
-			$"  Вагон:         {Current.Title}\n\n" +
-			"Tab — закрити";
+			$"  Вагон:         {Current.Title}";
+		if (_remembered.Count > 0)
+		{
+			text += "\n\nТи запам'ятав:";
+			foreach (var r in _remembered) text += "\n  · " + r;
+		}
+		return text;
 	}
 }
