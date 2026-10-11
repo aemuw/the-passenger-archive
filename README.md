@@ -41,7 +41,7 @@ the victim cannot be saved · after carriages 2–3 a card shows how the story r
 ## The man who rides with you
 In carriages 1, 2, 3 and in your own memories there is one man in different clothes:
 long coat → shirt with a newspaper → brown coat by the door. Same tells every time:
-he adjusts his cuff, and he says *«Далі — то далі.»* Nothing marks him as dangerous. In carriage 2 he is kind to you.
+he adjusts his cuff, and he says *«До кінця — то до кінця.»* Nothing marks him as dangerous. In carriage 2 he is kind to you.
 
 ## How it works
 - Everything is built in code (no imported assets): `scenes/Main.tscn` only holds the `Game` node.

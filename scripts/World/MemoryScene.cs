@@ -8,7 +8,7 @@ namespace PassengerArchive;
 ///   ride   — Halyna's imagined last night of her husband: a rainy road, a phone call, a man without a face.
 ///   walk   — Solomiya's evening: say "no" twice; the third time the word will not come out. Lights die behind you.
 ///   depart — the hero boards the train (hurrying, missed calls from Marta, a man at the door).
-///   arrive — the terminus. Marta calls. A man behind you says «Далі — то далі.» The hero dies.
+///   arrive — the terminus. Marta calls. A man behind you says «До кінця — то до кінця.» The hero dies.
 /// Cold-blue palette is applied by Game while a memory is active.
 /// </summary>
 public partial class MemoryScene : Node3D
@@ -60,7 +60,7 @@ public partial class MemoryScene : Node3D
 			case "route": GameRef.Hud.Caption(RouteCaptions[0], 2.5f); break;
 			case "ride": GameRef.Hud.Caption("Дощ. Дорога порожня.\nТи повертаєшся додому.", 3f); break;
 			case "walk": GameRef.Hud.Caption("П'ятниця. Автобус не прийшов.", 3f); break;
-			case "depart": GameRef.Hud.Caption("Центральний вокзал. 23:41.\nТи хочеш бути поруч, коли вона прокинеться.", 3.5f); break;
+			case "depart": GameRef.Hud.Caption("Центральний вокзал. 23:41.\nПодарунок для Марти — лише сьогодні вночі.", 3.5f); break;
 			case "arrive": GameRef.Hud.Caption("Кінцева. Нікого.", 2.5f); break;
 		}
 	}
@@ -108,19 +108,10 @@ public partial class MemoryScene : Node3D
 		if (!_fired1 && p.Z < 10f)
 		{
 			_fired1 = true;
-			GameRef.Hud.Notify("Телефон вібрує в кишені. Пропущені: Марта (3).", 5f);
-			GameRef.SetUse("[E] Прослухати повідомлення", () =>
-			{
-				GameRef.Keep("heard_marta");
-				GameRef.PlayScript(new[]
-				{
-					new Line("Це я. Знову не відповідаєш.", Speaker: "Марта (голосова пошта)"),
-					new Line("Почекай мене до ранку, добре? Поїдемо разом о 05:10. Нічні потяги порожні, я не люблю, коли ти їдеш сам.", Speaker: "Марта (голосова пошта)"),
-					new Line("Я вже збираюсь. Тільки не їдь. Прошу.", Speaker: "Марта (голосова пошта)"),
-				});
-			});
+			GameRef.Hud.Notify("Телефон вібрує. Нові повідомлення. Пропущені: Марта (3).", 5f);
+			GameRef.SetUse("[E] Телефон", () => GameRef.StartTalk(Carriages.HeroPhone, "phone", () => "Телефон"));
 		}
-		if (_fired1) { _vmT += dt; if (_vmT > 10.0 && !_fired2) GameRef.ClearUse(); }
+		if (_fired1 && !_fired2) { _vmT += dt; if (_vmT > 14.0) GameRef.ClearUse(); }
 		if (!_fired2 && p.Z < -1f)
 		{
 			_fired2 = true;

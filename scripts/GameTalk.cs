@@ -24,6 +24,12 @@ public partial class Game
 
 	public bool InTalk => _inTalk;
 
+	/// <summary>True while this person's line is still being "spoken" (typed out) — they nod and gesture.</summary>
+	public bool NpcSpeakingNow(string id) => _inTalk && _ownerId == id && !_heroLine && !_choosing && Hud.IsTyping;
+
+	/// <summary>Ambient muttering is allowed only when nothing else is going on.</summary>
+	public bool BarksAllowed => _mode == Mode.Carriage && !_busy && !_dead && !_inTalk && _script == null;
+
 	void ResetTalk()
 	{
 		_inTalk = false;

@@ -38,6 +38,7 @@ public partial class Game : Node
 	readonly HashSet<string> _known = new();      // people whose real name you have learned (this carriage)
 	readonly List<string> _remembered = new();    // shown on the ticket
 	double _carriageTime;
+	float _stress;
 	bool _offerStarted, _overheardStarted;
 	Vector3 _savedPos;
 	float _savedYaw;
@@ -63,6 +64,7 @@ public partial class Game : Node
 		AddChild(Hud);
 		Audio = new TrainAudio();
 		AddChild(Audio);
+		_player.OnStep = () => Audio.Step();
 
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 		LoadCarriage(first: true);
@@ -163,6 +165,11 @@ public partial class Game : Node
 		PhoneRinging = false;
 		Audio.SetRing(false);
 		Audio.RestoreClacks();
+		Audio.SetOutdoor(false);
+		Audio.SetPad(false);
+		Audio.Heartbeat(false);
+		Audio.AmbientOn = true;
+		SetStress(0f);
 		_mode = Mode.Carriage;
 		ApplyLook(false);
 		Hud.ClearGore();
@@ -234,15 +241,17 @@ public partial class Game : Node
 		_mode = Mode.Ending;
 		_busy = false;
 		_player.InputEnabled = false;
+		Audio.PlayMotif(-26f);                                                                  // almost inaudible, as designed
 		Hud.ShowDeath(
 			"TRAIN / FINAL MEMORY\n\n" +
 			"Ти бачиш ту саму мить ще раз — іншими очима.\n\n" +
-			"Він сів у потяг на тій самій станції. Він не переслідував тебе.\n" +
-			"Він їхав поруч.\n\n" +
+			"Продавця з «Зенітом» не було. Був Максим. Він написав тобі першим.\n" +
+			"Він сів у той самий потяг і їхав поруч — щоб ти приїхав сам.\n\n" +
 			"Вагон 1 — у довгому пальті, біля заднього виходу.\n" +
 			"Вагон 2 — із газетою, яку він ніколи не перегортав. Він відчинив тобі двері.\n" +
 			"Вагон 3 — біля виходу, ніби теж чекає зупинки.\n\n" +
-			"Марта чекала на ранковий потяг о 05:10.\n\n" +
+			"Марта сказала вголос те, що ти не захотів почути: ніч, готівка, сам, «тільки сьогодні».\n" +
+			"Винен той, хто це підлаштував. Але почути її було можливо.\n\n" +
 			"Кінець прототипу  ·  [R] — почати спочатку", ending: true);
 	}
 
@@ -266,6 +275,11 @@ public partial class Game : Node
 		PhoneRinging = false;
 		Audio.SetRing(false);
 		Audio.CutClacks(0.3f);
+		Audio.Heartbeat(false);
+		SetStress(0f);
+		Audio.SetOutdoor(true, id == "ride");
+		if (id != "arrive") { Audio.SetPad(true, -26f); GetTree().CreateTimer(3.0).Timeout += () => { if (_mode == Mode.Memory) Audio.PlayMotif(-15f); }; }
+		else Audio.SetPad(true, -20f);
 		ApplyLook(true);
 
 		_memory = new MemoryScene { Id = id, GameRef = this, Position = new Vector3(300, 0, 0) };
@@ -294,7 +308,9 @@ public partial class Game : Node
 		_memory = null;
 		_flags.Add("mem_" + id);
 
-		if (id == "arrive") { EndGame(); return; }
+		if (id == "arrive") { Audio.SetPad(false); Audio.StopMotif(); EndGame(); return; }
+		Audio.SetOutdoor(false);
+		Audio.SetPad(false);
 
 		_worldRoot.Visible = true;
 		_worldRoot.ProcessMode = Node.ProcessModeEnum.Inherit;
@@ -310,6 +326,12 @@ public partial class Game : Node
 
 		// A memory that tells the whole story finishes the carriage (the door lamp turns green).
 		if (id == "route" || id == "ride" || id == "walk") ApplyFx("done");
+	}
+
+	public void SetStress(float v)
+	{
+		_stress = v;
+		_post?.SetShaderParameter("stress", v);
 	}
 
 	public void TeleportPlayer(Vector3 pos, float yaw) => _player.Teleport(pos, yaw);
@@ -392,6 +414,7 @@ public partial class Game : Node
 			if (_flags.Add("story_done"))
 			{
 				Audio.Click();
+				Audio.PlayMotif(-21f);                                                          // the truth lands: the motif, very quietly
 				_worldRoot?.GetNodeOrNull<DoorInteractable>("door_front")?.SetUnlocked(true);   // the lamp over the door turns green
 			}
 		}
@@ -489,6 +512,9 @@ public partial class Game : Node
 		Passenger.Frozen = true;
 		Audio.CutClacks();
 		Audio.SetRing(false);
+		Audio.AmbientOn = false;
+		Audio.Heartbeat(true);
+		SetStress(1f);
 		PhoneRinging = false;
 		foreach (var n in GetTree().GetNodesInGroup("lamps")) (n as FlickerLight)?.Extinguish();
 
@@ -520,6 +546,7 @@ public partial class Game : Node
 		if (g != _gen) return;
 
 		// The blow. Blood on the lens, blood on the floor, the world tips over.
+		Audio.Heartbeat(false);
 		Audio.Hit();
 		Hud.BloodFlash();
 		Hud.Splatter(16);
@@ -606,6 +633,21 @@ public partial class Game : Node
 				Audio.SetRing(ring);
 			}
 		}
+
+		// Something in the carriage is looking at you: the picture bleeds, the pulse rises.
+		float target = 0f;
+		if (rule != null && !_dead)
+		{
+			var k = _worldRoot.GetNodeOrNull<Node3D>("p_" + rule.KillerId);
+			if (k != null)
+			{
+				float dist = k.GlobalPosition.DistanceTo(_player.GlobalPosition);
+				target = Mathf.Clamp((3.4f - dist) / 2.4f, 0f, 1f) * 0.55f;
+			}
+		}
+		_stress = Mathf.MoveToward(_stress, target, (float)delta * 0.7f);
+		_post.SetShaderParameter("stress", _stress);
+		Audio.Heartbeat(_stress > 0.25f);
 
 		if (rule?.Kind == RuleKind.OfferGuide && !_offerStarted && _carriageTime >= 35 && !_inTalk && !_busy && _script == null)
 			StartOffer();

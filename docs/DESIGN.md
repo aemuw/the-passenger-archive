@@ -35,7 +35,7 @@ Real stories are told truthfully — no sanitising — but never as a reconstruc
 
 ## The man who rides with the hero
 The hero's own killer boards with him and is in the background of every carriage in different clothes/roles,
-with fixed tells: a gesture (adjusts his cuff), a phrase («Далі — то далі.»), a habit (near doors).
+with fixed tells: a gesture (adjusts his cuff), a phrase («До кінця — то до кінця.»), a habit (near doors).
 The player can talk to him normally in one carriage (he is kind, helps with a stuck door). Other characters
 quote his phrase. He is never the "monster" — the fear is the moment you realise you already knew him.
 Because doors lock behind, he can only be in one carriage at a time.
@@ -91,6 +91,16 @@ fake window reflections · real models, textures, music.
   walk (Solomiya: say "no" twice, the third time the word won't come; the lamps die behind you) · depart/arrive (the hero).
 - **The hero's reason:** he didn't wait for the 05:10 train with Marta (the person he loves) and didn't listen to her voicemail
   (optional, remembered). At the terminus her call rings with the same phone sound that ended Viktor.
-- **The ending:** the man says «Далі — то далі.» and kills the hero. Violence is shown (blood on the lens, pool on the floor, camera falls).
+- **The ending:** the man says «До кінця — то до кінця.» and kills the hero. Violence is shown (blood on the lens, pool on the floor, camera falls).
 - **Rule deaths** also show it. The F key is gone: Taras's offer is now a conversation (go with him = rule broken).
 - Door lamp: red = locked, green = story finished. No more "click" caption.
+
+## v4 changes
+- **New reason for the hero's trip.** He did not wait for Marta (05:10, together) because he answered an ad for her late father's camera («Зеніт»):
+  night, cash, alone, "only tonight". The seller "Максим" is the man who rides with him; in carriages 1–3 he gives his name when asked —
+  it is the same name as in the hero's phone in the depart memory. At the terminus he asks "ви — по «Зеніт»?" and quotes the hero's own answers back.
+- **New phrase:** «До кінця — то до кінця.» (was «Далі — то далі.»). The conductor keeps saying «Далі.».
+- **Every talkable person has a voice and a name you can ask for** (Максим always gives his; the conductor says "Провідник — імені тут ніхто не питає").
+- **Characters live:** breathing, talking gestures, window glances, fidgeting, sleeping, barks when you linger. Better figures (hair, hands, shoes, glasses, beards, bags, build).
+- **Look & feel:** procedural surface textures, lamp haze, dust, straps/curtains/posters/rails, VHS bleed + tracking glitch + "stress" pulse near a killer.
+- **Sound & music:** footsteps, creaks, PA chime, wind/rain in memories, heartbeat near a killer, a five-note motif (D F A G F) in three forms, drone pad.

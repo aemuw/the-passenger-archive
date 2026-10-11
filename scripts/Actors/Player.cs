@@ -7,6 +7,8 @@ public partial class Player : CharacterBody3D
 {
 	public Camera3D Cam { get; private set; }
 	public bool InputEnabled = true;
+	public System.Action OnStep;     // fired once per footfall
+	int _stepCount;
 
 	Node3D _head;
 	RayCast3D _ray;
@@ -118,6 +120,8 @@ public partial class Player : CharacterBody3D
 		bool moving = new Vector2(Velocity.X, Velocity.Z).Length() > 0.3f;
 		_bobTime += dt * (moving ? 8.5f : 0f);
 		_swayTime += dt;
+		int steps = (int)(_bobTime / Mathf.Pi);
+		if (moving && steps != _stepCount) { _stepCount = steps; OnStep?.Invoke(); }
 		float bob = moving ? Mathf.Sin(_bobTime) * 0.025f : 0f;
 		_head.Position = new Vector3(Mathf.Sin(_bobTime * 0.5f) * 0.012f, EyeHeight + bob, 0);
 		Cam.Rotation = new Vector3(0, 0, Mathf.Sin(_swayTime * 1.3f) * 0.004f);

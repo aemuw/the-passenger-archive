@@ -7,6 +7,7 @@ public partial class FlickerLight : OmniLight3D
 {
 	public float BaseEnergy = 1.1f;
 	public MeshInstance3D Fixture;
+	public MeshInstance3D Glow;     // haze around the tube; hidden when the lamp is out
 	public bool Dead;
 	public bool Permanent;      // permanently broken lamp: Revive() does nothing
 
@@ -25,7 +26,7 @@ public partial class FlickerLight : OmniLight3D
 
 	public override void _Process(double delta)
 	{
-		if (Dead) { LightEnergy = 0f; return; }
+		if (Dead) { LightEnergy = 0f; if (Glow != null) Glow.Visible = false; return; }
 
 		float dt = (float)delta;
 		_timer -= dt;
@@ -38,6 +39,7 @@ public partial class FlickerLight : OmniLight3D
 		float e = BaseEnergy * (0.94f + 0.06f * Mathf.Sin(Time.GetTicksMsec() * 0.045f));
 		if (_dropout > 0f) { _dropout -= dt; e *= 0.15f; }
 		LightEnergy = e;
+		if (Glow != null) Glow.Visible = e > BaseEnergy * 0.4f;
 	}
 
 	public void Extinguish()

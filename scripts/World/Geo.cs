@@ -5,16 +5,18 @@ namespace PassengerArchive;
 /// <summary>Tiny helpers for building boxy PS1 geometry in code.</summary>
 public static class Geo
 {
-	public static MeshInstance3D MeshBox(Vector3 pos, Vector3 size, Color c, float emission = 0f, float grime = 0.3f) => new()
+	static GradientTexture2D _halo;
+
+	public static MeshInstance3D MeshBox(Vector3 pos, Vector3 size, Color c, float emission = 0f, float grime = 0.3f, Surface surf = Surface.None) => new()
 	{
 		Mesh = new BoxMesh { Size = size },
 		Position = pos,
-		MaterialOverride = Ps1Materials.Get(c, emission, grime),
+		MaterialOverride = Ps1Materials.Get(c, emission, grime, surf),
 	};
 
-	public static MeshInstance3D Box(Node parent, Vector3 pos, Vector3 size, Color c, float emission = 0f, bool collide = false, float grime = 0.35f)
+	public static MeshInstance3D Box(Node parent, Vector3 pos, Vector3 size, Color c, float emission = 0f, bool collide = false, float grime = 0.35f, Surface surf = Surface.None)
 	{
-		var mi = MeshBox(pos, size, c, emission, grime);
+		var mi = MeshBox(pos, size, c, emission, grime, surf);
 		parent.AddChild(mi);
 		if (collide)
 		{
@@ -31,5 +33,40 @@ public static class Geo
 		var body = new StaticBody3D { CollisionLayer = GameConfig.LayerWorld, CollisionMask = 0, Position = pos };
 		body.AddChild(new CollisionShape3D { Shape = new BoxShape3D { Size = size } });
 		parent.AddChild(body);
+	}
+
+	/// <summary>A soft additive glow that always faces the camera — fluorescent haze around a lamp.</summary>
+	public static MeshInstance3D Halo(Color c, float size)
+	{
+		if (_halo == null)
+		{
+			var g = new Gradient();
+			g.SetColor(0, new Color(1, 1, 1, 1));
+			g.SetColor(1, new Color(1, 1, 1, 0));
+			_halo = new GradientTexture2D
+			{
+				Gradient = g,
+				Width = 64,
+				Height = 64,
+				Fill = GradientTexture2D.FillEnum.Radial,
+				FillFrom = new Vector2(0.5f, 0.5f),
+				FillTo = new Vector2(0.5f, 0f),
+			};
+		}
+		var mat = new StandardMaterial3D
+		{
+			ShadingMode = BaseMaterial3D.ShadingModeEnum.Unshaded,
+			Transparency = BaseMaterial3D.TransparencyEnum.Alpha,
+			BlendMode = BaseMaterial3D.BlendModeEnum.Add,
+			BillboardMode = BaseMaterial3D.BillboardModeEnum.Enabled,
+			AlbedoTexture = _halo,
+			AlbedoColor = c,
+		};
+		return new MeshInstance3D
+		{
+			Mesh = new QuadMesh { Size = new Vector2(size, size) },
+			MaterialOverride = mat,
+			CastShadow = GeometryInstance3D.ShadowCastingSetting.Off,
+		};
 	}
 }

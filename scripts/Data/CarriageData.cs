@@ -12,7 +12,8 @@ public sealed record Line(string Text, string Fx = null, string Speaker = null);
 public enum StoryKind { Fiction, Inspired, Documented, Nightmare, Hero }
 
 /// <summary>Idle "tell" of a character. Repeated tells are how the player recognises people across carriages and memories.</summary>
-public enum Gesture { None, Sleeve, Tap }
+/// <summary>Sleeve/Tap = the killers' tells. Window = looks outside now and then. Fidget = restless hands. Sleep = head down, deaf to the world.</summary>
+public enum Gesture { None, Sleeve, Tap, Window, Fidget, Sleep }
 
 public enum RuleKind { None, PhoneRing, OfferGuide }
 
@@ -26,7 +27,13 @@ public sealed record Outfit(
 	bool Collar = false,
 	bool Paper = false,
 	bool Flowers = false,
-	bool Faceless = false);   // a face nobody ever saw (used in reconstructed memories)
+	bool Faceless = false,    // a face nobody ever saw (used in reconstructed memories)
+	Color? Hair = null,
+	Color? Skin = null,
+	bool Glasses = false,
+	bool Beard = false,
+	bool Bag = false,
+	float Build = 1f);        // body width multiplier (0.9 slim … 1.12 broad)
 
 /// <summary>
 /// A person on the train (or in a memory). Everyone is "Незнайомець / Незнайомка …" (<see cref="Alias"/>, a description
@@ -43,7 +50,8 @@ public sealed record PersonData(
 	Vector3? StandAt = null,         // set = standing at this spot instead of sitting
 	float StandYaw = 0f,
 	bool IsKiller = false,           // killer of THIS carriage's victim
-	bool IsHeroKiller = false);      // the hero's own killer (the "Попутник")
+	bool IsHeroKiller = false,       // the hero's own killer (the "Попутник")
+	string[] Barks = null);          // muttered when the player lingers near them without speaking
 
 /// <summary>The hidden rule of a carriage. It is never shown to the player — it is learned from the victim's story.</summary>
 public sealed record RuleDef(
