@@ -1,0 +1,151 @@
+{
+  "Entries": [
+    {
+      "Node": "chat",
+      "Need": null,
+      "Unless": null
+    },
+    {
+      "Node": "again",
+      "Need": "ph_seen",
+      "Unless": null
+    }
+  ],
+  "Nodes": [
+    {
+      "Id": "chat",
+      "Say": [
+        {
+          "Text": "Ну що, їдете? Я о 03:12 на кінцевій. Готівка, 3500.",
+          "Fx": null,
+          "Speaker": "Максим · «Зеніт»"
+        },
+        {
+          "Text": "Буду. Не продавайте нікому.",
+          "Fx": null,
+          "Speaker": "Ти"
+        },
+        {
+          "Text": "Тільки сам, добре? Мені потім ще з одним зустрічатись. І без зайвих розмов.",
+          "Fx": null,
+          "Speaker": "Максим · «Зеніт»"
+        }
+      ],
+      "Opts": null,
+      "Next": "vm",
+      "Set": "ph_seen",
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "vm",
+      "Say": [
+        {
+          "Text": "Це я. Знову не береш.",
+          "Fx": null,
+          "Speaker": "Марта · голосова пошта"
+        },
+        {
+          "Text": "Слухай. Він не хоче вдень, не хоче в центрі. Готівка, ніч, сам, і «тільки сьогодні». Мені це не подобається.",
+          "Fx": null,
+          "Speaker": "Марта · голосова пошта"
+        },
+        {
+          "Text": "Мені не потрібен цей «Зеніт», чуєш? Тато б і так тебе полюбив. Почекай мене. Поїдемо разом о 05:10. Прошу.",
+          "Fx": null,
+          "Speaker": "Марта · голосова пошта"
+        }
+      ],
+      "Opts": null,
+      "Next": "act",
+      "Set": "k:heard_marta",
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "act",
+      "Say": [],
+      "Opts": [
+        {
+          "Text": "Передзвонити.",
+          "To": "call",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Написати: «Все буде добре».",
+          "To": "text",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Сховати телефон.",
+          "To": null,
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "call",
+      "Say": [
+        {
+          "Text": "Довгі гудки. Не бере — мабуть, уже збирається.",
+          "Fx": null,
+          "Speaker": "—"
+        }
+      ],
+      "Opts": null,
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "text",
+      "Say": [
+        {
+          "Text": "Надіслано. Дві галочки. Прочитала.",
+          "Fx": null,
+          "Speaker": "—"
+        }
+      ],
+      "Opts": null,
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "again",
+      "Say": [
+        {
+          "Text": "Екран гасне.",
+          "Fx": null,
+          "Speaker": "—"
+        }
+      ],
+      "Opts": null,
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    }
+  ]
+}

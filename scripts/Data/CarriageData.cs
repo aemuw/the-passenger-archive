@@ -33,7 +33,9 @@ public sealed record Outfit(
 	bool Glasses = false,
 	bool Beard = false,
 	bool Bag = false,
-	float Build = 1f);        // body width multiplier (0.9 slim … 1.12 broad)
+	float Build = 1f,
+	string HairStyle = "short",
+	int Age = 40);
 
 /// <summary>
 /// A person on the train (or in a memory). Everyone is "Незнайомець / Незнайомка …" (<see cref="Alias"/>, a description

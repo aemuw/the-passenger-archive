@@ -4,7 +4,7 @@ namespace PassengerArchive;
 public static class GameConfig
 {
 	/// <summary>Window size is divided by this to get the internal (PS1-like) render resolution.</summary>
-	public const int RenderShrink = 3;
+	public const int RenderShrink = 2;
 
 	public const float PlayerSpeed = 2.6f;
 	public const float MouseSensitivity = 0.0022f;

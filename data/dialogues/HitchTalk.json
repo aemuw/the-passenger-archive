@@ -1,0 +1,148 @@
+{
+  "Entries": [
+    {
+      "Node": "hi",
+      "Need": null,
+      "Unless": null
+    }
+  ],
+  "Nodes": [
+    {
+      "Id": "hi",
+      "Say": [
+        {
+          "Text": "Дякую, що зупинились. Годину тут стою, жоден не гальмує.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Вибачте, що так, посеред дороги…",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "Куди вам?",
+          "To": "where",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Сідайте.",
+          "To": "sit",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Вибачте, я їду повз.",
+          "To": "pass",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "where",
+      "Say": [
+        {
+          "Text": "Та тут, недалеко. Я скажу, де повернути.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Тільки дозвольте, я весь мокрий — сидіння забруджу.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "Нічого страшного. Сідайте.",
+          "To": "sit",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Далеко ще?",
+          "To": "far",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "far",
+      "Say": [
+        {
+          "Text": "Ні. Зовсім ні.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "sit",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "pass",
+      "Say": [
+        {
+          "Text": "Ти хочеш проїхати повз. Але нога вже на гальмі, а рука — на ручці дверцят.",
+          "Fx": null,
+          "Speaker": "—"
+        },
+        {
+          "Text": "Це вже сталося.",
+          "Fx": null,
+          "Speaker": "—"
+        }
+      ],
+      "Opts": null,
+      "Next": "sit",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "sit",
+      "Say": [
+        {
+          "Text": "Дякую. Є ще люди, справді.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": null,
+      "Set": null,
+      "Fx": "memend",
+      "IfNeed": null,
+      "IfTo": null
+    }
+  ]
+}

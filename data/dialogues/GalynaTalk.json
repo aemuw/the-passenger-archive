@@ -1,0 +1,362 @@
+{
+  "Entries": [
+    {
+      "Node": "first",
+      "Need": null,
+      "Unless": null
+    },
+    {
+      "Node": "heard",
+      "Need": "heard",
+      "Unless": null
+    },
+    {
+      "Node": "interrupt",
+      "Need": "overheard_on",
+      "Unless": "heard"
+    },
+    {
+      "Node": "done",
+      "Need": "story_done",
+      "Unless": null
+    }
+  ],
+  "Nodes": [
+    {
+      "Id": "first",
+      "Say": [
+        {
+          "Text": "Ми знайомі? Ні? Тоді я нічого не зобов'язана пояснювати.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "Як вас звати?",
+          "To": "name",
+          "Need": null,
+          "Unless": "g_n",
+          "Set": "g_n",
+          "Fx": null
+        },
+        {
+          "Text": "Вибачте.",
+          "To": null,
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "name",
+      "Say": [
+        {
+          "Text": "Галина. Не Галя. Галя — це для тих, хто…",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "(пауза) Галина.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": null,
+      "Set": null,
+      "Fx": "know",
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "interrupt",
+      "Say": [
+        {
+          "Text": "Не зараз, будь ласка.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "Вибачте, я випадково почув.",
+          "To": "sorry",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Я піду.",
+          "To": null,
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "sorry",
+      "Say": [
+        {
+          "Text": "Нічого. Ви не перший, хто слухає.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Тут усі слухають. А потім їдуть далі.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "heard",
+      "Say": [
+        {
+          "Text": "Ви чули нашу розмову?",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Нічого. Тут усе чути, навіть коли говориш тихо.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "Це був ваш чоловік?",
+          "To": "husband",
+          "Need": null,
+          "Unless": "g_h",
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Ви були там після?",
+          "To": "wind",
+          "Need": null,
+          "Unless": "g_w",
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Як вас звати?",
+          "To": "name2",
+          "Need": null,
+          "Unless": "g_n",
+          "Set": "g_n",
+          "Fx": null
+        },
+        {
+          "Text": "Розкажіть, як усе було.",
+          "To": "tell",
+          "Need": "g_h",
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Не буду нав'язуватись.",
+          "To": null,
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "name2",
+      "Say": [
+        {
+          "Text": "Галина. Ви ж чули — Оля мене Галею кличе. Їй можна.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "heard",
+      "Set": null,
+      "Fx": "know",
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "husband",
+      "Say": [
+        {
+          "Text": "Андрій. П'ятнадцять років.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Він усіх підвозив: сусідів, студентів, діда з вокзалу. «Люди ж», — казав. Така в нього була відповідь на все.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "heard",
+      "Set": "g_h",
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "wind",
+      "Say": [
+        {
+          "Text": "Один раз. Там вітер. Квіти кладуть — вітер їх розносить.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Постояла й поїхала. Що там стояти?",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "heard",
+      "Set": "g_w",
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "tell",
+      "Say": [
+        {
+          "Text": "Я не бачила. Але я так багато разів це уявляла, що, здається, була там.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Хочете — дивіться. Тільки не питайте, який він був з обличчя. Я його не бачила, і моя уява теж відмовилась.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "Покажіть.",
+          "To": "show",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Може, не варто.",
+          "To": "heard",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "show",
+      "Say": [
+        {
+          "Text": "Тоді просто йдіть по дорозі.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": null,
+      "Set": null,
+      "Fx": "memory:ride",
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "done",
+      "Say": [
+        {
+          "Text": "Він був хорошою людиною. Це найгірше.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "Що б ви йому сказали тоді?",
+          "To": "say",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Мені шкода.",
+          "To": null,
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "say",
+      "Say": [
+        {
+          "Text": "Що мені страшно. Просто це. Одне речення.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "А я боялась, що він розсміється.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    }
+  ]
+}

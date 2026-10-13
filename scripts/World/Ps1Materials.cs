@@ -3,24 +3,33 @@ using Godot;
 
 namespace PassengerArchive;
 
-/// <summary>Procedural 32×32 surface textures (nearest-filtered, world-space mapped by the shader).</summary>
+/// <summary>Saved 32×32 surface textures (nearest-filtered, world-space mapped by the shader).</summary>
 public enum Surface { None, Wood, Fabric, Plaster, Metal, Floor, Skin }
 
 /// <summary>Cached factory for PS1-shader materials (one per colour/emission/surface combo).</summary>
 public static class Ps1Materials
 {
 	static Shader _shader;
-	static ImageTexture _grime;
-	static readonly Dictionary<Surface, ImageTexture> Surfaces = new();
+	static Texture2D _grime;
+	static readonly Dictionary<Surface, Texture2D> Surfaces = new();
 	static readonly Dictionary<string, ShaderMaterial> Cache = new();
+	public static void Release()
+	{
+		foreach (var material in Cache.Values) material.Dispose();
+		Cache.Clear();
+		foreach (var texture in Surfaces.Values) texture.Dispose();
+		Surfaces.Clear();
+		_grime?.Dispose(); _grime = null;
+		_shader?.Dispose(); _shader = null;
+	}
 
-	public static ShaderMaterial Get(Color color, float emission = 0f, float grime = 0.35f, Surface surface = Surface.None, float surfStrength = 0.55f)
+	public static ShaderMaterial Get(Color color, float emission = 0f, float grime = 0.35f, Surface surface = Surface.None, float surfStrength = 0.28f)
 	{
 		string key = $"{color.ToHtml()}|{emission}|{grime}|{surface}|{surfStrength}";
 		if (Cache.TryGetValue(key, out var m)) return m;
 
 		_shader ??= GD.Load<Shader>("res://shaders/ps1.gdshader");
-		_grime ??= MakeGrime();
+		_grime ??= GD.Load<Texture2D>("res://assets/textures/grime.png");
 
 		m = new ShaderMaterial { Shader = _shader };
 		m.SetShaderParameter("albedo", color);
@@ -34,12 +43,19 @@ public static class Ps1Materials
 		return m;
 	}
 
-	static ImageTexture GetSurface(Surface s)
+	static Texture2D GetSurface(Surface s)
 	{
 		if (Surfaces.TryGetValue(s, out var t)) return t;
-		t = MakeSurface(s);
+		t = GD.Load<Texture2D>($"res://assets/textures/{s.ToString().ToLowerInvariant()}.png");
 		Surfaces[s] = t;
 		return t;
+	}
+
+	public static void AuthorTextures()
+	{
+		MakeGrime().GetImage().SavePng("res://assets/textures/grime.png");
+		foreach (Surface surface in System.Enum.GetValues<Surface>())
+			MakeSurface(surface).GetImage().SavePng($"res://assets/textures/{surface.ToString().ToLowerInvariant()}.png");
 	}
 
 	static ImageTexture MakeGrime()

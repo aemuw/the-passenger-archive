@@ -22,6 +22,14 @@ public partial class Player : CharacterBody3D
 	public override void _Ready()
 	{
 		AddToGroup("player");
+		_head = GetNode<Node3D>("Head");
+		Cam = GetNode<Camera3D>("Head/Camera");
+		_ray = GetNode<RayCast3D>("Head/Camera/AimRay");
+	}
+
+	public void Author()
+	{
+		AddToGroup("player");
 		CollisionLayer = GameConfig.LayerPlayer;
 		CollisionMask = GameConfig.LayerWorld;
 
@@ -31,14 +39,15 @@ public partial class Player : CharacterBody3D
 			Position = new Vector3(0, 0.85f, 0),
 		});
 
-		_head = new Node3D { Position = new Vector3(0, EyeHeight, 0) };
+		_head = new Node3D { Name = "Head", Position = new Vector3(0, EyeHeight, 0) };
 		AddChild(_head);
 
-		Cam = new Camera3D { Fov = GameConfig.Fov, Near = 0.05f, Far = 150f, Current = true };
+		Cam = new Camera3D { Name = "Camera", Fov = GameConfig.Fov, Near = 0.05f, Far = 150f, Current = true };
 		_head.AddChild(Cam);
 
 		_ray = new RayCast3D
 		{
+			Name = "AimRay",
 			TargetPosition = new Vector3(0, 0, -GameConfig.InteractDistance),
 			CollisionMask = GameConfig.LayerWorld | GameConfig.LayerInteract,
 			CollideWithBodies = true,
@@ -50,8 +59,8 @@ public partial class Player : CharacterBody3D
 	public void Look(Vector2 relative)
 	{
 		if (!InputEnabled) return;
-		RotateY(-relative.X * GameConfig.MouseSensitivity);
-		_pitch = Mathf.Clamp(_pitch - relative.Y * GameConfig.MouseSensitivity, -1.45f, 1.45f);
+		RotateY(-relative.X * GameConfig.MouseSensitivity * UserSettings.Sensitivity);
+		_pitch = Mathf.Clamp(_pitch - relative.Y * GameConfig.MouseSensitivity * UserSettings.Sensitivity, -1.45f, 1.45f);
 		_head.Rotation = new Vector3(_pitch, 0, 0);
 	}
 
@@ -123,7 +132,7 @@ public partial class Player : CharacterBody3D
 		int steps = (int)(_bobTime / Mathf.Pi);
 		if (moving && steps != _stepCount) { _stepCount = steps; OnStep?.Invoke(); }
 		float bob = moving ? Mathf.Sin(_bobTime) * 0.025f : 0f;
-		_head.Position = new Vector3(Mathf.Sin(_bobTime * 0.5f) * 0.012f, EyeHeight + bob, 0);
-		Cam.Rotation = new Vector3(0, 0, Mathf.Sin(_swayTime * 1.3f) * 0.004f);
+		_head.Position = new Vector3(Mathf.Sin(_bobTime * 0.5f) * 0.012f * UserSettings.Motion, EyeHeight + bob * UserSettings.Motion, 0);
+		Cam.Rotation = new Vector3(0, 0, Mathf.Sin(_swayTime * 1.3f) * 0.004f * UserSettings.Motion);
 	}
 }

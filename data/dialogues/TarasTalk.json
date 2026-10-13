@@ -1,0 +1,409 @@
+{
+  "Entries": [
+    {
+      "Node": "first",
+      "Need": null,
+      "Unless": null
+    },
+    {
+      "Node": "after",
+      "Need": "offer_declined",
+      "Unless": null
+    },
+    {
+      "Node": "confess",
+      "Need": "t_asked_story",
+      "Unless": null
+    }
+  ],
+  "Nodes": [
+    {
+      "Id": "first",
+      "Say": [
+        {
+          "Text": "Добрий вечір! Місця тут вистачає. Гарне пальто, до речі, — зараз такого не шиють.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "Як вас звати?",
+          "To": "name",
+          "Need": null,
+          "Unless": "t_n",
+          "Set": "t_n",
+          "Fx": null
+        },
+        {
+          "Text": "Ви тут давно?",
+          "To": "long",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Ви не знали дівчину в зеленому пальті?",
+          "To": "know",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Левко каже, що ви все знаєте.",
+          "To": "levko",
+          "Need": "l_pointed",
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Дякую.",
+          "To": null,
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "name",
+      "Say": [
+        {
+          "Text": "Тарас. А ви — не кажіть, мені тут усі розповідають.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Люди чомусь довіряють. Не знаю чому.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "first",
+      "Set": null,
+      "Fx": "know",
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "long",
+      "Say": [
+        {
+          "Text": "Від початку. Люблю потяги. Тут усі розповідають — як на сповіді.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Не слухайте. Я шуткую.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "know",
+      "Say": [
+        {
+          "Text": "Ні. Хто ж їх знає? Я з жінками обережний.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "У мене сестра така сама — довірлива. Я за неї переживаю.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "levko",
+      "Say": [
+        {
+          "Text": "Левко? Вигадує. Він завжди вигадує.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Він би і рідного батька виправдав. Або звинуватив.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "after",
+      "Say": [
+        {
+          "Text": "Я завжди хотів допомогти людям. Такі, як вона, ходять самі, довірливі…",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "Розкажіть, як усе було.",
+          "To": "story",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Ви її вбили.",
+          "To": "accuse",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Я піду.",
+          "To": null,
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "accuse",
+      "Say": [
+        {
+          "Text": "Я? Ні-ні. Я просто розповідаю історію. Тут усі розповідають.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "after",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "story",
+      "Say": [
+        {
+          "Text": "Я чекав на зупинці. Просто стояв, нічого такого.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Вона виходила з компанії сама. Я сказав: «Темно, давайте проведу». Вона посміхнулась.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Ввічлива. Такі завжди ввічливі.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Біля арки сказала «ні». Тихо. А я вже не міг повернути назад.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "story2",
+      "Set": "t_asked_story",
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "story2",
+      "Say": [
+        {
+          "Text": "Не думайте, що я чудовисько. Я звичайна людина.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "У цьому й вся проблема.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "Чому ви мені це кажете?",
+          "To": "why",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "(Мовчати.)",
+          "To": null,
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "why",
+      "Say": [
+        {
+          "Text": "Бо ви не пішли зі мною. Поки що все добре.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "confess",
+      "Say": [
+        {
+          "Text": "Хочете ще раз послухати? Я не проти. Мені навіть приємно.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "story",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "offer",
+      "Say": [
+        {
+          "Text": "Ох, темно. Давайте я вас проведу до дверей. Я тут усе знаю.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "Дякую, ходімо.",
+          "To": "go",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Ні, я сам.",
+          "To": "no",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "(Промовчати.)",
+          "To": "silent",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "go",
+      "Say": [
+        {
+          "Text": "От і добре. Ходімо.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": null,
+      "Set": null,
+      "Fx": "violate",
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "no",
+      "Say": [
+        {
+          "Text": "Як знаєте. Тоді сидіть тихо.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": null,
+      "Set": "offer_declined",
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "silent",
+      "Say": [
+        {
+          "Text": "Мовчите? Ну, не заважайте.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": null,
+      "Set": "offer_declined",
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    }
+  ]
+}

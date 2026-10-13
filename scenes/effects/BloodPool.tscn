@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/textures/blood.svg" id="1"]
+
+[sub_resource type="StandardMaterial3D" id="BloodMaterial"]
+transparency = 1
+shading_mode = 0
+albedo_texture = ExtResource("1")
+texture_filter = 0
+cull_mode = 2
+
+[sub_resource type="PlaneMesh" id="PoolPlane"]
+size = Vector2(1, 1)
+
+[node name="BloodPool" type="MeshInstance3D"]
+material_override = SubResource("BloodMaterial")
+mesh = SubResource("PoolPlane")
+cast_shadow = 0

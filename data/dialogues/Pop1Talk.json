@@ -1,0 +1,130 @@
+{
+  "Entries": [
+    {
+      "Node": "first",
+      "Need": null,
+      "Unless": null
+    },
+    {
+      "Node": "again",
+      "Need": "p1_hi",
+      "Unless": null
+    }
+  ],
+  "Nodes": [
+    {
+      "Id": "first",
+      "Say": [
+        {
+          "Text": "Не зачепіть сумку. Я її зараз приберу.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Сідайте, якщо ноги втомилися. До зупинки ще є час.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "ask",
+      "Set": "k:met_pop1,p1_hi",
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "again",
+      "Say": [
+        {
+          "Text": "О, знову ви.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "ask",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "ask",
+      "Say": [],
+      "Opts": [
+        {
+          "Text": "Ви давно їдете?",
+          "To": "long",
+          "Need": null,
+          "Unless": "p1_long",
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Як вас звати?",
+          "To": "name",
+          "Need": null,
+          "Unless": "p1_name",
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Мені пора.",
+          "To": null,
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "long",
+      "Say": [
+        {
+          "Text": "Сів трохи раніше за вас. Збирався подрімати, та двері весь час грюкають.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Я до кінцевої. До кінця — то до кінця.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "ask",
+      "Set": "p1_long",
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "name",
+      "Say": [
+        {
+          "Text": "Максим. А ви — не кажіть, самі скажете, коли захочете.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Я нікуди не поспішаю.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "ask",
+      "Set": "p1_name,k:pop_named",
+      "Fx": "know",
+      "IfNeed": null,
+      "IfTo": null
+    }
+  ]
+}

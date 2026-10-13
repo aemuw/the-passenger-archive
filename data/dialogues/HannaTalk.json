@@ -1,0 +1,236 @@
+{
+  "Entries": [
+    {
+      "Node": "first",
+      "Need": null,
+      "Unless": null
+    }
+  ],
+  "Nodes": [
+    {
+      "Id": "first",
+      "Say": [
+        {
+          "Text": "Ви читали?! Ні? Господи, ви не повірите. Знову на пустирі за вокзалом!",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "Що там?",
+          "To": "what",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Як вас звати?",
+          "To": "name",
+          "Need": null,
+          "Unless": "h_n",
+          "Set": "h_n",
+          "Fx": null
+        },
+        {
+          "Text": "Я не читаю новин.",
+          "To": null,
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "name",
+      "Say": [
+        {
+          "Text": "Ганна Іванівна! Ну, Ганна.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Я вам, між іншим, не просто так розповідаю — бачила, як ви на мою газету дивились.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "first",
+      "Set": null,
+      "Fx": "know",
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "what",
+      "Say": [
+        {
+          "Text": "Дівчину знайшли. Пишуть — грабіжник, ззаду підійшов.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Господи, а ми цими потягами щодня!",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "Грабіжник? Так вирішили?",
+          "To": "police",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Вона була не сама?",
+          "To": "alone",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Страшно.",
+          "To": "scary",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "police",
+      "Say": [
+        {
+          "Text": "Ну, так пишуть. Я ж не слідчий. Хоча дивно: сумку не взяли.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Хто ж грабує і сумку не бере?",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "phrase",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "alone",
+      "Say": [
+        {
+          "Text": "Не сама? Звідки ви знаєте? У газеті про це ні слова.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Хоча… ой. А воно ж логічно.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "phrase",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "scary",
+      "Say": [
+        {
+          "Text": "Ще й як! Я тепер з роботи тільки таксі. Ну, чи трамваєм. Але зі страхом.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "phrase",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "phrase",
+      "Say": [
+        {
+          "Text": "А знаєте, що мені один чоловік у цьому потязі сказав? Спокійно так: «До кінця — то до кінця.»",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Мені аж по спині.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "Який чоловік?",
+          "To": "man",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Мало що люди кажуть.",
+          "To": null,
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "man",
+      "Say": [
+        {
+          "Text": "У коричневому пальті. Біля дверей стояв. Спокійний такий.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Усе одно я не люблю, коли так спокійно.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": null,
+      "Set": "k:hanna_pop",
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    }
+  ]
+}

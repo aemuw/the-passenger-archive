@@ -1,0 +1,26 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/Actors/Player.cs" id="1_xjuxa"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8iu4y"]
+radius = 0.25
+height = 1.7
+
+[node name="Player" type="CharacterBody3D" unique_id=1549415364]
+collision_layer = 4
+script = ExtResource("1_xjuxa")
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="." unique_id=1981045256]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
+shape = SubResource("CapsuleShape3D_8iu4y")
+
+[node name="Head" type="Node3D" parent="." unique_id=1359038224]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+
+[node name="Camera" type="Camera3D" parent="Head" unique_id=363583006]
+current = true
+far = 150.0
+
+[node name="AimRay" type="RayCast3D" parent="Head/Camera" unique_id=473861421]
+target_position = Vector3(0, 0, -2.4)
+collision_mask = 3

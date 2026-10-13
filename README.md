@@ -17,6 +17,8 @@ riding with you from carriage to carriage since the very start.
    (`Godot.NET.Sdk/4.7.2`) to match your editor version exactly.
 
 ## Controls
+
+The current visual/horror redesign adds saved spatial suspense encounters, revised cast models, 128px surfaces, shadowed lighting, dressed memories and a scare intensity setting. See [editing and horror notes](docs/HORROR_REDESIGN.md).
 | Key | Action |
 |---|---|
 | WASD / arrows, mouse | move, look |
@@ -24,7 +26,7 @@ riding with you from carriage to carriage since the very start.
 | 1–6, W/S | pick an answer in a conversation |
 | Tab | your ticket (the destination is erased — it slowly comes back) |
 | R | retry after death / restart after the end |
-| Esc | release / capture the mouse |
+| Esc | pause / resume |
 
 ## The prototype carriages
 | # | Type | Structure | What it shows |
@@ -32,24 +34,27 @@ riding with you from carriage to carriage since the very start.
 | 1 | Fiction | one person you can talk to + a **played memory** | Viktor's way home, four evenings, one more sign each time. Hidden rule: a phone rings in the carriage. |
 | 2 | Inspired | two people talking to each other; you **overhear** and may interrupt | a widow and her friend with flowers; a stuck door that a friendly stranger helps you open. |
 | 3 | Inspired | five voices that contradict each other | victim, newspaper reader, witness who "could do nothing", a liar, a friendly man who offers to guide you when the lights go out. |
-| 4 | Hero | the conductor opposite you | your memories: boarding in a hurry, and the empty terminus. Ends with *TRAIN / FINAL MEMORY*. |
+| 4 | Hero | the conductor opposite you | your memories: boarding in a hurry, and the empty terminus. The ending returns to the boarding scene. |
 
 Always true: doors lock behind you (the train never goes back) · the conductor never explains and never lies ·
-the victim cannot be saved · after carriages 2–3 a card shows how the story relates to reality
-(FICTIONAL / INSPIRED / DOCUMENTED + *real-world context*).
+the victim cannot be saved · after carriages 2–3 a card identifies the story as fictionalised.
+Documented cases and sourced real-world context are not implemented yet.
 
 ## The man who rides with you
 In carriages 1, 2, 3 and in your own memories there is one man in different clothes:
 long coat → shirt with a newspaper → brown coat by the door. Same tells every time:
 he adjusts his cuff, and he says *«До кінця — то до кінця.»* Nothing marks him as dangerous. In carriage 2 he is kind to you.
 
+## Scene based revision
+New menu, pause, settings and carriage checkpoints are available. Dialogue JSON is in `data/dialogues`. The four-carriage slice is retained; final production art, real train recordings and documented stories remain future work.
+
 ## How it works
-- Everything is built in code (no imported assets): `scenes/Main.tscn` only holds the `Game` node.
+- The world loads saved carriage, memory, character, UI and audio scenes. See [scene editing workflow](docs/SCENE_WORKFLOW.md). PNG textures, SVG blood and WAV audio are checked-in resources.
 - **PS1 look:** vertex-snapping shader, world-space grime texture, internal render at window/3, Bayer dithering,
   colour quantisation, grain, scanlines, vignette. Reality = warm yellow-green, memory = cold blue.
 - **Rule system:** a `RuleDef` per carriage (`RuleKind.PhoneRing`, `RuleKind.OfferGuide`). Violation →
-  lamps die, everyone freezes, the clacking stops, one flash of the killer standing in front of you, death text with the victim's method.
-- **Authoring:** edit `scripts/Data/Carriages.cs` — people (`Alias` = what the hero sees, `Name` = revealed by `know`), conversations
+  lamps die, everyone freezes, the clacking stops, a saved attack animation plays with a matching prop, then blood, camera fall and a death card.
+- **Authoring:** edit `data/dialogues/*.json` for runtime conversations. `scripts/Data/Carriages.cs` defines people (`Alias` = what the hero sees, `Name` = revealed by `know`), dialogue templates,
   (`DNode`/`Opt` graphs: what you ask changes what they say; flags `x` per carriage, `k:x` for the whole run), overheard scripts, rules, cards.
   Effects (`;`-separated): `done`, `unstick`, `know[:id]`, `flag:x`, `memory:<id>`, `memend`, `walkgo`, `callend`, `kill`, `violate`.
   Memories are in `scripts/World/MemoryScene.cs`; the conversation engine is `scripts/GameTalk.cs`.

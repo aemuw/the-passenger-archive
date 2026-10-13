@@ -1,0 +1,200 @@
+{
+  "Entries": [
+    {
+      "Node": "hi",
+      "Need": null,
+      "Unless": null
+    }
+  ],
+  "Nodes": [
+    {
+      "Id": "hi",
+      "Say": [
+        {
+          "Text": "Нарешті! Ти де? Я тричі дзвонила.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "Я на кінцевій. Тут нікого.",
+          "To": "fine",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Пробач. Я не хотів, щоб він продав комусь іншому.",
+          "To": "sorry",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "(Мовчати.)",
+          "To": "silent",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "fine",
+      "Say": [
+        {
+          "Text": "Нікого? А він? Продавець?",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Ти ж не віддав йому гроші наперед?",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "mid",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "sorry",
+      "Say": [
+        {
+          "Text": "Знаю. Для тебе це було про мене. Але мені потрібен не фотоапарат, а ти. Живий і нудний.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "mid",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "silent",
+      "Say": [
+        {
+          "Text": "Алло? Ти тут? Я чую, що ти дихаєш.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "mid",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "mid",
+      "Say": [
+        {
+          "Text": "Слухай. Стій там, де світло і є люди. Не йди нікуди з ним, поки я не приїду.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Я вже виходжу. Дві години — і я там.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "Добре. Чекатиму.",
+          "To": "end",
+          "Need": null,
+          "Unless": null,
+          "Set": "k:promised_marta",
+          "Fx": null
+        },
+        {
+          "Text": "Я люблю тебе.",
+          "To": "love",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "love",
+      "Say": [
+        {
+          "Text": "Я теж. Чуєш? Не відходь від ліхтаря.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "end2",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "end",
+      "Say": [
+        {
+          "Text": "Обіцяєш?",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "Обіцяю.",
+          "To": "end2",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "end2",
+      "Say": [
+        {
+          "Text": "Тоді до зустрічі.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": null,
+      "Set": null,
+      "Fx": "callend",
+      "IfNeed": null,
+      "IfTo": null
+    }
+  ]
+}

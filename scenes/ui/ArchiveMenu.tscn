@@ -1,0 +1,394 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/UI/ArchiveMenu.cs" id="1_luopb"]
+[ext_resource type="Texture2D" path="res://assets/textures/menu_window.svg" id="2_023bw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xkhm8"]
+content_margin_left = 20.0
+content_margin_top = 12.0
+content_margin_right = 20.0
+content_margin_bottom = 12.0
+bg_color = Color(0.86, 0.82, 0.69, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x6h0e"]
+content_margin_left = 12.0
+content_margin_top = 4.0
+content_margin_right = 12.0
+content_margin_bottom = 4.0
+bg_color = Color(0, 0, 0, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3w8ad"]
+content_margin_left = 12.0
+content_margin_top = 4.0
+content_margin_right = 12.0
+content_margin_bottom = 4.0
+bg_color = Color(0.12, 0.18, 0.15, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1paeo"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 2
+border_color = Color(0.86, 0.82, 0.69, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fgle4"]
+content_margin_left = 12.0
+content_margin_top = 4.0
+content_margin_right = 12.0
+content_margin_bottom = 4.0
+bg_color = Color(0, 0, 0, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dk6b7"]
+content_margin_left = 12.0
+content_margin_top = 4.0
+content_margin_right = 12.0
+content_margin_bottom = 4.0
+bg_color = Color(0.12, 0.18, 0.15, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6s5bs"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 2
+border_color = Color(0.86, 0.82, 0.69, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2skxa"]
+content_margin_left = 12.0
+content_margin_top = 4.0
+content_margin_right = 12.0
+content_margin_bottom = 4.0
+bg_color = Color(0, 0, 0, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qx32s"]
+content_margin_left = 12.0
+content_margin_top = 4.0
+content_margin_right = 12.0
+content_margin_bottom = 4.0
+bg_color = Color(0.12, 0.18, 0.15, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_drsvq"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 2
+border_color = Color(0.86, 0.82, 0.69, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m3ps2"]
+content_margin_left = 12.0
+content_margin_top = 4.0
+content_margin_right = 12.0
+content_margin_bottom = 4.0
+bg_color = Color(0, 0, 0, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fk2co"]
+content_margin_left = 12.0
+content_margin_top = 4.0
+content_margin_right = 12.0
+content_margin_bottom = 4.0
+bg_color = Color(0.12, 0.18, 0.15, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s24mj"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 2
+border_color = Color(0.86, 0.82, 0.69, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yo5ls"]
+content_margin_left = 12.0
+content_margin_top = 4.0
+content_margin_right = 12.0
+content_margin_bottom = 4.0
+bg_color = Color(0, 0, 0, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ur77g"]
+content_margin_left = 12.0
+content_margin_top = 4.0
+content_margin_right = 12.0
+content_margin_bottom = 4.0
+bg_color = Color(0.12, 0.18, 0.15, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o4lei"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 2
+border_color = Color(0.86, 0.82, 0.69, 1)
+
+[node name="ArchiveMenu" type="CanvasLayer" unique_id=1810976065]
+process_mode = 3
+layer = 30
+script = ExtResource("1_luopb")
+
+[node name="Root" type="Control" parent="." unique_id=1198380298]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Night" type="ColorRect" parent="Root" unique_id=1596728302]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.025, 0.04, 0.036, 0.98)
+
+[node name="ArchiveWindow" type="TextureRect" parent="Root" unique_id=717187949]
+modulate = Color(1, 1, 1, 0.45)
+layout_mode = 0
+anchor_left = 0.7
+anchor_top = 0.04
+anchor_right = 0.97
+anchor_bottom = 0.96
+mouse_filter = 2
+texture = ExtResource("2_023bw")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Layout" type="MarginContainer" parent="Root" unique_id=1539020319]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/margin_left = 72
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 72
+theme_override_constants/margin_bottom = 32
+
+[node name="Scroll" type="ScrollContainer" parent="Root/Layout" unique_id=2052225789]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="Controls" type="VBoxContainer" parent="Root/Layout/Scroll" unique_id=1308686318]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="Issue" type="Label" parent="Root/Layout/Scroll/Controls" unique_id=2090358309]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0.57, 0.64, 0.56, 1)
+text = "АРХІВ ПАСАЖИРІВ     /     НІЧНИЙ РЕЙС"
+autowrap_mode = 3
+
+[node name="Title" type="Label" parent="Root/Layout/Scroll/Controls" unique_id=1902637953]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+theme_override_colors/font_color = Color(0.86, 0.82, 0.69, 1)
+text = "THE PASSENGER ARCHIVE"
+autowrap_mode = 3
+
+[node name="Premise" type="Label" parent="Root/Layout/Scroll/Controls" unique_id=1614889431]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(0.86, 0.82, 0.69, 1)
+text = "Деякі історії можна лише пам’ятати."
+autowrap_mode = 3
+
+[node name="Ticket" type="PanelContainer" parent="Root/Layout/Scroll/Controls" unique_id=337167260]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_xkhm8")
+
+[node name="TicketPrint" type="Label" parent="Root/Layout/Scroll/Controls/Ticket" unique_id=1678349224]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(0.12, 0.15, 0.13, 1)
+text = "КВИТОК № 0001     ·     ВІДПРАВЛЕННЯ 23:41
+ПАСАЖИР __________________     ПРИЗНАЧЕННЯ ███████"
+autowrap_mode = 3
+
+[node name="Continue" type="Button" parent="Root/Layout/Scroll/Controls" unique_id=1841138842]
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_x6h0e")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_3w8ad")
+theme_override_styles/hover = SubResource("StyleBoxFlat_3w8ad")
+theme_override_styles/focus = SubResource("StyleBoxFlat_1paeo")
+theme_override_colors/font_color = Color(0.86, 0.82, 0.69, 1)
+theme_override_font_sizes/font_size = 20
+text = "Продовжити подорож"
+alignment = 0
+
+[node name="NewGame" type="Button" parent="Root/Layout/Scroll/Controls" unique_id=1257552610]
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_fgle4")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_dk6b7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_dk6b7")
+theme_override_styles/focus = SubResource("StyleBoxFlat_6s5bs")
+theme_override_colors/font_color = Color(0.86, 0.82, 0.69, 1)
+theme_override_font_sizes/font_size = 20
+text = "Нова подорож"
+alignment = 0
+
+[node name="Resume" type="Button" parent="Root/Layout/Scroll/Controls" unique_id=762121932]
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_2skxa")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_qx32s")
+theme_override_styles/hover = SubResource("StyleBoxFlat_qx32s")
+theme_override_styles/focus = SubResource("StyleBoxFlat_drsvq")
+theme_override_colors/font_color = Color(0.86, 0.82, 0.69, 1)
+theme_override_font_sizes/font_size = 20
+text = "Повернутися у вагон"
+alignment = 0
+
+[node name="SettingsButton" type="Button" parent="Root/Layout/Scroll/Controls" unique_id=498389624]
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_m3ps2")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_fk2co")
+theme_override_styles/hover = SubResource("StyleBoxFlat_fk2co")
+theme_override_styles/focus = SubResource("StyleBoxFlat_s24mj")
+theme_override_colors/font_color = Color(0.86, 0.82, 0.69, 1)
+theme_override_font_sizes/font_size = 20
+text = "Налаштування"
+alignment = 0
+
+[node name="Settings" type="VBoxContainer" parent="Root/Layout/Scroll/Controls" unique_id=1335303876]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Volume" type="HBoxContainer" parent="Root/Layout/Scroll/Controls/Settings" unique_id=1883388434]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Root/Layout/Scroll/Controls/Settings/Volume" unique_id=452874767]
+custom_minimum_size = Vector2(240, 24)
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+theme_override_colors/font_color = Color(0.86, 0.82, 0.69, 1)
+text = "Гучність"
+autowrap_mode = 3
+
+[node name="Slider" type="HSlider" parent="Root/Layout/Scroll/Controls/Settings/Volume" unique_id=1230639751]
+custom_minimum_size = Vector2(180, 20)
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.01
+value = 0.8
+
+[node name="Sensitivity" type="HBoxContainer" parent="Root/Layout/Scroll/Controls/Settings" unique_id=2039110761]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Root/Layout/Scroll/Controls/Settings/Sensitivity" unique_id=1079858205]
+custom_minimum_size = Vector2(240, 24)
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+theme_override_colors/font_color = Color(0.86, 0.82, 0.69, 1)
+text = "Чутливість миші"
+autowrap_mode = 3
+
+[node name="Slider" type="HSlider" parent="Root/Layout/Scroll/Controls/Settings/Sensitivity" unique_id=973018389]
+custom_minimum_size = Vector2(180, 20)
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.2
+max_value = 3.0
+step = 0.01
+value = 1.0000000029802323
+
+[node name="Effects" type="HBoxContainer" parent="Root/Layout/Scroll/Controls/Settings" unique_id=2090854347]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Root/Layout/Scroll/Controls/Settings/Effects" unique_id=811663204]
+custom_minimum_size = Vector2(240, 24)
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+theme_override_colors/font_color = Color(0.86, 0.82, 0.69, 1)
+text = "Шум і спотворення"
+autowrap_mode = 3
+
+[node name="Slider" type="HSlider" parent="Root/Layout/Scroll/Controls/Settings/Effects" unique_id=51021009]
+custom_minimum_size = Vector2(180, 20)
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.01
+value = 0.45
+
+[node name="Motion" type="HBoxContainer" parent="Root/Layout/Scroll/Controls/Settings" unique_id=648288332]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Root/Layout/Scroll/Controls/Settings/Motion" unique_id=233248014]
+custom_minimum_size = Vector2(240, 24)
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+theme_override_colors/font_color = Color(0.86, 0.82, 0.69, 1)
+text = "Рух камери"
+autowrap_mode = 3
+
+[node name="Slider" type="HSlider" parent="Root/Layout/Scroll/Controls/Settings/Motion" unique_id=1188793770]
+custom_minimum_size = Vector2(180, 20)
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.01
+value = 0.6
+
+[node name="Gore" type="HBoxContainer" parent="Root/Layout/Scroll/Controls/Settings" unique_id=1792719313]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Root/Layout/Scroll/Controls/Settings/Gore" unique_id=254519528]
+custom_minimum_size = Vector2(240, 24)
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+theme_override_colors/font_color = Color(0.86, 0.82, 0.69, 1)
+text = "Інтенсивність крові"
+autowrap_mode = 3
+
+[node name="Slider" type="HSlider" parent="Root/Layout/Scroll/Controls/Settings/Gore" unique_id=898602733]
+custom_minimum_size = Vector2(180, 20)
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="TextScale" type="HBoxContainer" parent="Root/Layout/Scroll/Controls/Settings" unique_id=1836519052]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Root/Layout/Scroll/Controls/Settings/TextScale" unique_id=1889889058]
+custom_minimum_size = Vector2(240, 24)
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+theme_override_colors/font_color = Color(0.86, 0.82, 0.69, 1)
+text = "Розмір діалогів"
+autowrap_mode = 3
+
+[node name="Slider" type="HSlider" parent="Root/Layout/Scroll/Controls/Settings/TextScale" unique_id=1307653085]
+custom_minimum_size = Vector2(180, 20)
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.8
+max_value = 1.4
+step = 0.01
+value = 1.000000011920929
+
+[node name="Scares" type="HBoxContainer" parent="Root/Layout/Scroll/Controls/Settings" unique_id=1321038862]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Root/Layout/Scroll/Controls/Settings/Scares" unique_id=1006353271]
+custom_minimum_size = Vector2(240, 24)
+layout_mode = 2
+theme_override_font_sizes/font_size = 17
+theme_override_colors/font_color = Color(0.86, 0.82, 0.69, 1)
+text = "Різкі появи та звуки"
+autowrap_mode = 3
+
+[node name="Slider" type="HSlider" parent="Root/Layout/Scroll/Controls/Settings/Scares" unique_id=1183598799]
+custom_minimum_size = Vector2(180, 20)
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="Quit" type="Button" parent="Root/Layout/Scroll/Controls" unique_id=1176256180]
+custom_minimum_size = Vector2(0, 34)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_yo5ls")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ur77g")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ur77g")
+theme_override_styles/focus = SubResource("StyleBoxFlat_o4lei")
+theme_override_colors/font_color = Color(0.86, 0.82, 0.69, 1)
+theme_override_font_sizes/font_size = 20
+text = "Вийти"
+alignment = 0
+
+[node name="Warning" type="Label" parent="Root/Layout/Scroll/Controls" unique_id=1537255707]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0.57, 0.64, 0.56, 1)
+text = "Містить сцени насильства та історії загибелі людей.
+WASD — рух · E — взаємодія · Tab — квиток · Esc — пауза"
+autowrap_mode = 3

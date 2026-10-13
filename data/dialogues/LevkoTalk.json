@@ -1,0 +1,155 @@
+{
+  "Entries": [
+    {
+      "Node": "first",
+      "Need": null,
+      "Unless": null
+    }
+  ],
+  "Nodes": [
+    {
+      "Id": "first",
+      "Say": [
+        {
+          "Text": "Чого вам? Нічого я не бачив. Вона сама пішла. Я того вечора вдома був.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "Я не питав про вечір.",
+          "To": "slip",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Хто тоді був?",
+          "To": "who",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Як вас звати?",
+          "To": "name",
+          "Need": null,
+          "Unless": "l_n",
+          "Set": "l_n",
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "name",
+      "Say": [
+        {
+          "Text": "Левко. А вам навіщо? Ви що, з поліції?",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "first",
+      "Set": null,
+      "Fx": "know",
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "slip",
+      "Say": [
+        {
+          "Text": "Ну… я просто. Мало що люди плетуть.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Чого ви так дивитесь? Вдома, кажу.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "Хто тоді був?",
+          "To": "who",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Гаразд.",
+          "To": null,
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": "l_slip",
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "who",
+      "Say": [
+        {
+          "Text": "Спитайте в нього. Він усе знає. Він і не таке бачив.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "У кого?",
+          "To": "taras",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Не буду вас більше мучити.",
+          "To": null,
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": "l_pointed",
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "taras",
+      "Say": [
+        {
+          "Text": "У нашого тямущого. Світлий светр. Він завжди знає, хто куди пішов — і всіх проводить.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    }
+  ]
+}

@@ -1,0 +1,248 @@
+{
+  "Entries": [
+    {
+      "Node": "h1",
+      "Need": null,
+      "Unless": null
+    },
+    {
+      "Node": "h2",
+      "Need": "mem_depart",
+      "Unless": null
+    }
+  ],
+  "Nodes": [
+    {
+      "Id": "h1",
+      "Say": [
+        {
+          "Text": "Ти довго йшов до цього вагона.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "ask",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "ask",
+      "Say": [],
+      "Opts": [
+        {
+          "Text": "Я нікуди не йшов. Я просто сів.",
+          "To": "sat",
+          "Need": null,
+          "Unless": "h_sat",
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Хто той чоловік у пальті?",
+          "To": "pop",
+          "Need": "k:met_pop2",
+          "Unless": "h_pop",
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Куди ми їдемо?",
+          "To": "where",
+          "Need": null,
+          "Unless": "h_where",
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Я готовий.",
+          "To": "story",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "sat",
+      "Say": [
+        {
+          "Text": "Ти сів. Це теж рішення.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "ask",
+      "Set": "h_sat",
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "pop",
+      "Say": [
+        {
+          "Text": "Пасажир.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Він завжди сідає там, де сідаєш ти.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "ask",
+      "Set": "h_pop",
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "where",
+      "Say": [
+        {
+          "Text": "Туди, де ти вже був.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "ask",
+      "Set": "h_where",
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "story",
+      "Say": [
+        {
+          "Text": "Розкажи свою історію.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": null,
+      "Set": null,
+      "Fx": "memory:depart",
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "h2",
+      "Say": [
+        {
+          "Text": "Ти не вибирав цей потяг. Ти вибрав момент.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "hub",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "hub",
+      "Say": [],
+      "Opts": [
+        {
+          "Text": "Вона просила мене почекати.",
+          "To": "marta",
+          "Need": "k:heard_marta",
+          "Unless": "h_marta",
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Що буде на станції?",
+          "To": "what",
+          "Need": null,
+          "Unless": "h_what",
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Я готовий.",
+          "To": "arrive",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "marta",
+      "Say": [
+        {
+          "Text": "Знаю.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Усі, хто тут, колись когось не послухали.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "hub",
+      "Set": "h_marta",
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "what",
+      "Say": [
+        {
+          "Text": "Те, що вже було.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "hub",
+      "Set": "h_what",
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "arrive",
+      "Say": [
+        {
+          "Text": "Станція.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": null,
+      "Set": null,
+      "Fx": "memory:arrive",
+      "IfNeed": null,
+      "IfTo": null
+    }
+  ]
+}

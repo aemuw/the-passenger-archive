@@ -1,0 +1,60 @@
+{
+  "Entries": [
+    {
+      "Node": "arch",
+      "Need": null,
+      "Unless": null
+    }
+  ],
+  "Nodes": [
+    {
+      "Id": "arch",
+      "Say": [
+        {
+          "Text": "Тут коротше.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "Ні. Я туди не піду.",
+          "To": "no",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "(Промовчати.)",
+          "To": "no",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "no",
+      "Say": [
+        {
+          "Text": "Он як.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": null,
+      "Set": null,
+      "Fx": "memend",
+      "IfNeed": null,
+      "IfTo": null
+    }
+  ]
+}

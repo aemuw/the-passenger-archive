@@ -14,6 +14,6 @@ public partial class Interactable : StaticBody3D
 	{
 		CollisionLayer = GameConfig.LayerInteract;
 		CollisionMask = 0;
-		AddChild(new CollisionShape3D { Shape = new BoxShape3D { Size = size }, Position = center });
+		AddChild(new CollisionShape3D { Name = "InteractionShape", Shape = new BoxShape3D { Size = size }, Position = center });
 	}
 }

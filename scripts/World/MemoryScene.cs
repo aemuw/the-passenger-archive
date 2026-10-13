@@ -13,10 +13,10 @@ namespace PassengerArchive;
 /// </summary>
 public partial class MemoryScene : Node3D
 {
-	public string Id;
+	[Export] public string Id { get; set; }
 	public Game GameRef;
-	public Vector3 StartLocal;
-	public float StartYaw;
+	[Export] public Vector3 StartLocal { get; set; }
+	[Export] public float StartYaw { get; set; }
 
 	static readonly string[] RouteCaptions =
 	{
@@ -42,6 +42,34 @@ public partial class MemoryScene : Node3D
 
 	public override void _Ready()
 	{
+		_extras = GetNode<Node3D>("Extras");
+		foreach (var child in _extras.GetChildren())
+		{
+			if (child is not Passenger passenger) continue;
+			passenger.GameRef = GameRef;
+			passenger.Data = Id switch
+			{
+				"ride" => new PersonData("hitch", null, "Незнайомець у капюшоні, мокрий до нитки", 0, 0, 0, Carriages.HitchLook, Carriages.HitchTalk),
+				"walk" => new PersonData("taras", null, "Незнайомець у світлому светрі", 0, 0, 0, Carriages.TarasLook),
+				_ => new PersonData("pop", null, "Незнайомець у довгому пальті", 0, 0, 0, Carriages.PopOriginal, Idle: Gesture.Sleeve),
+			};
+			passenger.Build();
+			if (Id == "walk") _taras = passenger;
+		}
+		foreach (var child in GetChildren())
+			if (child is OmniLight3D light && light.HasMeta("memory_fixture"))
+				_lamps.Add((light.Position.Z, light, GetNode<MeshInstance3D>(light.GetMeta("memory_fixture").AsString())));
+			else if (child is OmniLight3D finalLight && finalLight.HasMeta("final_lamp"))
+				_lamps.Add((finalLight.Position.Z, finalLight, null));
+		if (GetNodeOrNull<ActionProp>("BoardTrain") is { } board)
+		{
+			board.PromptFn = () => "[E] Сісти у вагон";
+			board.OnUse = game => FinishAt("Двері зачиняються.", 2.8);
+		}
+	}
+
+	public void Author()
+	{
 		ResetExtras();
 		switch (Id)
 		{
@@ -51,6 +79,16 @@ public partial class MemoryScene : Node3D
 			case "depart": BuildStation(false); break;
 			case "arrive": BuildStation(true); break;
 		}
+	}
+
+	public Node3D AuthorEvening(int evening)
+	{
+		_loop = evening;
+		SpawnLoop();
+		RemoveChild(_extras);
+		var result = _extras;
+		_extras = null;
+		return result;
 	}
 
 	public void Intro()
@@ -68,7 +106,7 @@ public partial class MemoryScene : Node3D
 	// ───────────────────────── per-frame ─────────────────────────
 	public override void _Process(double delta)
 	{
-		if (_busy || _done || GameRef == null) return;
+		if (_busy || _done || GameRef == null || !GameRef.MemoryIsActive(this)) return;
 		Vector3 p = GameRef.PlayerPosition - GlobalPosition;
 		switch (Id)
 		{
@@ -199,13 +237,16 @@ public partial class MemoryScene : Node3D
 		_done = true;
 		GameRef.LockPlayer();
 		GameRef.Audio.SetRing(false);
+		_pop?.BeginAttack("нож");
 		foreach (var l in _lamps) { l.light.LightEnergy = 0.15f; }
 		await ToSignal(GetTree().CreateTimer(0.8), SceneTreeTimer.SignalName.Timeout);
+		if (!IsInsideTree() || IsQueuedForDeletion() || !GameRef.MemoryIsActive(this)) return;
 
 		GameRef.Audio.Hit();
 		GameRef.Hud.BloodFlash();
 		GameRef.Hud.Splatter(10);
 		await ToSignal(GetTree().CreateTimer(0.9), SceneTreeTimer.SignalName.Timeout);
+		if (!IsInsideTree() || IsQueuedForDeletion() || !GameRef.MemoryIsActive(this)) return;
 
 		GameRef.Audio.Hit();
 		GameRef.Hud.BloodFlash(0.9f);
@@ -216,11 +257,14 @@ public partial class MemoryScene : Node3D
 		Gore.Pool(this, floor + new Vector3(0, 0, -0.2f), 1.4f, 7f);
 		Gore.Spatter(this, floor, 18, 1.8f);
 		await ToSignal(GetTree().CreateTimer(2.2), SceneTreeTimer.SignalName.Timeout);
+		if (!IsInsideTree() || IsQueuedForDeletion() || !GameRef.MemoryIsActive(this)) return;
 
 		GameRef.Hud.Caption("Лезо входить під ребра. Холодно.\nПотім — гаряче.", 3.2f);
 		await ToSignal(GetTree().CreateTimer(4.2), SceneTreeTimer.SignalName.Timeout);
+		if (!IsInsideTree() || IsQueuedForDeletion() || !GameRef.MemoryIsActive(this)) return;
 		GameRef.Hud.Caption(Carriages.HeroPhrase, 2.2f);
 		await ToSignal(GetTree().CreateTimer(3.4), SceneTreeTimer.SignalName.Timeout);
+		if (!IsInsideTree() || IsQueuedForDeletion() || !GameRef.MemoryIsActive(this)) return;
 		GameRef.EndMemory("arrive");
 	}
 
@@ -348,6 +392,8 @@ public partial class MemoryScene : Node3D
 			var light = new OmniLight3D { Position = new Vector3(x * 0.8f, 3.4f, lampZ[i]), LightColor = new Color(0.72f, 0.84f, 1.0f), OmniRange = 8f, LightEnergy = 1.3f };
 			AddChild(light);
 			_lamps.Add((lampZ[i], light, fix));
+			fix.Name = "MemoryFixture" + i;
+			light.SetMeta("memory_fixture", fix.Name.ToString());
 		}
 
 		// Bus stop (the bus never comes).
@@ -370,11 +416,13 @@ public partial class MemoryScene : Node3D
 	{
 		_busy = true;
 		await ToSignal(GameRef.Hud.Fade(1f, 0.5f), Tween.SignalName.Finished);
+		if (!IsInsideTree() || IsQueuedForDeletion() || !GameRef.MemoryIsActive(this)) return;
 		_loop++;
 		SpawnLoop();
 		GameRef.TeleportPlayer(GlobalPosition + StartLocal, StartYaw);
 		GameRef.Hud.Caption(RouteCaptions[_loop], 3f);
 		await ToSignal(GameRef.Hud.Fade(0f, 0.7f), Tween.SignalName.Finished);
+		if (!IsInsideTree() || IsQueuedForDeletion() || !GameRef.MemoryIsActive(this)) return;
 		_busy = false;
 	}
 
@@ -391,19 +439,36 @@ public partial class MemoryScene : Node3D
 		if (_done) return;
 		_done = true;
 		GameRef.Hud.Caption(caption, 3f);
-		GetTree().CreateTimer(afterSeconds).Timeout += () => GameRef.EndMemory(Id);
+		GetTree().CreateTimer(afterSeconds).Timeout += () => { if (IsInsideTree() && !IsQueuedForDeletion() && GameRef.MemoryIsActive(this)) GameRef.EndMemory(Id); };
 	}
 
 	void ResetExtras()
 	{
-		_extras?.QueueFree();
-		_extras = new Node3D();
+		if (GodotObject.IsInstanceValid(_extras))
+		{
+			if (_extras.GetParent() == this) RemoveChild(_extras);
+			if (SceneAssets.Baking) _extras.Free(); else _extras.QueueFree();
+		}
+		_extras = new Node3D { Name = "Extras" };
 		AddChild(_extras);
 	}
 
 	void SpawnLoop()
 	{
 		ResetExtras();
+		if (!SceneAssets.Baking)
+		{
+			var props = SceneAssets.Load<Node3D>($"res://scenes/memories/route_evening{_loop}.tscn");
+			_extras.AddChild(props);
+			foreach (var child in props.GetChildren())
+				if (child is Passenger passenger)
+				{
+					passenger.Data = new PersonData("kepka", null, "Незнайомець у кепці", 0, 0, 0, Carriages.KepkaLook, Idle: Gesture.Tap);
+					passenger.GameRef = GameRef;
+					passenger.Build();
+				}
+			return;
+		}
 		if (_loop == 1)
 		{
 			Spawn(Carriages.KepkaLook, Gesture.Tap, new Vector3(2.0f, 0f, 4.0f), Mathf.Pi * 0.5f);
@@ -445,6 +510,7 @@ public partial class MemoryScene : Node3D
 		var l = new OmniLight3D { Position = pos, LightColor = c, OmniRange = range, LightEnergy = energy };
 		AddChild(l);
 		if (Id == "arrive") _lamps.Add((pos.Z, l, null));
+		if (Id == "arrive") l.SetMeta("final_lamp", true);
 	}
 
 	void BuildRoute()
@@ -524,6 +590,7 @@ public partial class MemoryScene : Node3D
 
 			var board = new ActionProp
 			{
+				Name = "BoardTrain",
 				Position = new Vector3(-3.6f, 1.1f, -9f),
 				PromptFn = () => "[E] Сісти у вагон",
 				OnUse = g => FinishAt("Двері зачиняються.", 2.8),

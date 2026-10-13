@@ -9,13 +9,19 @@ namespace PassengerArchive;
 /// </summary>
 public partial class Scenery : Node3D
 {
-	public float Speed = 14f;
-	public bool StuckHouse;
+	[Export] public float Speed { get; set; } = 14f;
+	[Export] public bool StuckHouse { get; set; }
 
 	const float Span = 100f;
 	readonly List<Node3D> _movers = new();
 
 	public override void _Ready()
+	{
+		foreach (var n in GetChildren())
+			if (n is Node3D mover && mover.Name.ToString().StartsWith("Moving")) _movers.Add(mover);
+	}
+
+	public void Author()
 	{
 		var rng = new RandomNumberGenerator { Seed = 42 };
 
@@ -28,7 +34,7 @@ public partial class Scenery : Node3D
 		{
 			float z = -Span / 2f + Span * i / count;
 			float side = (i % 2 == 0) ? 1f : -1f;
-			var node = new Node3D { Position = new Vector3(side * rng.RandfRange(4.5f, 16f), 0, z) };
+			var node = new Node3D { Name = "Moving" + i, Position = new Vector3(side * rng.RandfRange(4.5f, 16f), 0, z) };
 
 			if (i % 3 == 0)
 			{

@@ -1,0 +1,338 @@
+{
+  "Entries": [
+    {
+      "Node": "first",
+      "Need": null,
+      "Unless": null
+    },
+    {
+      "Node": "first_met",
+      "Need": "k:met_pop1",
+      "Unless": null
+    },
+    {
+      "Node": "again",
+      "Need": "p2_hi",
+      "Unless": null
+    }
+  ],
+  "Nodes": [
+    {
+      "Id": "first",
+      "Say": [
+        {
+          "Text": "О, жива душа! Сідайте, місця вистачає. Довго їдете?",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "ask",
+      "Set": "k:met_pop2,p2_hi",
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "first_met",
+      "Say": [
+        {
+          "Text": "О, знайоме обличчя! Ми, здається, перетиналися в тому вагоні?",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Ви ще дивились на мене так, ніби я кредитор. Довго їдете?",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "ask",
+      "Set": "k:met_pop2,p2_hi",
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "ask",
+      "Say": [],
+      "Opts": [
+        {
+          "Text": "Не пам'ятаю, звідки.",
+          "To": "mem",
+          "Need": null,
+          "Unless": null,
+          "Set": "k:said_dont_remember",
+          "Fx": null
+        },
+        {
+          "Text": "До кінцевої.",
+          "To": "end",
+          "Need": null,
+          "Unless": null,
+          "Set": "k:said_terminus",
+          "Fx": null
+        },
+        {
+          "Text": "А ви?",
+          "To": "you",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "mem",
+      "Say": [
+        {
+          "Text": "Я теж. Забавно, правда? Сідаєш — і вже їдеш. Нікому не треба пояснювати, навіщо.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "hub",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "end",
+      "Say": [
+        {
+          "Text": "До кінцевої! Ого. Люблю таких, хто знає, куди їде. Мені б так.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "hub",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "you",
+      "Say": [
+        {
+          "Text": "Я? Я просто їду. Поруч. Люблю, коли є з ким.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "hub",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "again",
+      "Say": [
+        {
+          "Text": "О, це ви. Ну що, влаштувались?",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "hub",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "hub",
+      "Say": [],
+      "Opts": [
+        {
+          "Text": "Що ви читаєте?",
+          "To": "paper",
+          "Need": null,
+          "Unless": "p2_paper",
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Ви бачили, що тут було з тими двома?",
+          "To": "women",
+          "Need": null,
+          "Unless": "p2_women",
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Як вас звати?",
+          "To": "name",
+          "Need": null,
+          "Unless": "p2_name",
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Дякую, мені пора.",
+          "To": null,
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "paper",
+      "Say": [
+        {
+          "Text": "Читаю? Так, звісно. Нічого цікавого. Одні й ті ж новини:",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "хтось пішов не туди, хтось не тому повірив.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "hub",
+      "Set": "p2_paper",
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "women",
+      "Say": [
+        {
+          "Text": "Бачив. Горе таке, що й сказати нічого. Я сів подалі — не люблю, коли чужі сльози бачать, що я бачу.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "hub",
+      "Set": "p2_women",
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "name",
+      "Say": [
+        {
+          "Text": "Максим. Та кажіть просто «Макс», усі кажуть.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "hub",
+      "Set": "p2_name,k:pop_named",
+      "Fx": "know",
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "door",
+      "Say": [
+        {
+          "Text": "Заклинило? Дайте я.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Ви вже не вперше з такими дверима?",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "Дякую.",
+          "To": "door_thanks",
+          "Need": null,
+          "Unless": null,
+          "Set": "k:accepted_help",
+          "Fx": null
+        },
+        {
+          "Text": "Я сам.",
+          "To": "door_self",
+          "Need": null,
+          "Unless": null,
+          "Set": "k:refused_help",
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "door_thanks",
+      "Say": [
+        {
+          "Text": "Та нічого. Усі колись потребують, щоб хтось відчинив.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "До кінця — то до кінця.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": null,
+      "Set": null,
+      "Fx": "unstick",
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "door_self",
+      "Say": [
+        {
+          "Text": "Як хочете. Вона так не піддасться, але нехай.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Ну от. Піддалась. Буває.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "До кінця — то до кінця.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": null,
+      "Set": null,
+      "Fx": "unstick",
+      "IfNeed": null,
+      "IfTo": null
+    }
+  ]
+}

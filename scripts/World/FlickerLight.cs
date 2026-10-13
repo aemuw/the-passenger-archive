@@ -5,11 +5,11 @@ namespace PassengerArchive;
 /// <summary>A dirty fluorescent lamp: hum-flicker, occasional dropout; can be switched off and (unless permanently dead) back on.</summary>
 public partial class FlickerLight : OmniLight3D
 {
-	public float BaseEnergy = 1.1f;
-	public MeshInstance3D Fixture;
-	public MeshInstance3D Glow;     // haze around the tube; hidden when the lamp is out
-	public bool Dead;
-	public bool Permanent;      // permanently broken lamp: Revive() does nothing
+	[Export] public float BaseEnergy { get; set; } = 1.1f;
+	[Export] public MeshInstance3D Fixture { get; set; }
+	[Export] public MeshInstance3D Glow { get; set; }
+	[Export] public bool Dead { get; set; }
+	[Export] public bool Permanent { get; set; }
 
 	readonly RandomNumberGenerator _rng = new();
 	Material _fixtureMat;
@@ -36,8 +36,8 @@ public partial class FlickerLight : OmniLight3D
 			_timer = _rng.RandfRange(2f, 9f);
 		}
 
-		float e = BaseEnergy * (0.94f + 0.06f * Mathf.Sin(Time.GetTicksMsec() * 0.045f));
-		if (_dropout > 0f) { _dropout -= dt; e *= 0.15f; }
+		float e = BaseEnergy * (0.97f + 0.03f * UserSettings.Effects * Mathf.Sin(Time.GetTicksMsec() * 0.045f));
+		if (_dropout > 0f) { _dropout -= dt; e *= Mathf.Lerp(1f,0.15f,UserSettings.Effects); }
 		LightEnergy = e;
 		if (Glow != null) Glow.Visible = e > BaseEnergy * 0.4f;
 	}

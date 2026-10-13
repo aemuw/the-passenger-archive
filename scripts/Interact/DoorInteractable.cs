@@ -8,14 +8,16 @@ namespace PassengerArchive;
 /// </summary>
 public partial class DoorInteractable : Interactable
 {
-	public bool Forward;
+	[Export] public bool Forward { get; set; }
 	MeshInstance3D _lamp;
+	public override void _Ready() => _lamp = GetNodeOrNull<MeshInstance3D>("DoorLamp");
 
 	public override string Prompt => "[E] Двері";
 
 	public void AddLamp(bool unlocked)
 	{
 		_lamp = Geo.MeshBox(new Vector3(0, 1.12f, 0.05f), new Vector3(0.14f, 0.14f, 0.04f), Colors.Red, 1.4f, 0f);
+		_lamp.Name = "DoorLamp";
 		AddChild(_lamp);
 		SetUnlocked(unlocked);
 	}

@@ -1,0 +1,212 @@
+{
+  "Entries": [
+    {
+      "Node": "first",
+      "Need": null,
+      "Unless": null
+    }
+  ],
+  "Nodes": [
+    {
+      "Id": "first",
+      "Say": [
+        {
+          "Text": "Ви теж питати прийшли? Я вже всім сказав: нічого я не міг зробити.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "Що ви бачили?",
+          "To": "saw",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Чому ви не втрутились?",
+          "To": "why",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Як вас звати?",
+          "To": "name",
+          "Need": null,
+          "Unless": "b_n",
+          "Set": "b_n",
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "name",
+      "Say": [
+        {
+          "Text": "Богдан. Богдан Петрович.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Це що, допит?",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "first",
+      "Set": null,
+      "Fx": "know",
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "saw",
+      "Say": [
+        {
+          "Text": "Бачив її з чоловіком. Привітний такий, у світлому светрі.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Він її за лікоть підтримував — ну, як підтримують. Я подумав — знайомі.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "Ви розгледіли його обличчя?",
+          "To": "face",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Чому ви не втрутились?",
+          "To": "why",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "why",
+      "Say": [
+        {
+          "Text": "Що мені було робити? Втручатись? Сказати «ви її знаєте?» А якщо знає?",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Я ж не…",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "Могли хоча б подзвонити.",
+          "To": "call",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Я розумію.",
+          "To": "understand",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "call",
+      "Say": [
+        {
+          "Text": "Хтось би подзвонив. Усі так думають.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "«Хтось подзвонить». Я теж так думав.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "understand",
+      "Say": [
+        {
+          "Text": "Ні, не розумієте. Я й сам не розумію.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Я собаку потім три дні не міг вигуляти. Стою на порозі — і не можу.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "face",
+      "Say": [
+        {
+          "Text": "Світло там було погане. Нічого не розгледів.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Лише светр. Світлий. Дорогий, певно.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    }
+  ]
+}

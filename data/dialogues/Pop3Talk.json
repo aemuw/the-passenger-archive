@@ -1,0 +1,123 @@
+{
+  "Entries": [
+    {
+      "Node": "first",
+      "Need": null,
+      "Unless": null
+    }
+  ],
+  "Nodes": [
+    {
+      "Id": "first",
+      "Say": [
+        {
+          "Text": "Ви теж дивитесь на двері? Звичка. Двері — єдине, що тут чесне: або відчинені, або ні.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "ask",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "ask",
+      "Say": [],
+      "Opts": [
+        {
+          "Text": "Ви читали газету в сусідньому вагоні.",
+          "To": "lie",
+          "Need": "k:met_pop2",
+          "Unless": "p3_lie",
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Як вас звати?",
+          "To": "name",
+          "Need": null,
+          "Unless": "p3_n",
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Ви тут давно?",
+          "To": "long",
+          "Need": null,
+          "Unless": "p3_long",
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Дякую.",
+          "To": null,
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "lie",
+      "Say": [
+        {
+          "Text": "Газету? Ні. Ви, мабуть, сплутали. Тут усі схожі.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "До кінця — то до кінця.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "ask",
+      "Set": "p3_lie,k:caught_pop_lie",
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "name",
+      "Say": [
+        {
+          "Text": "Максим. Ми вже представлялись? Ні? Ну, тепер так.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "ask",
+      "Set": "p3_n,k:pop_named",
+      "Fx": "know",
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "long",
+      "Say": [
+        {
+          "Text": "Я їду. Як і ви.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "ask",
+      "Set": "p3_long",
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    }
+  ]
+}

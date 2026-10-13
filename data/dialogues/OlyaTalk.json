@@ -1,0 +1,153 @@
+{
+  "Entries": [
+    {
+      "Node": "first",
+      "Need": null,
+      "Unless": null
+    },
+    {
+      "Node": "done",
+      "Need": "story_done",
+      "Unless": null
+    }
+  ],
+  "Nodes": [
+    {
+      "Id": "first",
+      "Say": [
+        {
+          "Text": "Ой, вибачте. Я просто… так, гвоздики. Не знаю, куди їх діти — тримаю, як квиток.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "Це ваші квіти?",
+          "To": "flowers",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Як вас звати?",
+          "To": "name",
+          "Need": null,
+          "Unless": "o_n",
+          "Set": "o_n",
+          "Fx": null
+        },
+        {
+          "Text": "Я не хотів завадити.",
+          "To": null,
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "name",
+      "Say": [
+        {
+          "Text": "Оля. Ольга Миколаївна, але… ну, ви розумієте, це зараз не головне.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "first",
+      "Set": null,
+      "Fx": "know",
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "flowers",
+      "Say": [
+        {
+          "Text": "Гвоздики. Він любив. Галя думає, що я їх для нього.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "А я — щоб було що тримати в руках, розумієте? Коли руки порожні — думаєш забагато.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "Ви були близькі?",
+          "To": "close",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Зрозуміло.",
+          "To": null,
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "close",
+      "Say": [
+        {
+          "Text": "Ми десять років сиділи в одному кабінеті. Він мене щодня підвозив.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Тієї ночі я була у відпустці. Я теж думаю: якби я була в машині…",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Ой. Не слухайте мене.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "done",
+      "Say": [
+        {
+          "Text": "Я хотіла, щоб квіти були від нас обох. А Галя їх навіть у руки не взяла.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    }
+  ]
+}

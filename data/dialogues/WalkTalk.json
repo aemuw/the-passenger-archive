@@ -1,0 +1,184 @@
+{
+  "Entries": [
+    {
+      "Node": "hi",
+      "Need": null,
+      "Unless": null
+    }
+  ],
+  "Nodes": [
+    {
+      "Id": "hi",
+      "Say": [
+        {
+          "Text": "Ох, темно. Давайте я вас проведу.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "Ні, дякую. Я зачекаю автобус.",
+          "To": "no1",
+          "Need": null,
+          "Unless": null,
+          "Set": "w1",
+          "Fx": null
+        },
+        {
+          "Text": "Добре.",
+          "To": "ok",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "no1",
+      "Say": [
+        {
+          "Text": "Автобус? Він уже не прийде. Вісімка останній пройшла о пів на дванадцяту.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "hi2",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "hi2",
+      "Say": [
+        {
+          "Text": "Та мені по дорозі. Правда.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "Ні, справді, не треба.",
+          "To": "no2",
+          "Need": null,
+          "Unless": null,
+          "Set": "w2",
+          "Fx": null
+        },
+        {
+          "Text": "Ну… гаразд.",
+          "To": "ok",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "no2",
+      "Say": [
+        {
+          "Text": "Ну що ви. Я ж не кусаюсь.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Невже ви мені не довіряєте?",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "hi3",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "hi3",
+      "Say": [
+        {
+          "Text": "Ходімо. Там, де світло, — десять хвилин.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "Ні.",
+          "To": "no3",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Гаразд, ходімо.",
+          "To": "ok",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "no3",
+      "Say": [
+        {
+          "Text": "Ти намагаєшся сказати «ні» втретє. Але на тебе дивляться — і слово застрягає, ніби ти зробила щось непристойне.",
+          "Fx": null,
+          "Speaker": "—"
+        },
+        {
+          "Text": "— Гаразд.",
+          "Fx": null,
+          "Speaker": "Ти"
+        }
+      ],
+      "Opts": null,
+      "Next": "ok",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "ok",
+      "Say": [
+        {
+          "Text": "От і добре.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": null,
+      "Set": null,
+      "Fx": "walkgo",
+      "IfNeed": null,
+      "IfTo": null
+    }
+  ]
+}

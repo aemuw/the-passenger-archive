@@ -12,7 +12,7 @@ uniform float surf_strength = 0.0;
 uniform float surf_scale = 1.2;
 uniform float emission_strength = 0.0;
 // Number of snap steps across the screen (NDC -1..1). ~ half of render width = 1 px grid.
-uniform float snap_resolution = 140.0;
+uniform float snap_resolution = 320.0;
 
 varying vec3 w_pos;
 varying vec3 w_nrm;

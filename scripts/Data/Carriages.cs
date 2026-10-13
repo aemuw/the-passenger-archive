@@ -101,10 +101,10 @@ public static class Carriages
 		}),
 		N("name", S("Віктор. Віктор Степанович, але це вже для паперів.", "Тут просто Віктор."), fx: "know", next: "hub"),
 		N("home", S("П'ятиповерхівка, третій під'їзд. Двадцять років одним шляхом: зупинка, чотири ліхтарі, арка, двір.", "Я їх рахував. Чотири ліхтарі. Один — миготів."), set: "v_home", next: "hub"),
-		N("people", S("Он дівчина в шарфі — спить. Он той, у синьому, — теж, чи прикидається.", "А той, у кепці… бачите, барабанить? Весь цей час. Ніби рахує. А хто рахує — той чекає."),
+		N("people", S("Дівчина в шарфі спить відтоді, як я сів. Не будіть її.", "Чоловіка в кепці я, здається, бачив на своїй зупинці. Хоча таких кепок пів міста."),
 			set: "v_people", opts: new[] { O("Ви його знаєте?", "kepka"), O("Ви просто втомились.", "tired"), O("Зрозуміло.", "hub") }),
 		N("kepka", S("Не знаю. А здається, що знаю.", "Так буває, коли людину бачиш щодня, а в обличчя не дивишся."), next: "hub"),
-		N("tired", S("Може. Але я двадцять років рахував чужі гроші.", "Я помічаю, коли хтось рахує щось інше."), next: "hub"),
+		N("tired", S("Може. Останній тиждень погано спав.", "Зачиню двері — і знову перевіряю, чи повернув ключ. Ніколи такого не було."), next: "hub"),
 		N("route", S("Та що там розповідати. Ті самі ліхтарі, та сама арка.", "Хочете — покажу. Тільки не втручайтесь. Просто йдіть позаду. Мені так легше."),
 			opts: new[] { O("Покажіть.", "show"), O("Може, пізніше.", "hub") }),
 		N("show", S("Дивіться."), fx: "memory:route"),
@@ -145,7 +145,7 @@ public static class Carriages
 	// Maksym ("Макс"): easy, jokey, friendly to a fault. His name is a clue: it is the name of the "seller" in the hero's phone.
 	static readonly Convo Pop1Talk = C(
 		new[] { E("first"), E("again", need: "p1_hi") },
-		N("first", S("О, і ви тут. Знаєте, я п'ять хвилин намагаюсь зрозуміти, чому в цьому вагоні вікна не запітніли.", "Всередині тепло, надворі мороз — а скло сухе. Незвично."),
+		N("first", S("Не зачепіть сумку. Я її зараз приберу.", "Сідайте, якщо ноги втомилися. До зупинки ще є час."),
 			set: "k:met_pop1,p1_hi", next: "ask"),
 		N("again", S("О, знову ви."), next: "ask"),
 		N("ask", None, opts: new[]
@@ -154,7 +154,7 @@ public static class Carriages
 			O("Як вас звати?", "name", unless: "p1_name"),
 			O("Мені пора."),
 		}),
-		N("long", S("Та давно. Люблю дорогу. У дорозі всі щирі, помітили? Нікому нічого доводити.", "Мені головне — не зупинятись. " + HeroPhrase), set: "p1_long", next: "ask"),
+		N("long", S("Сів трохи раніше за вас. Збирався подрімати, та двері весь час грюкають.", "Я до кінцевої. " + HeroPhrase), set: "p1_long", next: "ask"),
 		N("name", S("Максим. А ви — не кажіть, самі скажете, коли захочете.", "Я нікуди не поспішаю."), set: "p1_name,k:pop_named", fx: "know", next: "ask"));
 
 	// ═════════════════════════════ CARRIAGE 2 · Halyna & Olya ═════════════════════════════
@@ -175,7 +175,7 @@ public static class Carriages
 		}),
 		N("sorry", S("Нічого. Ви не перший, хто слухає.", "Тут усі слухають. А потім їдуть далі."), next: null),
 
-		N("heard", S("А, ви все чули. Не вибачайтесь. Чужого горя не позичиш."), opts: new[]
+		N("heard", S("Ви чули нашу розмову?", "Нічого. Тут усе чути, навіть коли говориш тихо."), opts: new[]
 		{
 			O("Це був ваш чоловік?", "husband", unless: "g_h"),
 			O("Ви були там після?", "wind", unless: "g_w"),
@@ -466,7 +466,7 @@ public static class Carriages
 
 				new PersonData("viktor", "Віктор", "Незнайомець у коричневому піджаку, що рахує ліхтарі за вікном",
 					Row: 3, Side: -1, Slot: 1,
-					Look: new Outfit(new Color(0.32f, 0.22f, 0.15f), Glasses: true, Bag: true, Hair: new Color(0.55f, 0.55f, 0.55f), Build: 0.94f),
+					Look: new Outfit(new Color(0.32f, 0.22f, 0.15f), Glasses: true, Bag: true, Hair: new Color(0.55f, 0.55f, 0.55f), Build: 0.94f, Age: 67),
 					Dialog: ViktorTalk, Idle: Gesture.Fidget,
 					Barks: new[] { "(тихо) Один, два, три, чотири… Чотири ліхтарі.", "(стискає портфель) Двадцять років… двадцять років.", "Вибачте, я задумався." }),
 
@@ -498,9 +498,9 @@ public static class Carriages
 		new CarriageData(
 			Title: "ВАГОН 2",
 			Kind: StoryKind.Inspired,
-			CardNote: "Натхненна документально зафіксованими випадками. Імена та деталі змінено.",
+			CardNote: "Художня історія про довіру та втрату. Персонажі вигадані. Спогад відтворює уявлення Галини, а не встановлені факти.",
 			// PLACEHOLDER text: replace with sourced material before release (see docs/REAL_STORIES.md).
-			RealWorld: "Історії про нічні підвезення незнайомців трапляються в хроніках різних країн. Переважна більшість підвезень закінчується добре — тому ознаки небезпеки так легко пропустити: порожня дорога, ніч, мокрий одяг, і ніхто не знає, де ви.",
+			RealWorld: null,
 			StuckWorld: true,
 			DeadLamps: new[] { 0 },
 			People: new[]
@@ -509,12 +509,12 @@ public static class Carriages
 
 				new PersonData("galyna", "Галина", "Незнайома жінка в сірому шарфі, що дивиться повз усіх",
 					Row: 3, Side: +1, Slot: 0,
-					Look: new Outfit(new Color(0.12f, 0.12f, 0.14f), Scarf: true, ScarfColor: new Color(0.35f, 0.35f, 0.38f), Hair: new Color(0.35f, 0.33f, 0.33f), Build: 0.9f),
+					Look: new Outfit(new Color(0.12f, 0.12f, 0.14f), Scarf: true, ScarfColor: new Color(0.35f, 0.35f, 0.38f), Hair: new Color(0.35f, 0.33f, 0.33f), Build: 0.9f, HairStyle: "tied", Age: 62),
 					Dialog: GalynaTalk, Idle: Gesture.Window,
 					Barks: new[] { "(дивиться на чай) Холоне.", "Не стійте над душею, будь ласка." }),
 				new PersonData("olya", "Оля", "Незнайомка з гвоздиками, яка не знає, куди їх діти",
 					Row: 3, Side: +1, Slot: 1,
-					Look: new Outfit(new Color(0.2f, 0.35f, 0.35f), Flowers: true, Hair: new Color(0.55f, 0.3f, 0.15f), Build: 0.92f),
+					Look: new Outfit(new Color(0.2f, 0.35f, 0.35f), Flowers: true, Hair: new Color(0.55f, 0.3f, 0.15f), Build: 0.92f, HairStyle: "bob", Age: 29),
 					Dialog: OlyaTalk, Idle: Gesture.Fidget,
 					Barks: new[] { "Ой, вибачте… я думала вголос.", "Він завжди казав: «Оля, не нервуй». А я нервую." }),
 
@@ -549,9 +549,9 @@ public static class Carriages
 		new CarriageData(
 			Title: "ВАГОН 3",
 			Kind: StoryKind.Inspired,
-			CardNote: "Натхненна реальними випадками. Деталі змінено.",
+			CardNote: "Художня історія про суперечливі свідчення. Персонажі та події вигадані. Відповідальність за насильство належить тому, хто його вчинив.",
 			// PLACEHOLDER text: replace with sourced material before release (see docs/REAL_STORIES.md).
-			RealWorld: "У багатьох задокументованих випадках зникнення людину бачили востаннє в компанії того, кому вона довіряла або кого не хотіла образити. Незручність відмовити часто сильніша за інстинкт. Відмовитись можна завжди — навіть якщо це здається грубим.",
+			RealWorld: null,
 			DeadLamps: new[] { 2 },
 			People: new[]
 			{
@@ -559,7 +559,7 @@ public static class Carriages
 
 				new PersonData("solomiya", "Соломія", "Незнайомка в зеленому пальті, що тримає сумку обома руками",
 					Row: 2, Side: -1, Slot: 1,
-					Look: new Outfit(new Color(0.22f, 0.36f, 0.3f), Scarf: true, ScarfColor: new Color(0.7f, 0.65f, 0.4f), Bag: true, Hair: new Color(0.08f, 0.06f, 0.05f), Build: 0.9f),
+					Look: new Outfit(new Color(0.22f, 0.36f, 0.3f), Scarf: true, ScarfColor: new Color(0.7f, 0.65f, 0.4f), Bag: true, Hair: new Color(0.08f, 0.06f, 0.05f), Build: 0.9f, HairStyle: "tied", Age: 27),
 					Dialog: SolomiyaTalk, Idle: Gesture.Fidget,
 					Barks: new[] { "Вибачте, я просто… (поправляє сумку).", "Ви стоїте, а я мовчу. Незручно, так?" }),
 

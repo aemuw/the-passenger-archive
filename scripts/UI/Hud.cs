@@ -24,6 +24,26 @@ public partial class Hud : CanvasLayer
 	public override void _Ready()
 	{
 		_rng.Randomize();
+		_prompt = FindChild("Prompt", true, false) as Label;
+		_notify = FindChild("Notification", true, false) as Label;
+		_caption = FindChild("Caption", true, false) as Label;
+		_dlgName = FindChild("Speaker", true, false) as Label;
+		_dlgText = FindChild("DialogueText", true, false) as Label;
+		_dlgHint = FindChild("Advance", true, false) as Label;
+		_bookText = FindChild("TicketText", true, false) as Label;
+		_death = FindChild("StoryCard", true, false) as Label;
+		_dlgPanel = FindChild("Dialogue", true, false) as PanelContainer;
+		_book = FindChild("Ticket", true, false) as PanelContainer;
+		_choicePanel = FindChild("Choices", true, false) as PanelContainer;
+		_choiceBox = FindChild("ChoiceRows", true, false) as VBoxContainer;
+		_gore = FindChild("BloodOverlay", true, false) as Control;
+		_fade = FindChild("Fade", true, false) as ColorRect;
+		_flash = FindChild("ImpactFlash", true, false) as ColorRect;
+	}
+
+	public void Author()
+	{
+		_rng.Randomize();
 		Layer = 10;
 		var root = new Control { MouseFilter = Control.MouseFilterEnum.Ignore };
 		root.SetAnchorsPreset(Control.LayoutPreset.FullRect);
@@ -35,7 +55,7 @@ public partial class Hud : CanvasLayer
 		dot.OffsetLeft = -2; dot.OffsetRight = 2; dot.OffsetTop = -2; dot.OffsetBottom = 2;
 		root.AddChild(dot);
 
-		_prompt = MakeLabel(root, 0.2f, 0.60f, 0.8f, 0.72f, 20, Paper, HorizontalAlignment.Center);
+		_prompt = MakeLabel(root, 0.16f, 0.83f, 0.84f, 0.96f, 18, Paper, HorizontalAlignment.Center);
 		_notify = MakeLabel(root, 0.2f, 0.06f, 0.8f, 0.14f, 20, Amber, HorizontalAlignment.Center);
 		_caption = MakeLabel(root, 0.1f, 0.38f, 0.9f, 0.55f, 38, Amber, HorizontalAlignment.Center);
 		_caption.Modulate = new Color(1, 1, 1, 0);
@@ -88,6 +108,19 @@ public partial class Hud : CanvasLayer
 		_death = MakeLabel(root, 0.1f, 0.2f, 0.9f, 0.8f, 28, new Color(0.8f, 0.15f, 0.12f), HorizontalAlignment.Center);
 		_death.VerticalAlignment = VerticalAlignment.Center;
 		_death.Visible = false;
+		_prompt.Name = "Prompt"; _notify.Name = "Notification"; _caption.Name = "Caption";
+		_dlgName.Name = "Speaker"; _dlgText.Name = "DialogueText"; _dlgHint.Name = "Advance";
+		_bookText.Name = "TicketText"; _death.Name = "StoryCard";
+		_dlgPanel.Name = "Dialogue"; _book.Name = "Ticket"; _choicePanel.Name = "Choices";
+		_choiceBox.Name = "ChoiceRows"; _gore.Name = "BloodOverlay"; _fade.Name = "Fade"; _flash.Name = "ImpactFlash";
+	}
+
+	public void ApplyTextScale()
+	{
+		_dlgText.AddThemeFontSizeOverride("font_size", (int)(22 * UserSettings.TextScale));
+		_dlgName.AddThemeFontSizeOverride("font_size", (int)(20 * UserSettings.TextScale));
+		_bookText.AddThemeFontSizeOverride("font_size", (int)(20 * UserSettings.TextScale));
+		_death.AddThemeFontSizeOverride("font_size", (int)(24 * UserSettings.TextScale));
 	}
 
 	public override void _Process(double delta)
@@ -219,6 +252,7 @@ public partial class Hud : CanvasLayer
 	/// <summary>A red flash that decays — the moment of impact.</summary>
 	public void BloodFlash(float strength = 0.8f)
 	{
+		strength *= UserSettings.Gore;
 		_flash.Color = new Color(0.55f, 0.02f, 0.02f, strength);
 		var tw = CreateTween();
 		tw.TweenProperty(_flash, "color:a", 0f, 0.9f);
@@ -227,14 +261,17 @@ public partial class Hud : CanvasLayer
 	/// <summary>Blocky blood splashes on the "lens" (matches the PS1 look); some of them run down.</summary>
 	public void Splatter(int count)
 	{
+		count = (int)(count * UserSettings.Gore);
 		var size = GetViewport().GetVisibleRect().Size;
 		for (int i = 0; i < count; i++)
 		{
 			float w = _rng.RandfRange(14f, 90f);
 			float h = _rng.RandfRange(14f, 70f);
-			var r = new ColorRect
+			var r = new TextureRect
 			{
-				Color = new Color(_rng.RandfRange(0.35f, 0.62f), 0.01f, 0.02f, _rng.RandfRange(0.55f, 0.9f)),
+				Texture = GD.Load<Texture2D>("res://assets/textures/blood.svg"),
+				ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
+				Modulate = new Color(1f, 1f, 1f, _rng.RandfRange(0.55f, 0.9f)),
 				MouseFilter = Control.MouseFilterEnum.Ignore,
 				Position = new Vector2(_rng.RandfRange(0f, size.X - w), _rng.RandfRange(0f, size.Y * 0.8f)),
 				Size = new Vector2(w, h),

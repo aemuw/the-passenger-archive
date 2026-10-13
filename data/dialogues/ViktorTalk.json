@@ -1,0 +1,454 @@
+{
+  "Entries": [
+    {
+      "Node": "first",
+      "Need": null,
+      "Unless": null
+    },
+    {
+      "Node": "again",
+      "Need": "v_met",
+      "Unless": null
+    },
+    {
+      "Node": "done",
+      "Need": "story_done",
+      "Unless": null
+    }
+  ],
+  "Nodes": [
+    {
+      "Id": "first",
+      "Say": [
+        {
+          "Text": "О. Ви теж без квитка? Я кишені перевіряв чотири рази. Чотири!",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Двадцять років у бухгалтерії — а де сів, не пам'ятаю.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "Тут вільно?",
+          "To": "free",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Ви в порядку?",
+          "To": "ok",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Куди їде цей потяг?",
+          "To": "where",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "free",
+      "Say": [
+        {
+          "Text": "Вільно, вільно. Портфель приберу. Він у мене як собака: де я — там і він.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "hub",
+      "Set": "v_met",
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "ok",
+      "Say": [
+        {
+          "Text": "Я? Ну… Знаєте, вперше за двадцять років не знаю, котра година.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Це або відпустка, або щось серйозніше.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "hub",
+      "Set": "v_met,v_ok",
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "where",
+      "Say": [
+        {
+          "Text": "Питайте провідника. Мені він сказав «далі». Я чекав продовження. Не було.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "hub",
+      "Set": "v_met",
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "again",
+      "Say": [
+        {
+          "Text": "Так?",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "hub",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "hub",
+      "Say": [],
+      "Opts": [
+        {
+          "Text": "Як вас звати?",
+          "To": "name",
+          "Need": null,
+          "Unless": "v_name",
+          "Set": "v_name",
+          "Fx": null
+        },
+        {
+          "Text": "Де ви живете?",
+          "To": "home",
+          "Need": null,
+          "Unless": "v_home",
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Хто ці люди навколо?",
+          "To": "people",
+          "Need": null,
+          "Unless": "v_people",
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Розкажіть, як ви добиралися додому.",
+          "To": "route",
+          "Need": "v_home",
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Не буду заважати.",
+          "To": null,
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "name",
+      "Say": [
+        {
+          "Text": "Віктор. Віктор Степанович, але це вже для паперів.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Тут просто Віктор.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "hub",
+      "Set": null,
+      "Fx": "know",
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "home",
+      "Say": [
+        {
+          "Text": "П'ятиповерхівка, третій під'їзд. Двадцять років одним шляхом: зупинка, чотири ліхтарі, арка, двір.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Я їх рахував. Чотири ліхтарі. Один — миготів.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "hub",
+      "Set": "v_home",
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "people",
+      "Say": [
+        {
+          "Text": "Дівчина в шарфі спить відтоді, як я сів. Не будіть її.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Чоловіка в кепці я, здається, бачив на своїй зупинці. Хоча таких кепок пів міста.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "Ви його знаєте?",
+          "To": "kepka",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Ви просто втомились.",
+          "To": "tired",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Зрозуміло.",
+          "To": "hub",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": "v_people",
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "kepka",
+      "Say": [
+        {
+          "Text": "Не знаю. А здається, що знаю.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Так буває, коли людину бачиш щодня, а в обличчя не дивишся.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "hub",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "tired",
+      "Say": [
+        {
+          "Text": "Може. Останній тиждень погано спав.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Зачиню двері — і знову перевіряю, чи повернув ключ. Ніколи такого не було.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "hub",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "route",
+      "Say": [
+        {
+          "Text": "Та що там розповідати. Ті самі ліхтарі, та сама арка.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Хочете — покажу. Тільки не втручайтесь. Просто йдіть позаду. Мені так легше.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "Покажіть.",
+          "To": "show",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Може, пізніше.",
+          "To": "hub",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "show",
+      "Say": [
+        {
+          "Text": "Дивіться.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": null,
+      "Set": null,
+      "Fx": "memory:route",
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "done",
+      "Say": [
+        {
+          "Text": "Тепер ви знаєте, як це було.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Я намагаюсь пригадати, де саме… Ні. Не пригадую. Усе виглядало звичайно.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "Мені шкода.",
+          "To": "sorry",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "А чоловік у кепці?",
+          "To": "kepka2",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Їдьте спокійно.",
+          "To": null,
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "sorry",
+      "Say": [
+        {
+          "Text": "Не треба. Просто їдьте далі. Тільки — ну, ви розумієте — без мене.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "kepka2",
+      "Say": [
+        {
+          "Text": "Не питайте мене про нього. Я його більше не бачу.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Він просто сидить. Ніби чекає, поки хтось візьме слухавку.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    }
+  ]
+}

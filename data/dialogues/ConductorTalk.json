@@ -1,0 +1,254 @@
+{
+  "Entries": [
+    {
+      "Node": "hi",
+      "Need": null,
+      "Unless": null
+    },
+    {
+      "Node": "back",
+      "Need": "c_met",
+      "Unless": null
+    }
+  ],
+  "Nodes": [
+    {
+      "Id": "hi",
+      "Say": [
+        {
+          "Text": "Слухаю.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "hub",
+      "Set": "c_met",
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "back",
+      "Say": [
+        {
+          "Text": "Так?",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "hub",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "hub",
+      "Say": [],
+      "Opts": [
+        {
+          "Text": "Як вас звати?",
+          "To": "name",
+          "Need": null,
+          "Unless": "c_name",
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Куди їде потяг?",
+          "To": "where",
+          "Need": null,
+          "Unless": "c_where",
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Хто ці люди?",
+          "To": "who",
+          "Need": null,
+          "Unless": "c_who",
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Чому вони тут?",
+          "To": "why",
+          "Need": null,
+          "Unless": "c_why",
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Що в наступному вагоні?",
+          "To": "next",
+          "Need": null,
+          "Unless": "c_next",
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Ви ніколи не брешете?",
+          "To": "lie",
+          "Need": null,
+          "Unless": "c_lie",
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Нічого. Дякую.",
+          "To": null,
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "name",
+      "Say": [
+        {
+          "Text": "Провідник.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Імені тут ніхто не питає. Ви — перший за… не знаю, як це міряти.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "hub",
+      "Set": "c_name",
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "where",
+      "Say": [
+        {
+          "Text": "Далі.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "hub",
+      "Set": "c_where",
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "who",
+      "Say": [
+        {
+          "Text": "Пасажири.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "hub",
+      "Set": "c_who",
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "why",
+      "Say": [
+        {
+          "Text": "А чому ти?",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "hub",
+      "Set": "c_why",
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "next",
+      "Say": [
+        {
+          "Text": "Знаю.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "То скажіть.",
+          "To": "next2",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Ясно.",
+          "To": "hub",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": "c_next",
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "next2",
+      "Say": [
+        {
+          "Text": "Це не моя історія.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "hub",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "lie",
+      "Say": [
+        {
+          "Text": "Ні.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Мені не потрібно. Достатньо не відповідати.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "hub",
+      "Set": "c_lie",
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    }
+  ]
+}

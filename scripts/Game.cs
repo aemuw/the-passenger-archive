@@ -26,6 +26,9 @@ public partial class Game : Node
 	Player _player;
 	SubViewport _vp;
 	Node3D _worldRoot;
+	HorrorDirector _horror;
+	public bool HorrorAvailable => _mode == Mode.Carriage && !_busy && !_dead && !_inTalk && _script == null && !Hud.BookOpen && !PhoneRinging;
+	public bool SeesHorrorPoint(Vector3 point) => (-_player.Cam.GlobalBasis.Z).Dot((point-_player.Cam.GlobalPosition).Normalized())>.78f;
 	MemoryScene _memory;
 	Godot.Environment _env;
 	ShaderMaterial _post;
@@ -33,6 +36,8 @@ public partial class Game : Node
 	int _index;
 	int _gen;                         // bumps on every carriage load; stale async continuations check it
 	bool _dead, _deathShown, _busy, _memoryQueued;
+	ArchiveMenu _menu;
+	Checkpoint _entry;
 	readonly HashSet<string> _flags = new();      // live until the carriage ends / you die
 	readonly HashSet<string> _kept = new();       // "k:…" flags: live for the whole run
 	readonly HashSet<string> _known = new();      // people whose real name you have learned (this carriage)
@@ -57,17 +62,105 @@ public partial class Game : Node
 	// ───────────────────────── setup ─────────────────────────
 	public override void _Ready()
 	{
+		if (System.Array.IndexOf(OS.GetCmdlineUserArgs(), "--bake-art-media") >= 0)
+		{
+			SetProcess(false); ArtAuthoring.Draw(); AssetAuthoring.AuthorFaces(); HorrorAuthoring.Media(); GetTree().Quit(); return;
+		}
+		if (System.Array.IndexOf(OS.GetCmdlineUserArgs(), "--bake-redesign") >= 0)
+		{
+			SetProcess(false); AssetAuthoring.Run(true);
+			var menu = MenuAuthoring.Create(); AssetAuthoring.Save(menu,"res://scenes/ui/ArchiveMenu.tscn"); menu.Free();
+			var hud = new Hud { Name="Hud" }; hud.Author(); AssetAuthoring.Save(hud,"res://scenes/ui/Hud.tscn"); hud.Free();
+			GetTree().Quit(); return;
+		}
+		if (System.Array.IndexOf(OS.GetCmdlineUserArgs(), "--bake-faces") >= 0)
+		{
+			SetProcess(false); AssetAuthoring.AuthorFaces(); GetTree().Quit(); return;
+		}
+		if (System.Array.IndexOf(OS.GetCmdlineUserArgs(), "--bake-visuals") >= 0)
+		{
+			SetProcess(false); AssetAuthoring.Run(true); GetTree().Quit(); return;
+		}
+		if (System.Array.IndexOf(OS.GetCmdlineUserArgs(), "--bake-media") >= 0)
+		{
+			SetProcess(false);
+			AssetAuthoring.AuthorMedia();
+			GetTree().Quit();
+			return;
+		}
+		if (System.Array.IndexOf(OS.GetCmdlineUserArgs(), "--bake-assets") >= 0)
+		{
+			SetProcess(false);
+			AssetAuthoring.Run();
+			GetTree().Quit();
+			return;
+		}
 		RegisterInput();
+		UserSettings.Load();
 		BuildView();
 
-		Hud = new Hud();
+		Hud = SceneAssets.Load<Hud>("res://scenes/ui/Hud.tscn");
 		AddChild(Hud);
-		Audio = new TrainAudio();
+		Audio = SceneAssets.Load<TrainAudio>("res://scenes/audio/TrainAudio.tscn");
 		AddChild(Audio);
 		_player.OnStep = () => Audio.Step();
 
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 		LoadCarriage(first: true);
+		_menu = SceneAssets.Load<ArchiveMenu>("res://scenes/ui/ArchiveMenu.tscn");
+		AddChild(_menu);
+		_menu.NewGame = () =>
+		{
+			_index = 0; _kept.Clear(); _remembered.Clear();
+			Resume(); LoadCarriage(first: true); _entry.Write();
+		};
+		_menu.ContinueGame = () =>
+		{
+			var checkpoint = Checkpoint.Read();
+			if (checkpoint == null) return;
+			Restore(checkpoint); Resume(); LoadCarriage();
+		};
+		_menu.ResumeGame = Resume;
+		_menu.QuitGame = () => QuitGame();
+		_menu.SettingsChanged = ApplySettings;
+		ApplySettings();
+		_menu.ShowMenu(false, Checkpoint.Read() != null);
+		GetTree().Paused = true;
+		if (System.Array.IndexOf(OS.GetCmdlineUserArgs(), "--verify") >= 0) RunVerification();
+		if (System.Array.IndexOf(OS.GetCmdlineUserArgs(), "--capture") >= 0) CapturePreview();
+		if (System.Array.IndexOf(OS.GetCmdlineUserArgs(), "--verify-horror") >= 0) VerifyHorror(false);
+		if (System.Array.IndexOf(OS.GetCmdlineUserArgs(), "--capture-horror") >= 0) VerifyHorror(true);
+	}
+
+	void Resume() { GetTree().Paused = false; _menu.HideMenu(); }
+	bool _quitting;
+	async void QuitGame(int code = 0)
+	{
+		if (_quitting) return;
+		_quitting = true; _busy = true; _gen++;
+		GetTree().Paused = true;
+		Audio?.Shutdown();
+		// Allow the mixer to release playback references before native shutdown.
+		await ToSignal(GetTree().CreateTimer(0.2, processAlways: true), SceneTreeTimer.SignalName.Timeout);
+		GetTree().Quit(code);
+	}
+	public override void _ExitTree()
+	{
+		_gen++;
+		_post?.Dispose(); _post = null;
+		_env?.Dispose(); _env = null;
+		Ps1Materials.Release();
+	}
+	void Restore(Checkpoint checkpoint)
+	{
+		_index = checkpoint.Carriage;
+		_kept.Clear(); _kept.UnionWith(checkpoint.Flags);
+		_remembered.Clear(); _remembered.AddRange(checkpoint.Remembered);
+	}
+	void ApplySettings()
+	{
+		_post?.SetShaderParameter("effects", UserSettings.Effects);
+		Hud?.ApplyTextScale();
 	}
 
 	static void RegisterInput()
@@ -126,7 +219,7 @@ public partial class Game : Node
 		ApplyLook(false);
 		_vp.AddChild(new WorldEnvironment { Environment = _env });
 
-		_player = new Player();
+		_player = SceneAssets.Load<Player>("res://scenes/actors/Player.tscn");
 		_vp.AddChild(_player);
 	}
 
@@ -135,7 +228,7 @@ public partial class Game : Node
 	{
 		_env.BackgroundColor = memory ? new Color(0.03f, 0.05f, 0.10f) : new Color(0.02f, 0.03f, 0.06f);
 		_env.AmbientLightColor = memory ? new Color(0.30f, 0.42f, 0.70f) : new Color(0.35f, 0.40f, 0.60f);
-		_env.AmbientLightEnergy = memory ? 0.70f : 0.45f;
+		_env.AmbientLightEnergy = memory ? 0.70f : 0.55f;
 		_env.FogLightColor = memory ? new Color(0.05f, 0.08f, 0.16f) : new Color(0.03f, 0.04f, 0.07f);
 		_env.FogDensity = memory ? 0.03f : 0.018f;
 		_post.SetShaderParameter("tint", memory ? MemoryTint : CarriageTint);
@@ -144,6 +237,7 @@ public partial class Game : Node
 	// ───────────────────────── carriage flow ─────────────────────────
 	void LoadCarriage(bool first = false)
 	{
+		_entry = new Checkpoint { Carriage = _index, Flags = System.Linq.Enumerable.ToArray(_kept), Remembered = _remembered.ToArray() };
 		_gen++;
 		_memory?.QueueFree();
 		_memory = null;
@@ -174,7 +268,22 @@ public partial class Game : Node
 		ApplyLook(false);
 		Hud.ClearGore();
 
-		_worldRoot = CarriageBuilder.Build(Current, this);
+		_worldRoot = SceneAssets.Load<Node3D>($"res://scenes/carriages/Carriage{_index + 1:00}.tscn");
+		foreach (var child in _worldRoot.GetChildren())
+		{
+			if (child is Passenger passenger)
+			{
+				passenger.Data = Carriages.Find(Current, passenger.PersonId);
+				passenger.GameRef = this;
+				passenger.Build();
+			}
+		}
+		if (_worldRoot.GetNodeOrNull<ActionProp>("Telephone") is { } phone)
+		{
+			phone.PromptFn = () => PhoneRinging ? "[E] Відповісти" : "[E] Слухавка";
+			phone.OnUse = game => { if (game.PhoneRinging) game.ViolateRule(); else game.Notify("Гудків немає."); };
+		}
+		_horror = _worldRoot.GetNode<HorrorDirector>("Horror"); _horror.GameRef = this;
 		_vp.AddChild(_worldRoot);
 		_player.Teleport(new Vector3(0, 0.05f, 6.0f), 0f);
 
@@ -184,10 +293,11 @@ public partial class Game : Node
 		_player.InputEnabled = false;
 		Hud.SetFadeInstant(1f);
 		var tw = Hud.Fade(0f, first ? 2.5f : 1.4f);
-		tw.Finished += () => { _busy = false; _player.InputEnabled = !Hud.BookOpen; };
+		int generation = _gen;
+		tw.Finished += () => { if (generation == _gen) { _busy = false; _player.InputEnabled = !Hud.BookOpen; } };
 
 		Hud.Caption(Current.Title, 2.5f);
-		if (first) Hud.Notify("WASD — рух · E — діяти · Tab — квиток · Esc — курсор", 6f);
+		if (first) Hud.Notify("WASD — рух · E — діяти · Tab — квиток · Esc — пауза", 6f);
 	}
 
 	public void TryDoor()
@@ -228,6 +338,7 @@ public partial class Game : Node
 		if (c.RealWorld != null) card += $"\n\nREAL-WORLD CONTEXT\n{c.RealWorld}";
 
 		_index++;
+		new Checkpoint { Carriage = _index, Flags = System.Linq.Enumerable.ToArray(_kept), Remembered = _remembered.ToArray() }.Write();
 		Hud.ShowDeath(card, ending: true);
 		await ToSignal(GetTree().CreateTimer(6.0), SceneTreeTimer.SignalName.Timeout);
 		if (g != _gen) return;
@@ -241,24 +352,27 @@ public partial class Game : Node
 		_mode = Mode.Ending;
 		_busy = false;
 		_player.InputEnabled = false;
-		Audio.PlayMotif(-26f);                                                                  // almost inaudible, as designed
+		_memory = SceneAssets.Load<MemoryScene>("res://scenes/memories/depart.tscn");
+		_memory.GameRef = this;
+		_memory.Position = new Vector3(300, 0, 0);
+		_vp.AddChild(_memory);
+		_player.Teleport(_memory.GlobalPosition + new Vector3(0, 0.05f, -1f), 0f);
+		_player.InputEnabled = false;
+		Audio.PlayMotif(-26f);
 		Hud.ShowDeath(
-			"TRAIN / FINAL MEMORY\n\n" +
-			"Ти бачиш ту саму мить ще раз — іншими очима.\n\n" +
-			"Продавця з «Зенітом» не було. Був Максим. Він написав тобі першим.\n" +
-			"Він сів у той самий потяг і їхав поруч — щоб ти приїхав сам.\n\n" +
-			"Вагон 1 — у довгому пальті, біля заднього виходу.\n" +
-			"Вагон 2 — із газетою, яку він ніколи не перегортав. Він відчинив тобі двері.\n" +
-			"Вагон 3 — біля виходу, ніби теж чекає зупинки.\n\n" +
-			"Марта сказала вголос те, що ти не захотів почути: ніч, готівка, сам, «тільки сьогодні».\n" +
-			"Винен той, хто це підлаштував. Але почути її було можливо.\n\n" +
-			"Кінець прототипу  ·  [R] — почати спочатку", ending: true);
+			"ОСТАННІЙ СПОГАД\n\n" +
+			"Він стояв біля цих дверей, коли ти зайшов.\n" +
+			"Потім прибирав сумку. Читав газету. Допоміг із замком.\n" +
+			"Він не шукав тебе. Він їхав поруч.\n\n" +
+			"Це була його пастка.\n\n" +
+			"Кінець фрагмента  ·  [R] — почати спочатку", ending: true);
+		Hud.SetFadeInstant(0.68f);
 	}
-
 	// ───────────────────────── memories ─────────────────────────
 	async void EnterMemory(string id)
 	{
 		if (_mode != Mode.Carriage) return;
+		_horror?.Cancel();
 		int g = _gen;
 		_busy = true;
 		_player.InputEnabled = false;
@@ -282,12 +396,15 @@ public partial class Game : Node
 		else Audio.SetPad(true, -20f);
 		ApplyLook(true);
 
-		_memory = new MemoryScene { Id = id, GameRef = this, Position = new Vector3(300, 0, 0) };
+		_memory = SceneAssets.Load<MemoryScene>($"res://scenes/memories/{id}.tscn");
+		_memory.GameRef = this;
+		_memory.Position = new Vector3(300, 0, 0);
 		_vp.AddChild(_memory);
 		_mode = Mode.Memory;
 		_player.Teleport(_memory.GlobalPosition + _memory.StartLocal, _memory.StartYaw);
 
 		await ToSignal(Hud.Fade(0f, 1.2f), Tween.SignalName.Finished);
+		if (g != _gen) return;
 		_player.InputEnabled = true;
 		_busy = false;
 		_memory.Intro();
@@ -321,6 +438,7 @@ public partial class Game : Node
 		_player.Teleport(_savedPos, _savedYaw);
 
 		await ToSignal(Hud.Fade(0f, 1.4f), Tween.SignalName.Finished);
+		if (g != _gen) return;
 		_player.InputEnabled = true;
 		_busy = false;
 
@@ -337,6 +455,7 @@ public partial class Game : Node
 	public void TeleportPlayer(Vector3 pos, float yaw) => _player.Teleport(pos, yaw);
 	public void LockPlayer() => _player.InputEnabled = false;
 	public void CollapsePlayer() => _player.Collapse();
+	public bool MemoryIsActive(MemoryScene memory) => _memory == memory && _mode == Mode.Memory;
 
 	public void SetUse(string prompt, Action action) { _pendingPrompt = prompt; _pendingUse = action; }
 	public void ClearUse() { _pendingPrompt = null; _pendingUse = null; }
@@ -374,7 +493,7 @@ public partial class Game : Node
 	public static string DisplayOf(PersonData p, Game g)
 		=> p.Name != null && g != null && g.IsKnown(p.Id) ? p.Name : (p.Alias ?? p.Name ?? "");
 
-	public bool IsKnown(string id) => _known.Contains(id);
+	public bool IsKnown(string id) => _known.Contains(id) || id == "pop" && _kept.Contains("k:pop_named");
 
 	void Know(string id)
 	{
@@ -429,7 +548,8 @@ public partial class Game : Node
 			_busy = true;
 			_player.InputEnabled = false;
 			string id = fx.Substring(7);
-			GetTree().CreateTimer(0.8).Timeout += () => EnterMemory(id);
+			int generation = _gen;
+			GetTree().CreateTimer(0.8).Timeout += () => { if (generation == _gen) EnterMemory(id); };
 		}
 		else if (fx == "memend") _memory?.Conclude();
 		else if (fx == "walkgo") _memory?.StartWalk();
@@ -499,6 +619,7 @@ public partial class Game : Node
 	async void KillPlayer(string reason)
 	{
 		if (_dead || _mode != Mode.Carriage) return;
+		_horror?.Cancel();
 		int g = _gen;
 		var rule = Current.Rule;
 		_dead = true;
@@ -537,12 +658,12 @@ public partial class Game : Node
 		};
 		_worldRoot.AddChild(figure);
 		figure.Build();
+		figure.BeginAttack(rule.Method);
 
-		_env.AmbientLightEnergy = 1.4f;
-		await ToSignal(GetTree().CreateTimer(0.22), SceneTreeTimer.SignalName.Timeout);
+		_env.AmbientLightEnergy = 0.55f;
+		await ToSignal(GetTree().CreateTimer(0.5), SceneTreeTimer.SignalName.Timeout);
 		if (g != _gen) return;
-		_env.AmbientLightEnergy = 0.05f;
-		await ToSignal(GetTree().CreateTimer(0.6), SceneTreeTimer.SignalName.Timeout);
+		await ToSignal(GetTree().CreateTimer(0.3), SceneTreeTimer.SignalName.Timeout);
 		if (g != _gen) return;
 
 		// The blow. Blood on the lens, blood on the floor, the world tips over.
@@ -576,6 +697,7 @@ public partial class Game : Node
 				_kept.Clear();
 				_remembered.Clear();
 			}
+			else if (_entry != null) Restore(_entry);
 			LoadCarriage();
 			return;
 		}
@@ -634,20 +756,15 @@ public partial class Game : Node
 			}
 		}
 
-		// Something in the carriage is looking at you: the picture bleeds, the pulse rises.
+		// Suspense comes from staged encounters; proximity does not identify a killer.
 		float target = 0f;
-		if (rule != null && !_dead)
+		if (_horror?.Active == true && !_dead)
 		{
-			var k = _worldRoot.GetNodeOrNull<Node3D>("p_" + rule.KillerId);
-			if (k != null)
-			{
-				float dist = k.GlobalPosition.DistanceTo(_player.GlobalPosition);
-				target = Mathf.Clamp((3.4f - dist) / 2.4f, 0f, 1f) * 0.55f;
-			}
+			target = 0.28f;
 		}
 		_stress = Mathf.MoveToward(_stress, target, (float)delta * 0.7f);
 		_post.SetShaderParameter("stress", _stress);
-		Audio.Heartbeat(_stress > 0.25f);
+		Audio.Heartbeat(false);
 
 		if (rule?.Kind == RuleKind.OfferGuide && !_offerStarted && _carriageTime >= 35 && !_inTalk && !_busy && _script == null)
 			StartOffer();
@@ -665,16 +782,21 @@ public partial class Game : Node
 
 	public override void _Input(InputEvent e)
 	{
+		if (_menu == null) return;
+		if (e.IsActionPressed("ui_cancel"))
+		{
+			_menu.ShowMenu(true, Checkpoint.Read() != null);
+			GetTree().Paused = true;
+			GetViewport().SetInputAsHandled();
+			return;
+		}
+		if (_menu.Open) return;
 		if (e is InputEventMouseMotion mm && Input.MouseMode == Input.MouseModeEnum.Captured)
 			_player.Look(mm.Relative);
 		else if (e is InputEventMouseButton { Pressed: true, ButtonIndex: MouseButton.Left } && _inTalk)
 			_clickPending = true;
 		else if (e is InputEventMouseButton { Pressed: true } && Input.MouseMode != Input.MouseModeEnum.Captured)
 			Input.MouseMode = Input.MouseModeEnum.Captured;
-		else if (e.IsActionPressed("ui_cancel"))
-			Input.MouseMode = Input.MouseMode == Input.MouseModeEnum.Captured
-				? Input.MouseModeEnum.Visible
-				: Input.MouseModeEnum.Captured;
 	}
 
 	/// <summary>The ticket. Its destination is erased and slowly comes back as the train goes on. Below: who you have got to know.</summary>

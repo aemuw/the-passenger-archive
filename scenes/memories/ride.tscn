@@ -1,0 +1,2041 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" path="res://scripts/World/MemoryScene.cs" id="1_txi77"]
+[ext_resource type="Script" path="res://scripts/Actors/Passenger.cs" id="2_o7kfd"]
+[ext_resource type="Texture2D" path="res://assets/textures/tailoring.png" id="3_ayth7"]
+[ext_resource type="Shader" path="res://shaders/ps1.gdshader" id="4_5pa00"]
+[ext_resource type="Texture2D" path="res://assets/textures/grime.png" id="5_ijv3l"]
+[ext_resource type="Texture2D" path="res://assets/textures/none.png" id="6_ira4k"]
+[ext_resource type="Texture2D" path="res://assets/textures/fabric.png" id="7_k686b"]
+[ext_resource type="Texture2D" path="res://assets/textures/skin.png" id="8_ev1au"]
+[ext_resource type="Texture2D" path="res://assets/textures/faces/40393141e827.png" id="9_wp88n"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_60ty7"]
+cull_mode = 2
+specular_mode = 2
+albedo_color = Color(0.217, 0.22569999, 0.24309999, 1)
+albedo_texture = ExtResource("3_ayth7")
+texture_filter = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_vidxg"]
+_surfaces = [{
+"aabb": AABB(-0.245, -0.31, -0.14, 0.49, 0.62, 0.28),
+"attribute_data": PackedByteArray("tMh2PgAAgD/WNG8+lVJKP8oyRD+VUko/tMh2PgAAgD/KMkQ/lVJKP9NNQj8AAIA/001CPwAAgD/KMkQ/lVJKP/YoXD+VUko/001CPwAAgD/2KFw/lVJKP5qZWT8AAIA/mplZPwAAgD/2KFw/lVJKP/YoXD+VUko/mplZPwAAgD/2KFw/lVJKP5qZWT8AAIA/mplZPwAAgD/2KFw/lVJKP8oyRD+VUko/mplZPwAAgD/KMkQ/lVJKP9NNQj8AAIA/001CPwAAgD/KMkQ/lVJKP9Y0bz6VUko/001CPwAAgD/WNG8+lVJKP7TIdj4AAIA/tMh2PgAAgD/WNG8+lVJKPyhcDz6VUko/tMh2PgAAgD8oXA8+lVJKP5qZGT4AAIA/mpkZPgAAgD8oXA8+lVJKPyhcDz6VUko/mpkZPgAAgD8oXA8+lVJKP5qZGT4AAIA/mpkZPgAAgD8oXA8+lVJKP9Y0bz6VUko/mpkZPgAAgD/WNG8+lVJKP7TIdj4AAIA/1jRvPpVSSj8ubiM+fO+9PnQkVz98770+1jRvPpVSSj90JFc/fO+9PsoyRD+VUko/yjJEP5VSSj90JFc/fO+9PpDCdT98770+yjJEP5VSSj+QwnU/fO+9PvYoXD+VUko/9ihcP5VSSj+QwnU/fO+9PpDCdT98770+9ihcP5VSSj+QwnU/fO+9PvYoXD+VUko/9ihcP5VSSj+QwnU/fO+9PnQkVz98770+9ihcP5VSSj90JFc/fO+9PsoyRD+VUko/yjJEP5VSSj90JFc/fO+9Pi5uIz58770+yjJEP5VSSj8ubiM+fO+9PtY0bz6VUko/1jRvPpVSSj8ubiM+fO+9PgjXIz18770+1jRvPpVSSj8I1yM9fO+9PihcDz6VUko/KFwPPpVSSj8I1yM9fO+9PgjXIz18770+KFwPPpVSSj8I1yM9fO+9PihcDz6VUko/KFwPPpVSSj8I1yM9fO+9Pi5uIz58770+KFwPPpVSSj8ubiM+fO+9PtY0bz6VUko/Lm4jPnzvvT6Wsgw+CCEEPlrTXD8IIQQ+Lm4jPnzvvT5a01w/CCEEPnQkVz98770+dCRXP3zvvT5a01w/CCEEPqRwfT8IIQQ+dCRXP3zvvT6kcH0/CCEEPpDCdT98770+kMJ1P3zvvT6kcH0/CCEEPqRwfT8IIQQ+kMJ1P3zvvT6kcH0/CCEEPpDCdT98770+kMJ1P3zvvT6kcH0/CCEEPlrTXD8IIQQ+kMJ1P3zvvT5a01w/CCEEPnQkVz98770+dCRXP3zvvT5a01w/CCEEPpayDD4IIQQ+dCRXP3zvvT6Wsgw+CCEEPi5uIz58770+Lm4jPnzvvT6Wsgw+CCEEPgDXIzwIIQQ+Lm4jPnzvvT4A1yM8CCEEPgjXIz18770+CNcjPXzvvT4A1yM8CCEEPgDXIzwIIQQ+CNcjPXzvvT4A1yM8CCEEPgjXIz18770+CNcjPXzvvT4A1yM8CCEEPpayDD4IIQQ+CNcjPXzvvT6Wsgw+CCEEPi5uIz58770+lrIMPgghBD5YObQ+AAAAAFTjJT8AAAAAlrIMPgghBD5U4yU/AAAAAFrTXD8IIQQ+WtNcPwghBD5U4yU/AAAAADMzMz8AAAAAWtNcPwghBD4zMzM/AAAAAKRwfT8IIQQ+pHB9PwghBD4zMzM/AAAAADMzMz8AAAAApHB9PwghBD4zMzM/AAAAAKRwfT8IIQQ+pHB9PwghBD4zMzM/AAAAAFTjJT8AAAAApHB9PwghBD5U4yU/AAAAAFrTXD8IIQQ+WtNcPwghBD5U4yU/AAAAAFg5tD4AAAAAWtNcPwghBD5YObQ+AAAAAJayDD4IIQQ+lrIMPgghBD5YObQ+AAAAAJqZmT4AAAAAlrIMPgghBD6amZk+AAAAAADXIzwIIQQ+ANcjPAghBD6amZk+AAAAAJqZmT4AAAAAANcjPAghBD6amZk+AAAAAADXIzwIIQQ+ANcjPAghBD6amZk+AAAAAFg5tD4AAAAAANcjPAghBD5YObQ+AAAAAJayDD4IIQQ+"),
+"format": 34359738391,
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 192,
+"vertex_data": PackedByteArray("ppsEvlK4nr6PwvW9lWUIvuxROL4AAAC+lWUIPuxROL4AAAC+ppsEvlK4nr6PwvW9lWUIPuxROL4AAAC+ppsEPlK4nr6PwvW9ppsEPlK4nr6PwvW9lWUIPuxROL4AAAC+7FE4PuxROL4AAIC9ppsEPlK4nr6PwvW97FE4PuxROL4AAIC9MzMzPlK4nr6PwnW9MzMzPlK4nr6PwnW97FE4PuxROL4AAIC97FE4PuxROL4AAIA9MzMzPlK4nr6PwnW97FE4PuxROL4AAIA9MzMzPlK4nr6PwnU9MzMzPlK4nr6PwnU97FE4PuxROL4AAIA9lWUIPuxROL4AAAA+MzMzPlK4nr6PwnU9lWUIPuxROL4AAAA+ppsEPlK4nr6PwvU9ppsEPlK4nr6PwvU9lWUIPuxROL4AAAA+lWUIvuxROL4AAAA+ppsEPlK4nr6PwvU9lWUIvuxROL4AAAA+ppsEvlK4nr6PwvU9ppsEvlK4nr6PwvU9lWUIvuxROL4AAAA+7FE4vuxROL4AAIA9ppsEvlK4nr6PwvU97FE4vuxROL4AAIA9MzMzvlK4nr6PwnU9MzMzvlK4nr6PwnU97FE4vuxROL4AAIA97FE4vuxROL4AAIC9MzMzvlK4nr6PwnU97FE4vuxROL4AAIC9MzMzvlK4nr6PwnW9MzMzvlK4nr6PwnW97FE4vuxROL4AAIC9lWUIvuxROL4AAAC+MzMzvlK4nr6PwnW9lWUIvuxROL4AAAC+ppsEvlK4nr6PwvW9lWUIvuxROL4AAAC+6UguvgrXoz0pXA++6UguPgrXoz0pXA++lWUIvuxROL4AAAC+6UguPgrXoz0pXA++lWUIPuxROL4AAAC+lWUIPuxROL4AAAC+6UguPgrXoz0pXA++H4VrPgrXoz0pXI+9lWUIPuxROL4AAAC+H4VrPgrXoz0pXI+97FE4PuxROL4AAIC97FE4PuxROL4AAIC9H4VrPgrXoz0pXI+9H4VrPgrXoz0pXI897FE4PuxROL4AAIC9H4VrPgrXoz0pXI897FE4PuxROL4AAIA97FE4PuxROL4AAIA9H4VrPgrXoz0pXI896UguPgrXoz0pXA8+7FE4PuxROL4AAIA96UguPgrXoz0pXA8+lWUIPuxROL4AAAA+lWUIPuxROL4AAAA+6UguPgrXoz0pXA8+6UguvgrXoz0pXA8+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")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pb10t"]
+render_priority = 0
+shader = ExtResource("4_5pa00")
+shader_parameter/albedo = Color(0.04, 0.03, 0.03, 1)
+shader_parameter/grime_tex = ExtResource("5_ijv3l")
+shader_parameter/grime_strength = 0.25
+shader_parameter/tex_scale = null
+shader_parameter/surf_tex = ExtResource("6_ira4k")
+shader_parameter/surf_strength = 0.0
+shader_parameter/surf_scale = 1.4
+shader_parameter/emission_strength = 0.0
+shader_parameter/snap_resolution = null
+
+[sub_resource type="BoxMesh" id="BoxMesh_g3lms"]
+size = Vector3(0.52, 0.05, 0.3)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t0ye7"]
+render_priority = 0
+shader = ExtResource("4_5pa00")
+shader_parameter/albedo = Color(0.04, 0.03, 0.03, 1)
+shader_parameter/grime_tex = ExtResource("5_ijv3l")
+shader_parameter/grime_strength = 0.0
+shader_parameter/tex_scale = null
+shader_parameter/surf_tex = ExtResource("6_ira4k")
+shader_parameter/surf_strength = 0.0
+shader_parameter/surf_scale = 1.4
+shader_parameter/emission_strength = 0.0
+shader_parameter/snap_resolution = null
+
+[sub_resource type="BoxMesh" id="BoxMesh_q2vbw"]
+size = Vector3(0.035, 0.035, 0.01)
+
+[sub_resource type="BoxMesh" id="BoxMesh_w16gj"]
+size = Vector3(0.035, 0.035, 0.01)
+
+[sub_resource type="BoxMesh" id="BoxMesh_o6lvm"]
+size = Vector3(0.035, 0.035, 0.01)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qxu4j"]
+render_priority = 0
+shader = ExtResource("4_5pa00")
+shader_parameter/albedo = Color(0.1, 0.11, 0.13, 1)
+shader_parameter/grime_tex = ExtResource("5_ijv3l")
+shader_parameter/grime_strength = 0.06
+shader_parameter/tex_scale = null
+shader_parameter/surf_tex = ExtResource("7_k686b")
+shader_parameter/surf_strength = 0.28
+shader_parameter/surf_scale = 1.4
+shader_parameter/emission_strength = 0.0
+shader_parameter/snap_resolution = null
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_alsv7"]
+top_radius = 0.060350005
+bottom_radius = 0.071
+height = 0.26
+radial_segments = 8
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_lwt46"]
+top_radius = 0.04675
+bottom_radius = 0.055
+height = 0.28182444
+radial_segments = 8
+rings = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dox7e"]
+render_priority = 0
+shader = ExtResource("4_5pa00")
+shader_parameter/albedo = Color(0.55, 0.43, 0.36, 1)
+shader_parameter/grime_tex = ExtResource("5_ijv3l")
+shader_parameter/grime_strength = 0.03
+shader_parameter/tex_scale = null
+shader_parameter/surf_tex = ExtResource("8_ev1au")
+shader_parameter/surf_strength = 0.28
+shader_parameter/surf_scale = 4.0
+shader_parameter/emission_strength = 0.0
+shader_parameter/snap_resolution = null
+
+[sub_resource type="BoxMesh" id="BoxMesh_3tgvj"]
+size = Vector3(0.074, 0.1, 0.07)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_7m8ek"]
+top_radius = 0.060350005
+bottom_radius = 0.071
+height = 0.26
+radial_segments = 8
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_vehc8"]
+top_radius = 0.04675
+bottom_radius = 0.055
+height = 0.28182444
+radial_segments = 8
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_f0niw"]
+size = Vector3(0.074, 0.1, 0.07)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5o2uk"]
+render_priority = 0
+shader = ExtResource("4_5pa00")
+shader_parameter/albedo = Color(0.080000006, 0.088, 0.103999995, 1)
+shader_parameter/grime_tex = ExtResource("5_ijv3l")
+shader_parameter/grime_strength = 0.25
+shader_parameter/tex_scale = null
+shader_parameter/surf_tex = ExtResource("7_k686b")
+shader_parameter/surf_strength = 0.28
+shader_parameter/surf_scale = 1.4
+shader_parameter/emission_strength = 0.0
+shader_parameter/snap_resolution = null
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_0nk72"]
+top_radius = 0.43
+height = 1.0
+radial_segments = 8
+rings = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f4ly3"]
+render_priority = 0
+shader = ExtResource("4_5pa00")
+shader_parameter/albedo = Color(0.55, 0.43, 0.36, 1)
+shader_parameter/grime_tex = ExtResource("5_ijv3l")
+shader_parameter/grime_strength = 0.04
+shader_parameter/tex_scale = null
+shader_parameter/surf_tex = ExtResource("8_ev1au")
+shader_parameter/surf_strength = 0.28
+shader_parameter/surf_scale = 4.0
+shader_parameter/emission_strength = 0.0
+shader_parameter/snap_resolution = null
+
+[sub_resource type="BoxMesh" id="BoxMesh_cks8h"]
+size = Vector3(0.11, 0.11, 0.11)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_06yir"]
+cull_mode = 2
+specular_mode = 2
+albedo_texture = ExtResource("9_wp88n")
+texture_filter = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_1n6y3"]
+_surfaces = [{
+"aabb": AABB(-0.13, -0.01, -0.125, 0.26, 0.29999998, 0.04),
+"attribute_data": PackedByteArray("AAAAP3h39z5O7EQ+IiJiPwAAAD8AAIA/AAAAP3h39z7YiR09Z2YmP07sRD4iImI/AAAAP3h39z4AAAAAzMzMPtiJHT1nZiY/AAAAP3h39z7ETuw9uKqqPQAAAADMzMw+AAAAP3h39z4AAAA/AAAANMRO7D24qqo9AAAAP3h39z4odmI/uKqqPQAAAD8AAAA0AAAAP3h39z4AAIA/zMzMPih2Yj+4qqo9AAAAP3h39z5iJ3Y/Z2YmPwAAgD/MzMw+AAAAP3h39z7sxE4/IiJiP2Indj9nZiY/AAAAP3h39z4AAAA/AACAP+zETj8iImI/"),
+"format": 34359738391,
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 30,
+"vertex_data": PackedByteArray("AAAAAOF6FD4AAAC+Ctejvc3MzDx7FK69AAAAAArXI7x7FK69AAAAAOF6FD4AAAC+j8L1vVyPwj2PwvW9Ctejvc3MzDx7FK69AAAAAOF6FD4AAAC+uB4FvnsULj6PwvW9j8L1vVyPwj2PwvW9AAAAAOF6FD4AAAC+zczMvRSuhz57FK69uB4FvnsULj6PwvW9AAAAAOF6FD4AAAC+AAAAAOF6lD57FK69zczMvRSuhz57FK69AAAAAOF6FD4AAAC+zczMPRSuhz57FK69AAAAAOF6lD57FK69AAAAAOF6FD4AAAC+uB4FPnsULj6PwvW9zczMPRSuhz57FK69AAAAAOF6FD4AAAC+j8L1PVyPwj2PwvW9uB4FPnsULj6PwvW9AAAAAOF6FD4AAAC+CtejPc3MzDx7FK69j8L1PVyPwj2PwvW9AAAAAOF6FD4AAAC+AAAAAArXI7x7FK69CtejPc3MzDx7FK69AP8AAP1/f4DQ37oAjHauk73lAACQea6PAP8AAP1/f4D+6noELYD1itDfugCMdq6TAP8AAP1/f4ChEmX/JGrYgf7qegQtgPWKAP8AAP1/f4BXHhr+Q1lThaESZf8katiBAP8AAP1/f4BS5P//rF6Zg1ceGv5DWVOFAP8AAP1/f4Cn4Rr+c1u1g1Lk//+sXpmDAP8AAP1/f4Bd7WX/FmtGgafhGv5zW7WDAP8AAP1/f4AAFXoEdHeUjl3tZf8Wa0aBAP8AAP1/f4AuILoARXU3lAAVegR0d5SOAP8AAP1/f4C95QAAkHmujy4gugBFdTeU")
+}]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hk4os"]
+cull_mode = 2
+albedo_color = Color(0.55, 0.43, 0.36, 1)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_rx8i1"]
+_surfaces = [{
+"aabb": AABB(-0.015, 0.1, -0.155, 0.03, 0.080000006, 0.033),
+"format": 34359738375,
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 6,
+"vertex_data": PackedByteArray("j8J1vK5H4T0j2/m9AAAAAM3MzD1SuB6+AAAAAOxROD628/29AAAAAOxROD628/29AAAAAM3MzD1SuB6+j8J1PK5H4T0j2/m95Q5YtfJaerA/3P//PlM/hj/c//8+Uz+GP9z//z5TP4Y/3P//PlM/hhnxWLVLqhO9")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wlgn3"]
+render_priority = 0
+shader = ExtResource("4_5pa00")
+shader_parameter/albedo = Color(0.55, 0.43, 0.36, 1)
+shader_parameter/grime_tex = ExtResource("5_ijv3l")
+shader_parameter/grime_strength = 0.04
+shader_parameter/tex_scale = null
+shader_parameter/surf_tex = ExtResource("6_ira4k")
+shader_parameter/surf_strength = 0.0
+shader_parameter/surf_scale = 1.4
+shader_parameter/emission_strength = 0.0
+shader_parameter/snap_resolution = null
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_6027g"]
+_surfaces = [{
+"aabb": AABB(-0.13, -0.01, -0.12, 0.26, 0.29999998, 0.215),
+"format": 34359738375,
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 90,
+"vertex_data": PackedByteArray("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")
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rvsaw"]
+render_priority = 0
+shader = ExtResource("4_5pa00")
+shader_parameter/albedo = Color(0.12, 0.09, 0.07, 1)
+shader_parameter/grime_tex = ExtResource("5_ijv3l")
+shader_parameter/grime_strength = 0.05
+shader_parameter/tex_scale = null
+shader_parameter/surf_tex = ExtResource("6_ira4k")
+shader_parameter/surf_strength = 0.0
+shader_parameter/surf_scale = 1.4
+shader_parameter/emission_strength = 0.0
+shader_parameter/snap_resolution = null
+
+[sub_resource type="SphereMesh" id="SphereMesh_vd24v"]
+radius = 0.137
+height = 0.145
+radial_segments = 10
+rings = 4
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gjj21"]
+render_priority = 0
+shader = ExtResource("4_5pa00")
+shader_parameter/albedo = Color(0.55, 0.43, 0.36, 1)
+shader_parameter/grime_tex = ExtResource("5_ijv3l")
+shader_parameter/grime_strength = 0.05
+shader_parameter/tex_scale = null
+shader_parameter/surf_tex = ExtResource("6_ira4k")
+shader_parameter/surf_strength = 0.0
+shader_parameter/surf_scale = 1.4
+shader_parameter/emission_strength = 0.0
+shader_parameter/snap_resolution = null
+
+[sub_resource type="SphereMesh" id="SphereMesh_lf575"]
+radius = 0.032
+height = 0.065
+radial_segments = 6
+rings = 3
+
+[sub_resource type="SphereMesh" id="SphereMesh_mjgrq"]
+radius = 0.032
+height = 0.065
+radial_segments = 6
+rings = 3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1y6pm"]
+render_priority = 0
+shader = ExtResource("4_5pa00")
+shader_parameter/albedo = Color(0.07, 0.08, 0.09, 1)
+shader_parameter/grime_tex = ExtResource("5_ijv3l")
+shader_parameter/grime_strength = 0.1
+shader_parameter/tex_scale = null
+shader_parameter/surf_tex = ExtResource("7_k686b")
+shader_parameter/surf_strength = 0.28
+shader_parameter/surf_scale = 1.4
+shader_parameter/emission_strength = 0.0
+shader_parameter/snap_resolution = null
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_te5au"]
+top_radius = 0.115
+bottom_radius = 0.15
+height = 0.1
+radial_segments = 10
+rings = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xfj0o"]
+render_priority = 0
+shader = ExtResource("4_5pa00")
+shader_parameter/albedo = Color(0.07, 0.08, 0.09, 1)
+shader_parameter/grime_tex = ExtResource("5_ijv3l")
+shader_parameter/grime_strength = 0.1
+shader_parameter/tex_scale = null
+shader_parameter/surf_tex = ExtResource("6_ira4k")
+shader_parameter/surf_strength = 0.0
+shader_parameter/surf_scale = 1.4
+shader_parameter/emission_strength = 0.0
+shader_parameter/snap_resolution = null
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_f4ap8"]
+top_radius = 0.17
+bottom_radius = 0.17
+height = 0.014
+radial_segments = 10
+rings = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t0458"]
+render_priority = 0
+shader = ExtResource("4_5pa00")
+shader_parameter/albedo = Color(0.07, 0.072, 0.085999995, 1)
+shader_parameter/grime_tex = ExtResource("5_ijv3l")
+shader_parameter/grime_strength = 0.06
+shader_parameter/tex_scale = null
+shader_parameter/surf_tex = ExtResource("7_k686b")
+shader_parameter/surf_strength = 0.28
+shader_parameter/surf_scale = 1.4
+shader_parameter/emission_strength = 0.0
+shader_parameter/snap_resolution = null
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_i81hw"]
+top_radius = 0.0697
+bottom_radius = 0.082
+height = 0.38052595
+radial_segments = 8
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_twnwf"]
+top_radius = 0.051850002
+bottom_radius = 0.061
+height = 0.34058774
+radial_segments = 8
+rings = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c3td6"]
+render_priority = 0
+shader = ExtResource("4_5pa00")
+shader_parameter/albedo = Color(0.05, 0.04, 0.04, 1)
+shader_parameter/grime_tex = ExtResource("5_ijv3l")
+shader_parameter/grime_strength = 0.25
+shader_parameter/tex_scale = null
+shader_parameter/surf_tex = ExtResource("6_ira4k")
+shader_parameter/surf_strength = 0.0
+shader_parameter/surf_scale = 1.4
+shader_parameter/emission_strength = 0.0
+shader_parameter/snap_resolution = null
+
+[sub_resource type="BoxMesh" id="BoxMesh_l1oja"]
+size = Vector3(0.17, 0.08, 0.3)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_xrh4o"]
+top_radius = 0.0697
+bottom_radius = 0.082
+height = 0.38052595
+radial_segments = 8
+rings = 1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_eesrh"]
+top_radius = 0.051850002
+bottom_radius = 0.061
+height = 0.34058774
+radial_segments = 8
+rings = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_6lv55"]
+size = Vector3(0.17, 0.08, 0.3)
+
+[sub_resource type="Animation" id="Animation_ds051"]
+length = 1.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Upper:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.55, 1.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -0.06, -0.18), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Upper/RightArm:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.36666667, 0.73333335, 1.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-1.3, 0, -0.2), Vector3(-1.6, 0, -0.1), Vector3(0.7, 0, 0.2), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_5wa58"]
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Upper:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0.007, 0), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Upper/RightArm:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.025, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_22qi3"]
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Upper:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.75, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0.007, 0), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Upper/RightArm:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.25, 0, -0.3), Vector3(-0.12, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_kdfnp"]
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Upper:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0.007, 0), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Upper/RightArm:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.25, 0, 0), Vector3(-0.12, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6e18n"]
+_data = {
+&"attack": SubResource("Animation_ds051"),
+&"idle": SubResource("Animation_5wa58"),
+&"sleeve": SubResource("Animation_22qi3"),
+&"talk": SubResource("Animation_kdfnp")
+}
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f4r6d"]
+size = Vector3(0.5, 1.8, 0.4)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_26mxd"]
+render_priority = 0
+shader = ExtResource("4_5pa00")
+shader_parameter/albedo = Color(0.06, 0.08, 0.07, 1)
+shader_parameter/grime_tex = ExtResource("5_ijv3l")
+shader_parameter/grime_strength = 0.35
+shader_parameter/tex_scale = null
+shader_parameter/surf_tex = ExtResource("6_ira4k")
+shader_parameter/surf_strength = 0.0
+shader_parameter/surf_scale = 1.4
+shader_parameter/emission_strength = 0.0
+shader_parameter/snap_resolution = null
+
+[sub_resource type="BoxMesh" id="BoxMesh_gibo3"]
+size = Vector3(30, 0.2, 80)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_aidof"]
+size = Vector3(30, 0.2, 80)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3si4m"]
+render_priority = 0
+shader = ExtResource("4_5pa00")
+shader_parameter/albedo = Color(0.04, 0.045, 0.05, 1)
+shader_parameter/grime_tex = ExtResource("5_ijv3l")
+shader_parameter/grime_strength = 0.35
+shader_parameter/tex_scale = null
+shader_parameter/surf_tex = ExtResource("6_ira4k")
+shader_parameter/surf_strength = 0.0
+shader_parameter/surf_scale = 1.4
+shader_parameter/emission_strength = 0.0
+shader_parameter/snap_resolution = null
+
+[sub_resource type="BoxMesh" id="BoxMesh_j52u2"]
+size = Vector3(4.2, 0.02, 80)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0fsm6"]
+render_priority = 0
+shader = ExtResource("4_5pa00")
+shader_parameter/albedo = Color(0.5, 0.48, 0.36, 1)
+shader_parameter/grime_tex = ExtResource("5_ijv3l")
+shader_parameter/grime_strength = 0.35
+shader_parameter/tex_scale = null
+shader_parameter/surf_tex = ExtResource("6_ira4k")
+shader_parameter/surf_strength = 0.0
+shader_parameter/surf_scale = 1.4
+shader_parameter/emission_strength = 0.0
+shader_parameter/snap_resolution = null
+
+[sub_resource type="BoxMesh" id="BoxMesh_nl37l"]
+size = Vector3(0.12, 0.01, 2.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nsws8"]
+size = Vector3(0.12, 0.01, 2.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5li3m"]
+size = Vector3(0.12, 0.01, 2.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_f7fmc"]
+size = Vector3(0.12, 0.01, 2.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kosrr"]
+size = Vector3(0.12, 0.01, 2.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lhtj0"]
+size = Vector3(0.12, 0.01, 2.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_d5si1"]
+size = Vector3(0.12, 0.01, 2.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_skpv3"]
+size = Vector3(0.12, 0.01, 2.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_68doi"]
+size = Vector3(0.12, 0.01, 2.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_sky8e"]
+size = Vector3(0.12, 0.01, 2.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pkauf"]
+size = Vector3(0.12, 0.01, 2.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_shy4e"]
+size = Vector3(0.12, 0.01, 2.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_gjmru"]
+size = Vector3(0.12, 0.01, 2.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_k8hfu"]
+size = Vector3(0.12, 0.01, 2.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qcacq"]
+size = Vector3(30, 4, 0.4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o5tvl"]
+size = Vector3(30, 4, 0.4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g0wft"]
+size = Vector3(0.4, 4, 80)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_x4bx8"]
+size = Vector3(0.4, 4, 80)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hbc6p"]
+render_priority = 0
+shader = ExtResource("4_5pa00")
+shader_parameter/albedo = Color(0.07, 0.06, 0.05, 1)
+shader_parameter/grime_tex = ExtResource("5_ijv3l")
+shader_parameter/grime_strength = 0.35
+shader_parameter/tex_scale = null
+shader_parameter/surf_tex = ExtResource("6_ira4k")
+shader_parameter/surf_strength = 0.0
+shader_parameter/surf_scale = 1.4
+shader_parameter/emission_strength = 0.0
+shader_parameter/snap_resolution = null
+
+[sub_resource type="BoxMesh" id="BoxMesh_orlxa"]
+size = Vector3(0.3, 3.9411263, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_46wjw"]
+size = Vector3(0.3, 3.9411263, 0.3)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_htxrx"]
+render_priority = 0
+shader = ExtResource("4_5pa00")
+shader_parameter/albedo = Color(0.06, 0.1, 0.08, 1)
+shader_parameter/grime_tex = ExtResource("5_ijv3l")
+shader_parameter/grime_strength = 0.35
+shader_parameter/tex_scale = null
+shader_parameter/surf_tex = ExtResource("6_ira4k")
+shader_parameter/surf_strength = 0.0
+shader_parameter/surf_scale = 1.4
+shader_parameter/emission_strength = 0.0
+shader_parameter/snap_resolution = null
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_8ays5"]
+top_radius = 0.0
+bottom_radius = 1.05
+height = 3.0
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yhwj7"]
+size = Vector3(1.6, 1.4, 1.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7d3pj"]
+size = Vector3(0.3, 3.250962, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5uyka"]
+size = Vector3(0.3, 3.250962, 0.3)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_4wwwm"]
+top_radius = 0.0
+bottom_radius = 1.05
+height = 3.0
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_svprf"]
+size = Vector3(1.6, 1.4, 1.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_m8bk5"]
+size = Vector3(0.3, 4.0633154, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lq6mw"]
+size = Vector3(0.3, 4.0633154, 0.3)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_4202i"]
+top_radius = 0.0
+bottom_radius = 1.05
+height = 3.0
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_veh8w"]
+size = Vector3(1.6, 1.4, 1.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jpab5"]
+size = Vector3(0.3, 3.3013518, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1b5ec"]
+size = Vector3(0.3, 3.3013518, 0.3)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_sl45d"]
+top_radius = 0.0
+bottom_radius = 1.05
+height = 3.0
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_t2o5n"]
+size = Vector3(1.6, 1.4, 1.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_yype6"]
+size = Vector3(0.3, 3.351635, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_72q52"]
+size = Vector3(0.3, 3.351635, 0.3)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_5jcgm"]
+top_radius = 0.0
+bottom_radius = 1.05
+height = 3.0
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_h0ppd"]
+size = Vector3(1.6, 1.4, 1.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_58lk1"]
+size = Vector3(0.3, 4.9535117, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_81chd"]
+size = Vector3(0.3, 4.9535117, 0.3)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_tyb8w"]
+top_radius = 0.0
+bottom_radius = 1.05
+height = 3.0
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_d6mp8"]
+size = Vector3(1.6, 1.4, 1.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_gg3ww"]
+size = Vector3(0.3, 4.8915467, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ncq1b"]
+size = Vector3(0.3, 4.8915467, 0.3)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_x15xb"]
+top_radius = 0.0
+bottom_radius = 1.05
+height = 3.0
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uvcdo"]
+size = Vector3(1.6, 1.4, 1.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_eqmim"]
+size = Vector3(0.3, 4.115869, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ierpu"]
+size = Vector3(0.3, 4.115869, 0.3)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_amw0s"]
+top_radius = 0.0
+bottom_radius = 1.05
+height = 3.0
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qhk7x"]
+size = Vector3(1.6, 1.4, 1.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_12a4y"]
+size = Vector3(0.3, 4.0424137, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rr682"]
+size = Vector3(0.3, 4.0424137, 0.3)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_edam2"]
+top_radius = 0.0
+bottom_radius = 1.05
+height = 3.0
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_d5so7"]
+size = Vector3(1.6, 1.4, 1.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_4x5ur"]
+size = Vector3(0.3, 4.3301272, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_37622"]
+size = Vector3(0.3, 4.3301272, 0.3)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_8tu46"]
+top_radius = 0.0
+bottom_radius = 1.05
+height = 3.0
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_i1oti"]
+size = Vector3(1.6, 1.4, 1.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_sk4xn"]
+size = Vector3(0.3, 3.2282662, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_i6oor"]
+size = Vector3(0.3, 3.2282662, 0.3)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_c4u20"]
+top_radius = 0.0
+bottom_radius = 1.05
+height = 3.0
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_atnnu"]
+size = Vector3(1.6, 1.4, 1.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_x3eyr"]
+size = Vector3(0.3, 3.4494407, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_conq5"]
+size = Vector3(0.3, 3.4494407, 0.3)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ijqmb"]
+top_radius = 0.0
+bottom_radius = 1.05
+height = 3.0
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7qd7q"]
+size = Vector3(1.6, 1.4, 1.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_umjni"]
+size = Vector3(0.3, 4.5721273, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bllsk"]
+size = Vector3(0.3, 4.5721273, 0.3)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_32e5t"]
+top_radius = 0.0
+bottom_radius = 1.05
+height = 3.0
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hvt85"]
+size = Vector3(1.6, 1.4, 1.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ssk1i"]
+size = Vector3(0.3, 3.767613, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fbp84"]
+size = Vector3(0.3, 3.767613, 0.3)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_i2ig0"]
+top_radius = 0.0
+bottom_radius = 1.05
+height = 3.0
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w5qvb"]
+size = Vector3(1.6, 1.4, 1.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_d2sgc"]
+size = Vector3(0.3, 4.5039015, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_numdt"]
+size = Vector3(0.3, 4.5039015, 0.3)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_0aaga"]
+top_radius = 0.0
+bottom_radius = 1.05
+height = 3.0
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pdi3o"]
+size = Vector3(1.6, 1.4, 1.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_yf6tb"]
+size = Vector3(0.3, 3.675173, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lcwd5"]
+size = Vector3(0.3, 3.675173, 0.3)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_v0wc8"]
+top_radius = 0.0
+bottom_radius = 1.05
+height = 3.0
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fn72i"]
+size = Vector3(1.6, 1.4, 1.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bv3xc"]
+size = Vector3(0.3, 4.0498343, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mm0a1"]
+size = Vector3(0.3, 4.0498343, 0.3)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_fexq7"]
+top_radius = 0.0
+bottom_radius = 1.05
+height = 3.0
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8jugr"]
+size = Vector3(1.6, 1.4, 1.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_8ba4g"]
+size = Vector3(0.3, 4.709258, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o11ch"]
+size = Vector3(0.3, 4.709258, 0.3)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_m7sru"]
+top_radius = 0.0
+bottom_radius = 1.05
+height = 3.0
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y2cqb"]
+size = Vector3(1.6, 1.4, 1.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_61snp"]
+size = Vector3(0.3, 4.108305, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ljs15"]
+size = Vector3(0.3, 4.108305, 0.3)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_cartd"]
+top_radius = 0.0
+bottom_radius = 1.05
+height = 3.0
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ggdai"]
+size = Vector3(1.6, 1.4, 1.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kgaqd"]
+size = Vector3(0.3, 3.6518216, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rw614"]
+size = Vector3(0.3, 3.6518216, 0.3)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_5woui"]
+top_radius = 0.0
+bottom_radius = 1.05
+height = 3.0
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rli88"]
+size = Vector3(1.6, 1.4, 1.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rc8ok"]
+size = Vector3(0.3, 3.977242, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cqpem"]
+size = Vector3(0.3, 3.977242, 0.3)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_6ktu1"]
+top_radius = 0.0
+bottom_radius = 1.05
+height = 3.0
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_htx1x"]
+size = Vector3(1.6, 1.4, 1.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_beiqr"]
+size = Vector3(0.3, 3.1643252, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_53key"]
+size = Vector3(0.3, 3.1643252, 0.3)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_3j6tq"]
+top_radius = 0.0
+bottom_radius = 1.05
+height = 3.0
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bj866"]
+size = Vector3(1.6, 1.4, 1.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_kyywn"]
+size = Vector3(0.3, 3.2373066, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hs5de"]
+size = Vector3(0.3, 3.2373066, 0.3)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_jccch"]
+top_radius = 0.0
+bottom_radius = 1.05
+height = 3.0
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xxbnm"]
+size = Vector3(1.6, 1.4, 1.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xdwd6"]
+size = Vector3(0.3, 4.3339577, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3f38v"]
+size = Vector3(0.3, 4.3339577, 0.3)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ovdwg"]
+top_radius = 0.0
+bottom_radius = 1.05
+height = 3.0
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ebjug"]
+size = Vector3(1.6, 1.4, 1.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6dtn0"]
+size = Vector3(0.3, 4.7933016, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0moof"]
+size = Vector3(0.3, 4.7933016, 0.3)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_xuvuu"]
+top_radius = 0.0
+bottom_radius = 1.05
+height = 3.0
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pijec"]
+size = Vector3(1.6, 1.4, 1.6)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ijuk0"]
+size = Vector3(0.3, 5.4684973, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_r7bbv"]
+size = Vector3(0.3, 5.4684973, 0.3)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_6n5rf"]
+top_radius = 0.0
+bottom_radius = 1.05
+height = 3.0
+radial_segments = 6
+rings = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2q8qb"]
+size = Vector3(1.6, 1.4, 1.6)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c38g8"]
+render_priority = 0
+shader = ExtResource("4_5pa00")
+shader_parameter/albedo = Color(0.2, 0.12, 0.1, 1)
+shader_parameter/grime_tex = ExtResource("5_ijv3l")
+shader_parameter/grime_strength = 0.35
+shader_parameter/tex_scale = null
+shader_parameter/surf_tex = ExtResource("6_ira4k")
+shader_parameter/surf_strength = 0.0
+shader_parameter/surf_scale = 1.4
+shader_parameter/emission_strength = 0.0
+shader_parameter/snap_resolution = null
+
+[sub_resource type="BoxMesh" id="BoxMesh_4nlxn"]
+size = Vector3(1.8, 0.9, 4.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e3wrj"]
+size = Vector3(1.8, 0.9, 4.2)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4wrtl"]
+render_priority = 0
+shader = ExtResource("4_5pa00")
+shader_parameter/albedo = Color(0.14, 0.1, 0.09, 1)
+shader_parameter/grime_tex = ExtResource("5_ijv3l")
+shader_parameter/grime_strength = 0.35
+shader_parameter/tex_scale = null
+shader_parameter/surf_tex = ExtResource("6_ira4k")
+shader_parameter/surf_strength = 0.0
+shader_parameter/surf_scale = 1.4
+shader_parameter/emission_strength = 0.0
+shader_parameter/snap_resolution = null
+
+[sub_resource type="BoxMesh" id="BoxMesh_lgmqi"]
+size = Vector3(1.6, 0.6, 2.2)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vert5"]
+render_priority = 0
+shader = ExtResource("4_5pa00")
+shader_parameter/albedo = Color(1, 0.95, 0.7, 1)
+shader_parameter/grime_tex = ExtResource("5_ijv3l")
+shader_parameter/grime_strength = 0.35
+shader_parameter/tex_scale = null
+shader_parameter/surf_tex = ExtResource("6_ira4k")
+shader_parameter/surf_strength = 0.0
+shader_parameter/surf_scale = 1.4
+shader_parameter/emission_strength = 2.0
+shader_parameter/snap_resolution = null
+
+[sub_resource type="BoxMesh" id="BoxMesh_lh7sq"]
+size = Vector3(0.3, 0.2, 0.05)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0bse3"]
+size = Vector3(0.3, 0.2, 0.05)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2k2f7"]
+render_priority = 0
+shader = ExtResource("4_5pa00")
+shader_parameter/albedo = Color(0.1, 0.1, 0.12, 1)
+shader_parameter/grime_tex = ExtResource("5_ijv3l")
+shader_parameter/grime_strength = 0.35
+shader_parameter/tex_scale = null
+shader_parameter/surf_tex = ExtResource("6_ira4k")
+shader_parameter/surf_strength = 0.0
+shader_parameter/surf_scale = 1.4
+shader_parameter/emission_strength = 0.0
+shader_parameter/snap_resolution = null
+
+[sub_resource type="BoxMesh" id="BoxMesh_7sbiw"]
+size = Vector3(0.12, 4.4, 0.12)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_csecj"]
+render_priority = 0
+shader = ExtResource("4_5pa00")
+shader_parameter/albedo = Color(1, 0.7, 0.3, 1)
+shader_parameter/grime_tex = ExtResource("5_ijv3l")
+shader_parameter/grime_strength = 0.0
+shader_parameter/tex_scale = null
+shader_parameter/surf_tex = ExtResource("6_ira4k")
+shader_parameter/surf_strength = 0.0
+shader_parameter/surf_scale = 1.4
+shader_parameter/emission_strength = 1.4
+shader_parameter/snap_resolution = null
+
+[sub_resource type="BoxMesh" id="BoxMesh_jut0g"]
+size = Vector3(0.9, 0.1, 0.3)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8a5oi"]
+emission_shape = 3
+emission_box_extents = Vector3(7, 0.2, 32)
+direction = Vector3(0, -1, 0)
+spread = 4.0
+initial_velocity_min = 8.0
+initial_velocity_max = 10.0
+gravity = Vector3(0, -2, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t07jy"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.43, 0.55, 0.65, 0.17)
+billboard_mode = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_lqel1"]
+material = SubResource("StandardMaterial3D_t07jy")
+size = Vector2(0.009, 0.16)
+
+[node name="Memory" type="Node3D" unique_id=459291429]
+script = ExtResource("1_txi77")
+Id = "ride"
+StartLocal = Vector3(0, 0.05, 26)
+
+[node name="Extras" type="Node3D" parent="." unique_id=540160886]
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="Extras" unique_id=1439520648]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 2.4, 0, -6)
+collision_layer = 3
+collision_mask = 0
+script = ExtResource("2_o7kfd")
+Standing = true
+
+[node name="Upper" type="Node3D" parent="Extras/StaticBody3D01" unique_id=918894115]
+
+[node name="TailoredCoat" type="MeshInstance3D" parent="Extras/StaticBody3D01/Upper" unique_id=1549711330]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.11, 0)
+material_override = SubResource("StandardMaterial3D_60ty7")
+mesh = SubResource("ArrayMesh_vidxg")
+
+[node name="MeshInstance3D01" type="MeshInstance3D" parent="Extras/StaticBody3D01/Upper" unique_id=1431843756]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.84, 0)
+material_override = SubResource("ShaderMaterial_pb10t")
+mesh = SubResource("BoxMesh_g3lms")
+
+[node name="MeshInstance3D02" type="MeshInstance3D" parent="Extras/StaticBody3D01/Upper" unique_id=1719071687]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.29, -0.145)
+material_override = SubResource("ShaderMaterial_t0ye7")
+mesh = SubResource("BoxMesh_q2vbw")
+
+[node name="MeshInstance3D03" type="MeshInstance3D" parent="Extras/StaticBody3D01/Upper" unique_id=281923671]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.12, -0.145)
+material_override = SubResource("ShaderMaterial_t0ye7")
+mesh = SubResource("BoxMesh_w16gj")
+
+[node name="MeshInstance3D04" type="MeshInstance3D" parent="Extras/StaticBody3D01/Upper" unique_id=1460509552]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9499999, -0.145)
+material_override = SubResource("ShaderMaterial_t0ye7")
+mesh = SubResource("BoxMesh_o6lvm")
+
+[node name="RightArm" type="Node3D" parent="Extras/StaticBody3D01/Upper" unique_id=469830176]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.235, 1.38, 0)
+
+[node name="UpperSleeve" type="MeshInstance3D" parent="Extras/StaticBody3D01/Upper/RightArm" unique_id=127483394]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.13, 0)
+material_override = SubResource("ShaderMaterial_qxu4j")
+mesh = SubResource("CylinderMesh_alsv7")
+
+[node name="ForeSleeve" type="MeshInstance3D" parent="Extras/StaticBody3D01/Upper/RightArm" unique_id=826979383]
+transform = Transform3D(0.9960527, 0.08870771, -0.0031578438, -0.08870771, 0.9935264, -0.070966154, -0.0031578438, 0.070966154, 0.9974737, -0.0125, -0.4, -0.01)
+material_override = SubResource("ShaderMaterial_qxu4j")
+mesh = SubResource("CylinderMesh_lwt46")
+
+[node name="MeshInstance3D01" type="MeshInstance3D" parent="Extras/StaticBody3D01/Upper/RightArm" unique_id=1745805380]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.025, -0.58500004, -0.038)
+material_override = SubResource("ShaderMaterial_dox7e")
+mesh = SubResource("BoxMesh_3tgvj")
+
+[node name="LeftArm" type="Node3D" parent="Extras/StaticBody3D01/Upper" unique_id=1717821506]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.235, 1.38, 0)
+
+[node name="UpperSleeve" type="MeshInstance3D" parent="Extras/StaticBody3D01/Upper/LeftArm" unique_id=805251334]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.13, 0)
+material_override = SubResource("ShaderMaterial_qxu4j")
+mesh = SubResource("CylinderMesh_7m8ek")
+
+[node name="ForeSleeve" type="MeshInstance3D" parent="Extras/StaticBody3D01/Upper/LeftArm" unique_id=1083303136]
+transform = Transform3D(0.9960527, -0.08870771, 0.0031578438, 0.08870771, 0.9935264, -0.070966154, 0.0031578438, 0.070966154, 0.9974737, 0.0125, -0.4, -0.01)
+material_override = SubResource("ShaderMaterial_qxu4j")
+mesh = SubResource("CylinderMesh_vehc8")
+
+[node name="MeshInstance3D01" type="MeshInstance3D" parent="Extras/StaticBody3D01/Upper/LeftArm" unique_id=956910368]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.025, -0.58500004, -0.038)
+material_override = SubResource("ShaderMaterial_dox7e")
+mesh = SubResource("BoxMesh_f0niw")
+
+[node name="MeshInstance3D05" type="MeshInstance3D" parent="Extras/StaticBody3D01/Upper" unique_id=661228383]
+transform = Transform3D(0.36, 0, 0, 0, 0.14, 0, 0, 0, 0.32, 0, 1.42, 0.02)
+material_override = SubResource("ShaderMaterial_5o2uk")
+mesh = SubResource("CylinderMesh_0nk72")
+
+[node name="MeshInstance3D06" type="MeshInstance3D" parent="Extras/StaticBody3D01/Upper" unique_id=308356761]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.435, 0.02)
+material_override = SubResource("ShaderMaterial_f4ly3")
+mesh = SubResource("BoxMesh_cks8h")
+
+[node name="Head" type="Node3D" parent="Extras/StaticBody3D01/Upper" unique_id=785139201]
+transform = Transform3D(0.91, 0, 0, 0, 0.9, 0, 0, 0, 0.95, 0, 1.47, 0.02)
+
+[node name="Face" type="MeshInstance3D" parent="Extras/StaticBody3D01/Upper/Head" unique_id=1743975894]
+material_override = SubResource("StandardMaterial3D_06yir")
+mesh = SubResource("ArrayMesh_1n6y3")
+
+[node name="Nose" type="MeshInstance3D" parent="Extras/StaticBody3D01/Upper/Head" unique_id=337392746]
+material_override = SubResource("StandardMaterial3D_hk4os")
+mesh = SubResource("ArrayMesh_rx8i1")
+
+[node name="Skull" type="MeshInstance3D" parent="Extras/StaticBody3D01/Upper/Head" unique_id=1514205933]
+material_override = SubResource("ShaderMaterial_wlgn3")
+mesh = SubResource("ArrayMesh_6027g")
+
+[node name="Hair" type="MeshInstance3D" parent="Extras/StaticBody3D01/Upper/Head" unique_id=527412965]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.245, 0.015)
+material_override = SubResource("ShaderMaterial_rvsaw")
+mesh = SubResource("SphereMesh_vd24v")
+
+[node name="LeftEar" type="MeshInstance3D" parent="Extras/StaticBody3D01/Upper/Head" unique_id=1455153330]
+transform = Transform3D(0.45, 0, 0, 0, 1, 0, 0, 0, 0.6, -0.13, 0.12, 0)
+material_override = SubResource("ShaderMaterial_gjj21")
+mesh = SubResource("SphereMesh_lf575")
+
+[node name="RightEar" type="MeshInstance3D" parent="Extras/StaticBody3D01/Upper/Head" unique_id=660306648]
+transform = Transform3D(0.45, 0, 0, 0, 1, 0, 0, 0, 0.6, 0.13, 0.12, 0)
+material_override = SubResource("ShaderMaterial_gjj21")
+mesh = SubResource("SphereMesh_mjgrq")
+
+[node name="CapCrown" type="MeshInstance3D" parent="Extras/StaticBody3D01/Upper/Head" unique_id=1523589889]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0.015)
+material_override = SubResource("ShaderMaterial_1y6pm")
+mesh = SubResource("CylinderMesh_te5au")
+
+[node name="CapBrim" type="MeshInstance3D" parent="Extras/StaticBody3D01/Upper/Head" unique_id=860535353]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.7, 0, 0.265, -0.065)
+material_override = SubResource("ShaderMaterial_xfj0o")
+mesh = SubResource("CylinderMesh_f4ap8")
+
+[node name="Thigh" type="MeshInstance3D" parent="Extras/StaticBody3D01" unique_id=2050391097]
+transform = Transform3D(1, 0, 0, 0, 0.9986178, -0.052558832, 0, 0.052558832, 0.9986178, -0.11, 0.62, -0.01)
+material_override = SubResource("ShaderMaterial_t0458")
+mesh = SubResource("CylinderMesh_i81hw")
+
+[node name="Shin" type="MeshInstance3D" parent="Extras/StaticBody3D01" unique_id=906685391]
+transform = Transform3D(1, 0, 0, 0, 0.9982744, 0.05872203, 0, -0.05872203, 0.9982744, -0.11, 0.26, -0.01)
+material_override = SubResource("ShaderMaterial_t0458")
+mesh = SubResource("CylinderMesh_twnwf")
+
+[node name="MeshInstance3D01" type="MeshInstance3D" parent="Extras/StaticBody3D01" unique_id=298195707]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.11, 0.04, -0.05)
+material_override = SubResource("ShaderMaterial_c3td6")
+mesh = SubResource("BoxMesh_l1oja")
+
+[node name="MeshInstance3D02" type="MeshInstance3D" parent="Extras/StaticBody3D01" unique_id=257734553]
+transform = Transform3D(1, 0, 0, 0, 0.9986178, -0.052558832, 0, 0.052558832, 0.9986178, 0.11, 0.62, -0.01)
+material_override = SubResource("ShaderMaterial_t0458")
+mesh = SubResource("CylinderMesh_xrh4o")
+
+[node name="MeshInstance3D03" type="MeshInstance3D" parent="Extras/StaticBody3D01" unique_id=678988938]
+transform = Transform3D(1, 0, 0, 0, 0.9982744, 0.05872203, 0, -0.05872203, 0.9982744, 0.11, 0.26, -0.01)
+material_override = SubResource("ShaderMaterial_t0458")
+mesh = SubResource("CylinderMesh_eesrh")
+
+[node name="MeshInstance3D04" type="MeshInstance3D" parent="Extras/StaticBody3D01" unique_id=1025335422]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.11, 0.04, -0.05)
+material_override = SubResource("ShaderMaterial_c3td6")
+mesh = SubResource("BoxMesh_6lv55")
+
+[node name="Animations" type="AnimationPlayer" parent="Extras/StaticBody3D01" unique_id=14423040]
+libraries/ = SubResource("AnimationLibrary_6e18n")
+
+[node name="InteractionShape" type="CollisionShape3D" parent="Extras/StaticBody3D01" unique_id=1766170071]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("BoxShape3D_f4r6d")
+
+[node name="MeshInstance3D01" type="MeshInstance3D" parent="." unique_id=1528605383]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+material_override = SubResource("ShaderMaterial_26mxd")
+mesh = SubResource("BoxMesh_gibo3")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D01" unique_id=1875009040]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D01/StaticBody3D01" unique_id=1540931874]
+shape = SubResource("BoxShape3D_aidof")
+
+[node name="MeshInstance3D02" type="MeshInstance3D" parent="." unique_id=1054370514]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.01, 0)
+material_override = SubResource("ShaderMaterial_3si4m")
+mesh = SubResource("BoxMesh_j52u2")
+
+[node name="MeshInstance3D03" type="MeshInstance3D" parent="." unique_id=288520321]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.025, 30)
+material_override = SubResource("ShaderMaterial_0fsm6")
+mesh = SubResource("BoxMesh_nl37l")
+
+[node name="MeshInstance3D04" type="MeshInstance3D" parent="." unique_id=1131811796]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.025, 25)
+material_override = SubResource("ShaderMaterial_0fsm6")
+mesh = SubResource("BoxMesh_nsws8")
+
+[node name="MeshInstance3D05" type="MeshInstance3D" parent="." unique_id=685786742]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.025, 20)
+material_override = SubResource("ShaderMaterial_0fsm6")
+mesh = SubResource("BoxMesh_5li3m")
+
+[node name="MeshInstance3D06" type="MeshInstance3D" parent="." unique_id=103843177]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.025, 15)
+material_override = SubResource("ShaderMaterial_0fsm6")
+mesh = SubResource("BoxMesh_f7fmc")
+
+[node name="MeshInstance3D07" type="MeshInstance3D" parent="." unique_id=422443579]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.025, 10)
+material_override = SubResource("ShaderMaterial_0fsm6")
+mesh = SubResource("BoxMesh_kosrr")
+
+[node name="MeshInstance3D08" type="MeshInstance3D" parent="." unique_id=43064222]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.025, 5)
+material_override = SubResource("ShaderMaterial_0fsm6")
+mesh = SubResource("BoxMesh_lhtj0")
+
+[node name="MeshInstance3D09" type="MeshInstance3D" parent="." unique_id=149913230]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.025, 0)
+material_override = SubResource("ShaderMaterial_0fsm6")
+mesh = SubResource("BoxMesh_d5si1")
+
+[node name="MeshInstance3D10" type="MeshInstance3D" parent="." unique_id=867813565]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.025, -5)
+material_override = SubResource("ShaderMaterial_0fsm6")
+mesh = SubResource("BoxMesh_skpv3")
+
+[node name="MeshInstance3D11" type="MeshInstance3D" parent="." unique_id=2114838388]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.025, -10)
+material_override = SubResource("ShaderMaterial_0fsm6")
+mesh = SubResource("BoxMesh_68doi")
+
+[node name="MeshInstance3D12" type="MeshInstance3D" parent="." unique_id=2020141126]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.025, -15)
+material_override = SubResource("ShaderMaterial_0fsm6")
+mesh = SubResource("BoxMesh_sky8e")
+
+[node name="MeshInstance3D13" type="MeshInstance3D" parent="." unique_id=1055846532]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.025, -20)
+material_override = SubResource("ShaderMaterial_0fsm6")
+mesh = SubResource("BoxMesh_pkauf")
+
+[node name="MeshInstance3D14" type="MeshInstance3D" parent="." unique_id=1617181458]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.025, -25)
+material_override = SubResource("ShaderMaterial_0fsm6")
+mesh = SubResource("BoxMesh_shy4e")
+
+[node name="MeshInstance3D15" type="MeshInstance3D" parent="." unique_id=1745964629]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.025, -30)
+material_override = SubResource("ShaderMaterial_0fsm6")
+mesh = SubResource("BoxMesh_gjmru")
+
+[node name="MeshInstance3D16" type="MeshInstance3D" parent="." unique_id=282571623]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.025, -35)
+material_override = SubResource("ShaderMaterial_0fsm6")
+mesh = SubResource("BoxMesh_k8hfu")
+
+[node name="StaticBody3D17" type="StaticBody3D" parent="." unique_id=259205489]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -32)
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="StaticBody3D17" unique_id=1436773345]
+shape = SubResource("BoxShape3D_qcacq")
+
+[node name="StaticBody3D18" type="StaticBody3D" parent="." unique_id=640393919]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 34)
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="StaticBody3D18" unique_id=287456934]
+shape = SubResource("BoxShape3D_o5tvl")
+
+[node name="StaticBody3D19" type="StaticBody3D" parent="." unique_id=649950671]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 2, 0)
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="StaticBody3D19" unique_id=1110976135]
+shape = SubResource("BoxShape3D_g0wft")
+
+[node name="StaticBody3D20" type="StaticBody3D" parent="." unique_id=1696945391]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 2, 0)
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="StaticBody3D20" unique_id=190350538]
+shape = SubResource("BoxShape3D_x4bx8")
+
+[node name="MeshInstance3D21" type="MeshInstance3D" parent="." unique_id=1904718420]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.070226, 1.9705632, 32)
+material_override = SubResource("ShaderMaterial_hbc6p")
+mesh = SubResource("BoxMesh_orlxa")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D21" unique_id=1733814353]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D21/StaticBody3D01" unique_id=904212640]
+shape = SubResource("BoxShape3D_46wjw")
+
+[node name="MeshInstance3D22" type="MeshInstance3D" parent="." unique_id=1794317805]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.070226, 3.9411263, 32)
+material_override = SubResource("ShaderMaterial_htxrx")
+mesh = SubResource("CylinderMesh_8ays5")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D22" unique_id=1524960873]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D22/StaticBody3D01" unique_id=663942695]
+shape = SubResource("BoxShape3D_yhwj7")
+
+[node name="MeshInstance3D23" type="MeshInstance3D" parent="." unique_id=1146034873]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.2360263, 1.625481, 29.4)
+material_override = SubResource("ShaderMaterial_hbc6p")
+mesh = SubResource("BoxMesh_7d3pj")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D23" unique_id=1582449164]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D23/StaticBody3D01" unique_id=788947819]
+shape = SubResource("BoxShape3D_5uyka")
+
+[node name="MeshInstance3D24" type="MeshInstance3D" parent="." unique_id=1989233140]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.2360263, 3.250962, 29.4)
+material_override = SubResource("ShaderMaterial_htxrx")
+mesh = SubResource("CylinderMesh_4wwwm")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D24" unique_id=1058836339]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D24/StaticBody3D01" unique_id=1138452653]
+shape = SubResource("BoxShape3D_svprf")
+
+[node name="MeshInstance3D25" type="MeshInstance3D" parent="." unique_id=413362097]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.8877635, 2.0316577, 26.8)
+material_override = SubResource("ShaderMaterial_hbc6p")
+mesh = SubResource("BoxMesh_m8bk5")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D25" unique_id=965110449]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D25/StaticBody3D01" unique_id=113332311]
+shape = SubResource("BoxShape3D_lq6mw")
+
+[node name="MeshInstance3D26" type="MeshInstance3D" parent="." unique_id=1894360441]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.8877635, 4.0633154, 26.8)
+material_override = SubResource("ShaderMaterial_htxrx")
+mesh = SubResource("CylinderMesh_4202i")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D26" unique_id=133138736]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D26/StaticBody3D01" unique_id=374280952]
+shape = SubResource("BoxShape3D_veh8w")
+
+[node name="MeshInstance3D27" type="MeshInstance3D" parent="." unique_id=1943128051]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.920462, 1.6506759, 24.2)
+material_override = SubResource("ShaderMaterial_hbc6p")
+mesh = SubResource("BoxMesh_jpab5")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D27" unique_id=1037732445]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D27/StaticBody3D01" unique_id=269318111]
+shape = SubResource("BoxShape3D_1b5ec")
+
+[node name="MeshInstance3D28" type="MeshInstance3D" parent="." unique_id=1993680923]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.920462, 3.3013518, 24.2)
+material_override = SubResource("ShaderMaterial_htxrx")
+mesh = SubResource("CylinderMesh_sl45d")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D28" unique_id=1165672718]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D28/StaticBody3D01" unique_id=838659747]
+shape = SubResource("BoxShape3D_t2o5n")
+
+[node name="MeshInstance3D29" type="MeshInstance3D" parent="." unique_id=2014366314]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.428866, 1.6758175, 21.6)
+material_override = SubResource("ShaderMaterial_hbc6p")
+mesh = SubResource("BoxMesh_yype6")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D29" unique_id=1879650887]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D29/StaticBody3D01" unique_id=2071308221]
+shape = SubResource("BoxShape3D_72q52")
+
+[node name="MeshInstance3D30" type="MeshInstance3D" parent="." unique_id=1351067698]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.428866, 3.351635, 21.6)
+material_override = SubResource("ShaderMaterial_htxrx")
+mesh = SubResource("CylinderMesh_5jcgm")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D30" unique_id=1171850357]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D30/StaticBody3D01" unique_id=1562339593]
+shape = SubResource("BoxShape3D_h0ppd")
+
+[node name="MeshInstance3D31" type="MeshInstance3D" parent="." unique_id=554927604]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.7934923, 2.4767559, 19)
+material_override = SubResource("ShaderMaterial_hbc6p")
+mesh = SubResource("BoxMesh_58lk1")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D31" unique_id=2105687971]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D31/StaticBody3D01" unique_id=1348808362]
+shape = SubResource("BoxShape3D_81chd")
+
+[node name="MeshInstance3D32" type="MeshInstance3D" parent="." unique_id=1519123791]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.7934923, 4.9535117, 19)
+material_override = SubResource("ShaderMaterial_htxrx")
+mesh = SubResource("CylinderMesh_tyb8w")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D32" unique_id=1424395144]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D32/StaticBody3D01" unique_id=409631056]
+shape = SubResource("BoxShape3D_d6mp8")
+
+[node name="MeshInstance3D33" type="MeshInstance3D" parent="." unique_id=1364994440]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.3984556, 2.4457734, 16.400002)
+material_override = SubResource("ShaderMaterial_hbc6p")
+mesh = SubResource("BoxMesh_gg3ww")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D33" unique_id=493069599]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D33/StaticBody3D01" unique_id=441493706]
+shape = SubResource("BoxShape3D_ncq1b")
+
+[node name="MeshInstance3D34" type="MeshInstance3D" parent="." unique_id=1816272703]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.3984556, 4.8915467, 16.400002)
+material_override = SubResource("ShaderMaterial_htxrx")
+mesh = SubResource("CylinderMesh_x15xb")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D34" unique_id=302288415]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D34/StaticBody3D01" unique_id=801850509]
+shape = SubResource("BoxShape3D_uvcdo")
+
+[node name="MeshInstance3D35" type="MeshInstance3D" parent="." unique_id=887218017]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.696967, 2.0579345, 13.800001)
+material_override = SubResource("ShaderMaterial_hbc6p")
+mesh = SubResource("BoxMesh_eqmim")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D35" unique_id=180582691]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D35/StaticBody3D01" unique_id=1662428042]
+shape = SubResource("BoxShape3D_ierpu")
+
+[node name="MeshInstance3D36" type="MeshInstance3D" parent="." unique_id=1060854874]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.696967, 4.115869, 13.800001)
+material_override = SubResource("ShaderMaterial_htxrx")
+mesh = SubResource("CylinderMesh_amw0s")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D36" unique_id=2074934261]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D36/StaticBody3D01" unique_id=1538617006]
+shape = SubResource("BoxShape3D_qhk7x")
+
+[node name="MeshInstance3D37" type="MeshInstance3D" parent="." unique_id=2143816705]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.9666586, 2.0212069, 11.200001)
+material_override = SubResource("ShaderMaterial_hbc6p")
+mesh = SubResource("BoxMesh_12a4y")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D37" unique_id=508000468]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D37/StaticBody3D01" unique_id=1118769398]
+shape = SubResource("BoxShape3D_rr682")
+
+[node name="MeshInstance3D38" type="MeshInstance3D" parent="." unique_id=1354496413]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.9666586, 4.0424137, 11.200001)
+material_override = SubResource("ShaderMaterial_htxrx")
+mesh = SubResource("CylinderMesh_edam2")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D38" unique_id=1464136069]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D38/StaticBody3D01" unique_id=10551748]
+shape = SubResource("BoxShape3D_d5so7")
+
+[node name="MeshInstance3D39" type="MeshInstance3D" parent="." unique_id=1316322471]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.4958534, 2.1650636, 8.6)
+material_override = SubResource("ShaderMaterial_hbc6p")
+mesh = SubResource("BoxMesh_4x5ur")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D39" unique_id=1864652850]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D39/StaticBody3D01" unique_id=1006812414]
+shape = SubResource("BoxShape3D_37622")
+
+[node name="MeshInstance3D40" type="MeshInstance3D" parent="." unique_id=161315452]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.4958534, 4.3301272, 8.6)
+material_override = SubResource("ShaderMaterial_htxrx")
+mesh = SubResource("CylinderMesh_8tu46")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D40" unique_id=104054932]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D40/StaticBody3D01" unique_id=2147053962]
+shape = SubResource("BoxShape3D_i1oti")
+
+[node name="MeshInstance3D41" type="MeshInstance3D" parent="." unique_id=1427918537]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.79146, 1.6141331, 6)
+material_override = SubResource("ShaderMaterial_hbc6p")
+mesh = SubResource("BoxMesh_sk4xn")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D41" unique_id=1488946529]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D41/StaticBody3D01" unique_id=1443710314]
+shape = SubResource("BoxShape3D_i6oor")
+
+[node name="MeshInstance3D42" type="MeshInstance3D" parent="." unique_id=927281641]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.79146, 3.2282662, 6)
+material_override = SubResource("ShaderMaterial_htxrx")
+mesh = SubResource("CylinderMesh_c4u20")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D42" unique_id=1074624718]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D42/StaticBody3D01" unique_id=686411003]
+shape = SubResource("BoxShape3D_atnnu")
+
+[node name="MeshInstance3D43" type="MeshInstance3D" parent="." unique_id=751382722]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.328015, 1.7247204, 3.4000015)
+material_override = SubResource("ShaderMaterial_hbc6p")
+mesh = SubResource("BoxMesh_x3eyr")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D43" unique_id=324886914]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D43/StaticBody3D01" unique_id=688427826]
+shape = SubResource("BoxShape3D_conq5")
+
+[node name="MeshInstance3D44" type="MeshInstance3D" parent="." unique_id=2040292168]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.328015, 3.4494407, 3.4000015)
+material_override = SubResource("ShaderMaterial_htxrx")
+mesh = SubResource("CylinderMesh_ijqmb")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D44" unique_id=1369539924]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D44/StaticBody3D01" unique_id=339180267]
+shape = SubResource("BoxShape3D_7qd7q")
+
+[node name="MeshInstance3D45" type="MeshInstance3D" parent="." unique_id=2061233162]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.7753096, 2.2860637, 0.80000114)
+material_override = SubResource("ShaderMaterial_hbc6p")
+mesh = SubResource("BoxMesh_umjni")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D45" unique_id=1804557087]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D45/StaticBody3D01" unique_id=1488159954]
+shape = SubResource("BoxShape3D_bllsk")
+
+[node name="MeshInstance3D46" type="MeshInstance3D" parent="." unique_id=780162935]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.7753096, 4.5721273, 0.80000114)
+material_override = SubResource("ShaderMaterial_htxrx")
+mesh = SubResource("CylinderMesh_32e5t")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D46" unique_id=1623592756]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D46/StaticBody3D01" unique_id=694629768]
+shape = SubResource("BoxShape3D_hvt85")
+
+[node name="MeshInstance3D47" type="MeshInstance3D" parent="." unique_id=1241883419]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.939105, 1.8838065, -1.7999992)
+material_override = SubResource("ShaderMaterial_hbc6p")
+mesh = SubResource("BoxMesh_ssk1i")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D47" unique_id=1516296901]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D47/StaticBody3D01" unique_id=848874145]
+shape = SubResource("BoxShape3D_fbp84")
+
+[node name="MeshInstance3D48" type="MeshInstance3D" parent="." unique_id=1150105789]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.939105, 3.767613, -1.7999992)
+material_override = SubResource("ShaderMaterial_htxrx")
+mesh = SubResource("CylinderMesh_i2ig0")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D48" unique_id=525064374]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D48/StaticBody3D01" unique_id=1552761353]
+shape = SubResource("BoxShape3D_w5qvb")
+
+[node name="MeshInstance3D49" type="MeshInstance3D" parent="." unique_id=47426364]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.609911, 2.2519507, -4.3999977)
+material_override = SubResource("ShaderMaterial_hbc6p")
+mesh = SubResource("BoxMesh_d2sgc")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D49" unique_id=866819601]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D49/StaticBody3D01" unique_id=1391274761]
+shape = SubResource("BoxShape3D_numdt")
+
+[node name="MeshInstance3D50" type="MeshInstance3D" parent="." unique_id=761519840]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.609911, 4.5039015, -4.3999977)
+material_override = SubResource("ShaderMaterial_htxrx")
+mesh = SubResource("CylinderMesh_0aaga")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D50" unique_id=2046405748]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D50/StaticBody3D01" unique_id=1885317082]
+shape = SubResource("BoxShape3D_pdi3o")
+
+[node name="MeshInstance3D51" type="MeshInstance3D" parent="." unique_id=1264931401]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.978373, 1.8375865, -7)
+material_override = SubResource("ShaderMaterial_hbc6p")
+mesh = SubResource("BoxMesh_yf6tb")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D51" unique_id=1733514264]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D51/StaticBody3D01" unique_id=1072156264]
+shape = SubResource("BoxShape3D_lcwd5")
+
+[node name="MeshInstance3D52" type="MeshInstance3D" parent="." unique_id=462643051]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.978373, 3.675173, -7)
+material_override = SubResource("ShaderMaterial_htxrx")
+mesh = SubResource("CylinderMesh_v0wc8")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D52" unique_id=1347135007]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D52/StaticBody3D01" unique_id=915862809]
+shape = SubResource("BoxShape3D_fn72i")
+
+[node name="MeshInstance3D53" type="MeshInstance3D" parent="." unique_id=82063348]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.500227, 2.0249171, -9.599998)
+material_override = SubResource("ShaderMaterial_hbc6p")
+mesh = SubResource("BoxMesh_bv3xc")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D53" unique_id=1075427086]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D53/StaticBody3D01" unique_id=653833066]
+shape = SubResource("BoxShape3D_mm0a1")
+
+[node name="MeshInstance3D54" type="MeshInstance3D" parent="." unique_id=978282338]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.500227, 4.0498343, -9.599998)
+material_override = SubResource("ShaderMaterial_htxrx")
+mesh = SubResource("CylinderMesh_fexq7")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D54" unique_id=383984768]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D54/StaticBody3D01" unique_id=1183736369]
+shape = SubResource("BoxShape3D_8jugr")
+
+[node name="MeshInstance3D55" type="MeshInstance3D" parent="." unique_id=514172894]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.1797943, 2.354629, -12.199997)
+material_override = SubResource("ShaderMaterial_hbc6p")
+mesh = SubResource("BoxMesh_8ba4g")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D55" unique_id=414607895]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D55/StaticBody3D01" unique_id=1249259757]
+shape = SubResource("BoxShape3D_o11ch")
+
+[node name="MeshInstance3D56" type="MeshInstance3D" parent="." unique_id=825180410]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.1797943, 4.709258, -12.199997)
+material_override = SubResource("ShaderMaterial_htxrx")
+mesh = SubResource("CylinderMesh_m7sru")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D56" unique_id=364062962]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D56/StaticBody3D01" unique_id=763677426]
+shape = SubResource("BoxShape3D_y2cqb")
+
+[node name="MeshInstance3D57" type="MeshInstance3D" parent="." unique_id=136120557]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.169505, 2.0541525, -14.799999)
+material_override = SubResource("ShaderMaterial_hbc6p")
+mesh = SubResource("BoxMesh_61snp")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D57" unique_id=10401130]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D57/StaticBody3D01" unique_id=1025155224]
+shape = SubResource("BoxShape3D_ljs15")
+
+[node name="MeshInstance3D58" type="MeshInstance3D" parent="." unique_id=517136504]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.169505, 4.108305, -14.799999)
+material_override = SubResource("ShaderMaterial_htxrx")
+mesh = SubResource("CylinderMesh_cartd")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D58" unique_id=209036257]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D58/StaticBody3D01" unique_id=1686656210]
+shape = SubResource("BoxShape3D_ggdai")
+
+[node name="MeshInstance3D59" type="MeshInstance3D" parent="." unique_id=1711338665]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.348555, 1.8259108, -17.399998)
+material_override = SubResource("ShaderMaterial_hbc6p")
+mesh = SubResource("BoxMesh_kgaqd")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D59" unique_id=1674957402]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D59/StaticBody3D01" unique_id=1217026258]
+shape = SubResource("BoxShape3D_rw614")
+
+[node name="MeshInstance3D60" type="MeshInstance3D" parent="." unique_id=151937975]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.348555, 3.6518216, -17.399998)
+material_override = SubResource("ShaderMaterial_htxrx")
+mesh = SubResource("CylinderMesh_5woui")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D60" unique_id=817244933]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D60/StaticBody3D01" unique_id=1997279753]
+shape = SubResource("BoxShape3D_rli88")
+
+[node name="MeshInstance3D61" type="MeshInstance3D" parent="." unique_id=1787802332]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5358396, 1.988621, -20)
+material_override = SubResource("ShaderMaterial_hbc6p")
+mesh = SubResource("BoxMesh_rc8ok")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D61" unique_id=1422922462]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D61/StaticBody3D01" unique_id=1685343450]
+shape = SubResource("BoxShape3D_cqpem")
+
+[node name="MeshInstance3D62" type="MeshInstance3D" parent="." unique_id=873523050]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5358396, 3.977242, -20)
+material_override = SubResource("ShaderMaterial_htxrx")
+mesh = SubResource("CylinderMesh_6ktu1")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D62" unique_id=279666684]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D62/StaticBody3D01" unique_id=1576804455]
+shape = SubResource("BoxShape3D_htx1x")
+
+[node name="MeshInstance3D63" type="MeshInstance3D" parent="." unique_id=947269925]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.709218, 1.5821626, -22.599998)
+material_override = SubResource("ShaderMaterial_hbc6p")
+mesh = SubResource("BoxMesh_beiqr")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D63" unique_id=1080271126]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D63/StaticBody3D01" unique_id=1485438195]
+shape = SubResource("BoxShape3D_53key")
+
+[node name="MeshInstance3D64" type="MeshInstance3D" parent="." unique_id=1178647232]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.709218, 3.1643252, -22.599998)
+material_override = SubResource("ShaderMaterial_htxrx")
+mesh = SubResource("CylinderMesh_3j6tq")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D64" unique_id=2086958973]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D64/StaticBody3D01" unique_id=706184379]
+shape = SubResource("BoxShape3D_bj866")
+
+[node name="MeshInstance3D65" type="MeshInstance3D" parent="." unique_id=940593382]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.0029607, 1.6186533, -25.199997)
+material_override = SubResource("ShaderMaterial_hbc6p")
+mesh = SubResource("BoxMesh_kyywn")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D65" unique_id=1281199027]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D65/StaticBody3D01" unique_id=1173427831]
+shape = SubResource("BoxShape3D_hs5de")
+
+[node name="MeshInstance3D66" type="MeshInstance3D" parent="." unique_id=783853398]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.0029607, 3.2373066, -25.199997)
+material_override = SubResource("ShaderMaterial_htxrx")
+mesh = SubResource("CylinderMesh_jccch")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D66" unique_id=1408204939]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D66/StaticBody3D01" unique_id=2083006773]
+shape = SubResource("BoxShape3D_xxbnm")
+
+[node name="MeshInstance3D67" type="MeshInstance3D" parent="." unique_id=203353297]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.463036, 2.1669788, -27.8)
+material_override = SubResource("ShaderMaterial_hbc6p")
+mesh = SubResource("BoxMesh_xdwd6")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D67" unique_id=1752279334]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D67/StaticBody3D01" unique_id=626561817]
+shape = SubResource("BoxShape3D_3f38v")
+
+[node name="MeshInstance3D68" type="MeshInstance3D" parent="." unique_id=1716903463]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.463036, 4.3339577, -27.8)
+material_override = SubResource("ShaderMaterial_htxrx")
+mesh = SubResource("CylinderMesh_ovdwg")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D68" unique_id=931861352]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D68/StaticBody3D01" unique_id=2047590537]
+shape = SubResource("BoxShape3D_ebjug")
+
+[node name="MeshInstance3D69" type="MeshInstance3D" parent="." unique_id=170845413]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.52042, 2.3966508, -30.399998)
+material_override = SubResource("ShaderMaterial_hbc6p")
+mesh = SubResource("BoxMesh_6dtn0")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D69" unique_id=370666037]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D69/StaticBody3D01" unique_id=1850875116]
+shape = SubResource("BoxShape3D_0moof")
+
+[node name="MeshInstance3D70" type="MeshInstance3D" parent="." unique_id=1480207519]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.52042, 4.7933016, -30.399998)
+material_override = SubResource("ShaderMaterial_htxrx")
+mesh = SubResource("CylinderMesh_xuvuu")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D70" unique_id=1481571111]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D70/StaticBody3D01" unique_id=1882063083]
+shape = SubResource("BoxShape3D_pijec")
+
+[node name="MeshInstance3D71" type="MeshInstance3D" parent="." unique_id=571769102]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.350034, 2.7342486, -33)
+material_override = SubResource("ShaderMaterial_hbc6p")
+mesh = SubResource("BoxMesh_ijuk0")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D71" unique_id=1318043509]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D71/StaticBody3D01" unique_id=104401414]
+shape = SubResource("BoxShape3D_r7bbv")
+
+[node name="MeshInstance3D72" type="MeshInstance3D" parent="." unique_id=366509679]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.350034, 5.4684973, -33)
+material_override = SubResource("ShaderMaterial_htxrx")
+mesh = SubResource("CylinderMesh_6n5rf")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="MeshInstance3D72" unique_id=1665710132]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="MeshInstance3D72/StaticBody3D01" unique_id=894644609]
+shape = SubResource("BoxShape3D_2q8qb")
+
+[node name="Node3D73" type="Node3D" parent="." unique_id=1873803453]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9, 0, 29)
+
+[node name="MeshInstance3D01" type="MeshInstance3D" parent="Node3D73" unique_id=426185172]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
+material_override = SubResource("ShaderMaterial_c38g8")
+mesh = SubResource("BoxMesh_4nlxn")
+
+[node name="StaticBody3D01" type="StaticBody3D" parent="Node3D73/MeshInstance3D01" unique_id=1062517093]
+collision_mask = 0
+
+[node name="CollisionShape3D01" type="CollisionShape3D" parent="Node3D73/MeshInstance3D01/StaticBody3D01" unique_id=543742692]
+shape = SubResource("BoxShape3D_e3wrj")
+
+[node name="MeshInstance3D02" type="MeshInstance3D" parent="Node3D73" unique_id=254609810]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0.4)
+material_override = SubResource("ShaderMaterial_4wrtl")
+mesh = SubResource("BoxMesh_lgmqi")
+
+[node name="MeshInstance3D03" type="MeshInstance3D" parent="Node3D73" unique_id=938882496]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 0.6, -2.12)
+material_override = SubResource("ShaderMaterial_vert5")
+mesh = SubResource("BoxMesh_lh7sq")
+
+[node name="MeshInstance3D04" type="MeshInstance3D" parent="Node3D73" unique_id=685186907]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0.6, -2.12)
+material_override = SubResource("ShaderMaterial_vert5")
+mesh = SubResource("BoxMesh_0bse3")
+
+[node name="OmniLight3D05" type="OmniLight3D" parent="Node3D73" unique_id=344641989]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, -4)
+light_color = Color(1, 0.9, 0.6, 1)
+light_energy = 1.2
+omni_range = 9.0
+
+[node name="MeshInstance3D74" type="MeshInstance3D" parent="." unique_id=1105361514]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.2, 2.2, -6)
+material_override = SubResource("ShaderMaterial_2k2f7")
+mesh = SubResource("BoxMesh_7sbiw")
+
+[node name="MeshInstance3D75" type="MeshInstance3D" parent="." unique_id=673157592]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7, 4.4, -6)
+material_override = SubResource("ShaderMaterial_csecj")
+mesh = SubResource("BoxMesh_jut0g")
+
+[node name="OmniLight3D76" type="OmniLight3D" parent="." unique_id=1528166834]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4, 4, -6)
+light_color = Color(1, 0.7, 0.35, 1)
+light_energy = 1.4
+omni_range = 9.0
+
+[node name="ArchitectureDetails" type="Node3D" parent="." unique_id=548896609]
+
+[node name="Rain" type="GPUParticles3D" parent="ArchitectureDetails" unique_id=124855365]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+amount = 500
+lifetime = 1.4
+visibility_aabb = AABB(-10, -8, -40, 20, 16, 80)
+process_material = SubResource("ParticleProcessMaterial_8a5oi")
+draw_pass_1 = SubResource("QuadMesh_lqel1")

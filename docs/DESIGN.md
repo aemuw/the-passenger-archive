@@ -1,5 +1,11 @@
 # Design
 
+## Scene based implementation
+
+The October 2026 revision loads checked-in carriage, memory, character, player, UI and audio scenes. Layout, meshes, colliders, materials, AnimationPlayer clips, PNG textures and WAV streams are editable before play. Development authoring commands remain available but do not run during a normal session. See `SCENE_WORKFLOW.md` for locations, editing rules and verification limits.
+
+The current scope remains the four-carriage slice. It now has a start menu, pause, accessibility controls and carriage checkpoints. Unsupported real-world placeholder summaries have been removed; additional documented stories require actual research before implementation.
+
 ## One line
 You cannot change what happened. You can remember why.
 

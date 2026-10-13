@@ -1,0 +1,234 @@
+{
+  "Entries": [
+    {
+      "Node": "hi",
+      "Need": null,
+      "Unless": null
+    }
+  ],
+  "Nodes": [
+    {
+      "Id": "hi",
+      "Say": [
+        {
+          "Text": "Вибачте. Ви — по «Зеніт»?",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": [
+        {
+          "Text": "Максим?",
+          "To": "m_known",
+          "Need": "k:pop_named",
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Ви… продавець?",
+          "To": "m_unknown",
+          "Need": null,
+          "Unless": "k:pop_named",
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Де камера?",
+          "To": "cam",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        },
+        {
+          "Text": "Ви їхали цим потягом?",
+          "To": "train",
+          "Need": null,
+          "Unless": null,
+          "Set": null,
+          "Fx": null
+        }
+      ],
+      "Next": null,
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "m_known",
+      "Say": [
+        {
+          "Text": "Ну так. Я ж казав у потязі: Максим. Ви тоді були такий задумливий.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "end",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "m_unknown",
+      "Say": [
+        {
+          "Text": "А хто ж. Ми листувались. Ви такий, як я уявляв.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "end",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "cam",
+      "Say": [
+        {
+          "Text": "У сумці. Тут темно — давайте під арку, там світліше.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "end",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "train",
+      "Say": [
+        {
+          "Text": "Від першого вагона. Мені треба було переконатись, що ви приїдете самі.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "Ви ж самі, так?",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "end",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "end",
+      "Say": [
+        {
+          "Text": "Знаєте, мені подобаються люди, які приходять самі. Це рідкість.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "e1b",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": "k:said_dont_remember",
+      "IfTo": "e_mem"
+    },
+    {
+      "Id": "e_mem",
+      "Say": [
+        {
+          "Text": "Ви ж казали мені в потязі, що не пам'ятаєте, звідки їдете. А виявилось — за «Зенітом».",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "e2",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "e1b",
+      "Say": [],
+      "Opts": null,
+      "Next": "e2",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": "k:said_terminus",
+      "IfTo": "e_term"
+    },
+    {
+      "Id": "e_term",
+      "Say": [
+        {
+          "Text": "Ви казали, що їдете до кінцевої. Ну от, дісталися.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "e2",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "e2",
+      "Say": [],
+      "Opts": null,
+      "Next": "last",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": "k:heard_marta",
+      "IfTo": "e_marta"
+    },
+    {
+      "Id": "e_marta",
+      "Say": [
+        {
+          "Text": "Вам дзвонили. Тричі, я чув. Вона просила почекати? Розумна.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": "last",
+      "Set": null,
+      "Fx": null,
+      "IfNeed": null,
+      "IfTo": null
+    },
+    {
+      "Id": "last",
+      "Say": [
+        {
+          "Text": "Ходімо під арку. Там і розрахуємось.",
+          "Fx": null,
+          "Speaker": null
+        },
+        {
+          "Text": "До кінця — то до кінця.",
+          "Fx": null,
+          "Speaker": null
+        }
+      ],
+      "Opts": null,
+      "Next": null,
+      "Set": null,
+      "Fx": "kill",
+      "IfNeed": null,
+      "IfTo": null
+    }
+  ]
+}

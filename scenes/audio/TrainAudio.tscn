@@ -1,0 +1,108 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/World/TrainAudio.cs" id="1_g0h7f"]
+[ext_resource type="AudioStream" path="res://assets/audio/rumble.wav" id="2_mjs8u"]
+[ext_resource type="AudioStream" path="res://assets/audio/clack.wav" id="3_2wyhk"]
+[ext_resource type="AudioStream" path="res://assets/audio/ring.wav" id="4_nn0bd"]
+[ext_resource type="AudioStream" path="res://assets/audio/click.wav" id="5_lm1nm"]
+[ext_resource type="AudioStream" path="res://assets/audio/hit.wav" id="6_rbvqg"]
+[ext_resource type="AudioStream" path="res://assets/audio/wind.wav" id="7_oa25x"]
+[ext_resource type="AudioStream" path="res://assets/audio/rain.wav" id="8_ycepa"]
+[ext_resource type="AudioStream" path="res://assets/audio/pad.wav" id="9_rxqwd"]
+[ext_resource type="AudioStream" path="res://assets/audio/heart.wav" id="10_gmrek"]
+[ext_resource type="AudioStream" path="res://assets/audio/creak.wav" id="11_2brpt"]
+[ext_resource type="AudioStream" path="res://assets/audio/thud.wav" id="12_7e6mw"]
+[ext_resource type="AudioStream" path="res://assets/audio/chime.wav" id="13_q1m4r"]
+[ext_resource type="AudioStream" path="res://assets/audio/motif.wav" id="14_7t3px"]
+[ext_resource type="AudioStream" path="res://assets/audio/motif_dark.wav" id="15_hl6kg"]
+[ext_resource type="AudioStream" path="res://assets/audio/step1.wav" id="16_27d7e"]
+[ext_resource type="AudioStream" path="res://assets/audio/step2.wav" id="17_r4skn"]
+[ext_resource type="AudioStream" path="res://assets/audio/step3.wav" id="18_v1qol"]
+
+[node name="TrainAudio" type="Node" unique_id=982222202]
+script = ExtResource("1_g0h7f")
+
+[node name="rumble" type="AudioStreamPlayer" parent="." unique_id=813462883]
+stream = ExtResource("2_mjs8u")
+volume_db = -9.0
+bus = &"Ambience"
+
+[node name="clack" type="AudioStreamPlayer" parent="." unique_id=1879956182]
+stream = ExtResource("3_2wyhk")
+volume_db = -12.0
+bus = &"Ambience"
+
+[node name="ring" type="AudioStreamPlayer" parent="." unique_id=750011256]
+stream = ExtResource("4_nn0bd")
+volume_db = -8.0
+bus = &"Effects"
+
+[node name="click" type="AudioStreamPlayer" parent="." unique_id=1044621512]
+stream = ExtResource("5_lm1nm")
+volume_db = -4.0
+bus = &"Effects"
+
+[node name="hit" type="AudioStreamPlayer" parent="." unique_id=1127227945]
+stream = ExtResource("6_rbvqg")
+volume_db = -2.0
+bus = &"Effects"
+
+[node name="wind" type="AudioStreamPlayer" parent="." unique_id=2129857799]
+stream = ExtResource("7_oa25x")
+volume_db = -60.0
+bus = &"Ambience"
+
+[node name="rain" type="AudioStreamPlayer" parent="." unique_id=925601704]
+stream = ExtResource("8_ycepa")
+volume_db = -60.0
+bus = &"Ambience"
+
+[node name="pad" type="AudioStreamPlayer" parent="." unique_id=1627488304]
+stream = ExtResource("9_rxqwd")
+volume_db = -60.0
+bus = &"Music"
+
+[node name="heart" type="AudioStreamPlayer" parent="." unique_id=1288885945]
+stream = ExtResource("10_gmrek")
+volume_db = -60.0
+bus = &"Effects"
+
+[node name="creak" type="AudioStreamPlayer" parent="." unique_id=822749907]
+stream = ExtResource("11_2brpt")
+volume_db = -20.0
+bus = &"Ambience"
+
+[node name="thud" type="AudioStreamPlayer" parent="." unique_id=336546620]
+stream = ExtResource("12_7e6mw")
+volume_db = -22.0
+bus = &"Ambience"
+
+[node name="chime" type="AudioStreamPlayer" parent="." unique_id=1043230525]
+stream = ExtResource("13_q1m4r")
+volume_db = -24.0
+bus = &"Ambience"
+
+[node name="motif" type="AudioStreamPlayer" parent="." unique_id=1412981629]
+stream = ExtResource("14_7t3px")
+volume_db = -15.0
+bus = &"Music"
+
+[node name="motif_dark" type="AudioStreamPlayer" parent="." unique_id=701943616]
+stream = ExtResource("15_hl6kg")
+volume_db = -12.0
+bus = &"Music"
+
+[node name="step1" type="AudioStreamPlayer" parent="." unique_id=937109856]
+stream = ExtResource("16_27d7e")
+volume_db = -13.0
+bus = &"Effects"
+
+[node name="step2" type="AudioStreamPlayer" parent="." unique_id=1982848273]
+stream = ExtResource("17_r4skn")
+volume_db = -13.0
+bus = &"Effects"
+
+[node name="step3" type="AudioStreamPlayer" parent="." unique_id=1547026869]
+stream = ExtResource("18_v1qol")
+volume_db = -13.0
+bus = &"Effects"

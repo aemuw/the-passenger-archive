@@ -28,7 +28,7 @@ public partial class Game
 	public bool NpcSpeakingNow(string id) => _inTalk && _ownerId == id && !_heroLine && !_choosing && Hud.IsTyping;
 
 	/// <summary>Ambient muttering is allowed only when nothing else is going on.</summary>
-	public bool BarksAllowed => _mode == Mode.Carriage && !_busy && !_dead && !_inTalk && _script == null;
+	public bool BarksAllowed => _mode == Mode.Carriage && !_busy && !_dead && !_inTalk && _script == null && _horror?.Active != true;
 
 	void ResetTalk()
 	{
@@ -50,6 +50,8 @@ public partial class Game
 	public void StartTalk(Convo convo, string ownerId, Func<string> name, Vector3? face = null, string force = null, Action onEnd = null)
 	{
 		if (_inTalk || convo == null || _dead) return;
+		_horror?.Cancel();
+		convo = DialogueAssets.Resolve(convo);
 		_convo = convo;
 		_ownerId = ownerId;
 		_ownerName = name;
